@@ -11,6 +11,8 @@ import { signSessionToken } from "@/lib/auth/jwt";
 import { hashPassword } from "@/lib/auth/password";
 import { createUser, findUser } from "@/lib/auth/user-store";
 
+export const runtime = "nodejs";
+
 const bodySchema = z.object({
   username: z
     .string()

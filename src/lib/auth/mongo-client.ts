@@ -1,5 +1,7 @@
 import { MongoClient, type MongoClientOptions } from "mongodb";
 
+import { normalizeMongoUri } from "@/lib/auth/mongo-uri";
+
 const globalForMongo = globalThis as typeof globalThis & {
   __feaMongoClientPromise?: Promise<MongoClient>;
 };
@@ -7,6 +9,7 @@ const globalForMongo = globalThis as typeof globalThis & {
 const clientOptions: MongoClientOptions = {
   serverSelectionTimeoutMS: 15_000,
   maxPoolSize: 10,
+  appName: "frontend-academy",
 };
 
 function getUri(): string {
@@ -14,7 +17,7 @@ function getUri(): string {
   if (!uri?.trim()) {
     throw new Error("MONGODB_URI is not set");
   }
-  return uri.trim();
+  return normalizeMongoUri(uri);
 }
 
 /**

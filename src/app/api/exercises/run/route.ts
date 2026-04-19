@@ -12,6 +12,8 @@ import { runTsPositive } from "@/lib/exercises/run-ts-positive";
 import { runTsSum } from "@/lib/exercises/run-ts-sum";
 import { runTsUserLabel } from "@/lib/exercises/run-ts-user-label";
 
+export const runtime = "nodejs";
+
 const bodySchema = z.object({
   exerciseId: zExerciseId,
   code: z.string().max(50_000),

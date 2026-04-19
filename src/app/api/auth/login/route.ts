@@ -7,6 +7,8 @@ import { signSessionToken } from "@/lib/auth/jwt";
 import { verifyPassword } from "@/lib/auth/password";
 import { findUser } from "@/lib/auth/user-store";
 
+export const runtime = "nodejs";
+
 const bodySchema = z.object({
   username: z.string().min(1).max(32),
   password: z.string().min(1).max(128),

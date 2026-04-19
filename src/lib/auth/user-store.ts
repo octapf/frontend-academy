@@ -1,3 +1,4 @@
+import { isMongoEnvConfigured } from "@/lib/auth/mongo-uri";
 import { createUserJson, findUserJson } from "@/lib/auth/user-store-json";
 import { createUserMongo, findUserMongo } from "@/lib/auth/user-store-mongo";
 import type { StoredUser } from "@/lib/auth/user-types";
@@ -5,7 +6,7 @@ import type { StoredUser } from "@/lib/auth/user-types";
 export type { StoredUser } from "@/lib/auth/user-types";
 
 function isMongoConfigured(): boolean {
-  return Boolean(process.env.MONGODB_URI?.trim());
+  return isMongoEnvConfigured();
 }
 
 /** Usuario por nombre (MongoDB si `MONGODB_URI`, si no `data/users.json`). */

@@ -1,5 +1,6 @@
 import type { ExerciseId } from "@/exercises/types";
 
+import { isMongoEnvConfigured } from "@/lib/auth/mongo-uri";
 import {
   getProgressSummaryJson,
   recordExercisePassJson,
@@ -14,7 +15,7 @@ import {
 export type { UserProgress } from "@/lib/progress/progress-types";
 
 function isMongoConfigured(): boolean {
-  return Boolean(process.env.MONGODB_URI?.trim());
+  return isMongoEnvConfigured();
 }
 
 export async function recordLessonView(

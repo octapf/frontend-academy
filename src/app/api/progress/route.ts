@@ -9,6 +9,8 @@ import {
   recordLessonView,
 } from "@/lib/progress/progress-store";
 
+export const runtime = "nodejs";
+
 const slugPart = z
   .string()
   .min(1)
