@@ -44,9 +44,26 @@ En rutas **Learn**, si la preferencia guardada es inglés y la URL no incluye `?
 
 ## Despliegue
 
-1. Conectá el repositorio a [Vercel](https://vercel.com) (o build con `npm run build` + `npm start` en Node).
-2. Definí las variables de entorno anteriores en el entorno de producción.
-3. El workflow **CI** (`.github/workflows/ci.yml`) ejecuta lint, tests y build en cada push y PR a `main`.
+### Opción A — GitHub Actions → Vercel (tras cada push a `main`)
+
+1. En [Vercel](https://vercel.com): creá el proyecto (import desde GitHub o vacío) y **una vez** linkeá el repo si hace falta.
+2. Obtené en el proyecto **Settings → General**:
+   - **Project ID** → secreto `VERCEL_PROJECT_ID`
+   - **Team ID** (también llamado *Organization ID* / `team_…`) → secreto `VERCEL_ORG_ID` (misma pantalla, arriba del Project ID en proyectos recientes).
+3. En [Tokens](https://vercel.com/account/tokens) creá un token → secreto **`VERCEL_TOKEN`**.
+4. En GitHub: **repo → Settings → Secrets and variables → Actions** → *New repository secret* y cargá los tres.
+
+El workflow **`.github/workflows/ci.yml`** corre lint, tests y build en **push y PR** a `main`. Si todo pasa y el evento es **push** a `main`, el job **`deploy-vercel`** ejecuta **`vercel deploy --prod`** (el build corre en la infra de Vercel).
+
+> Si los secretos no están definidos, el job de deploy fallará hasta configurarlos. Los PR no despliegan producción.
+
+### Opción B — Solo integración Git de Vercel
+
+Conectá el repo en el dashboard de Vercel y desactivá o borrá el job `deploy-vercel` si preferís que **Vercel** construya y despliegue solo con su integración (sin duplicar deploy con Actions).
+
+### Variables en Vercel
+
+Definí en el proyecto de Vercel (**Settings → Environment Variables**) las mismas keys que en `.env.example` para **Production** (`AUTH_SECRET`, `NEXT_PUBLIC_APP_URL`, `MONGODB_URI`, etc.).
 
 ## Estructura útil
 
