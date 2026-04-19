@@ -18,9 +18,35 @@ const robotoMono = Roboto_Mono({
   weight: ["400", "500", "600", "700"],
 });
 
+const appUrl = process.env.NEXT_PUBLIC_APP_URL?.trim();
+const metadataBase =
+  appUrl && URL.canParse(appUrl)
+    ? new URL(appUrl)
+    : new URL("http://localhost:3000");
+
 export const metadata: Metadata = {
-  title: "Frontend Academy",
-  description: "Frontend Academy (FEA) — learning platform",
+  metadataBase,
+  title: {
+    default: "Frontend Academy",
+    template: "%s · Frontend Academy",
+  },
+  description:
+    "Plataforma de aprendizaje: módulos React y TypeScript, referencia, ejercicios con tests en servidor y progreso persistido.",
+  openGraph: {
+    type: "website",
+    locale: "es_AR",
+    siteName: "Frontend Academy",
+    title: "Frontend Academy",
+    description:
+      "Lecciones, práctica y progreso en frontend — módulos, glosario y ejercicios.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Frontend Academy",
+    description:
+      "Lecciones, práctica y progreso en frontend — módulos, glosario y ejercicios.",
+  },
+  robots: { index: true, follow: true },
 };
 
 export default function RootLayout({

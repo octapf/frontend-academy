@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import { usePathname } from "next/navigation";
 
 import { LearnLanguageNav } from "@/components/app-shell/LearnLanguageNav";
+import { LearnLangUrlSync } from "@/components/learn/LearnLangUrlSync";
 import { TrackSelector } from "@/components/app-shell/TrackSelector";
 import { UserMenu } from "@/components/app-shell/UserMenu";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
@@ -37,6 +38,7 @@ export function AppShell({
     <div className="min-h-dvh bg-background text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
       <Suspense fallback={null}>
         <TrackUrlSync />
+        <LearnLangUrlSync />
       </Suspense>
       <header className="sticky top-0 z-10 border-b border-zinc-300/80 bg-zinc-100/90 backdrop-blur dark:border-zinc-700/80 dark:bg-zinc-950/90">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">

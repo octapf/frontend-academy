@@ -31,8 +31,11 @@ App Next.js (App Router) con lecciones MDX, ejercicios TypeScript con validació
 | `MONGODB_DB`, `MONGODB_PROGRESS_COLLECTION`, `MONGODB_USERS_COLLECTION`, … | Opcionales; ver código en `src/lib/auth/` y `src/lib/progress/`. |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Rate limit distribuido para ejecutar ejercicios; sin ellos, límite en memoria por proceso. |
 | `EXERCISE_RUN_RATE_LIMIT_PER_MIN` | Opcional; tope de ejecuciones por minuto (ver `src/lib/rate-limit/exercise-config.ts`). |
+| `NEXT_PUBLIC_APP_URL` | URL canónica del sitio (metadata / Open Graph). Ej.: `https://tu-app.vercel.app`. |
 
-Copiá los valores a `.env.local` en desarrollo. En Vercel u otro host, configurá las mismas keys en el panel del proyecto.
+Copiá `.env.example` a `.env.local` y completá valores. En Vercel u otro host, configurá las mismas keys en el panel del proyecto.
+
+En rutas **Learn**, si la preferencia guardada es inglés y la URL no incluye `?lang=en`, el cliente normaliza la query automáticamente (`LearnLangUrlSync`).
 
 ## Despliegue
 
@@ -45,4 +48,5 @@ Copiá los valores a `.env.local` en desarrollo. En Vercel u otro host, configur
 - `src/app/(app)/learn/` — rutas Learn y lecciones.
 - `src/lib/learn/lesson-code-exercises.ts` — registro de lecciones con bloque “ejercicio de código” enlazado.
 - `src/lib/i18n/learn-lang.ts` — helpers de `lang` en URLs.
+- `src/components/learn/LearnLangUrlSync.tsx` — alinear `?lang=en` con la preferencia en Learn.
 - `content/` — lecciones MDX por módulo e idioma.
