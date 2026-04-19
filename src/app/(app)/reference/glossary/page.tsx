@@ -1,5 +1,5 @@
+import { LearnEntryLink } from "@/components/learn/LearnEntryLink";
 import { GlossaryPracticeCard } from "@/components/reference/GlossaryPracticeCard";
-import { TrackLink } from "@/components/track/TrackLink";
 
 export default function GlossaryPage() {
   return (
@@ -14,12 +14,12 @@ export default function GlossaryPage() {
       <GlossaryPracticeCard />
 
       <div>
-        <TrackLink
+        <LearnEntryLink
           href="/learn"
           className="text-sm text-zinc-600 underline-offset-4 hover:underline dark:text-zinc-300"
         >
           Volver a Learn
-        </TrackLink>
+        </LearnEntryLink>
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+import { Suspense, useEffect } from "react";
 
 import type { LessonLang } from "@/lib/content/get-lesson";
 import {
@@ -11,6 +11,7 @@ import {
 } from "@/lib/i18n/learn-lang";
 import type { TrackId } from "@/lib/track";
 import { hrefWithTrack } from "@/lib/track/href";
+import { useLearnLangStore } from "@/stores/useLearnLangStore";
 import { useTrackStore } from "@/stores/useTrackStore";
 
 function hrefForLang(
@@ -29,6 +30,11 @@ function LearnLanguageNavInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const track = useTrackStore((s) => s.track);
+  const setLearnLang = useLearnLangStore((s) => s.setLearnLang);
+
+  useEffect(() => {
+    if (searchParams.get("lang") === "en") setLearnLang("en");
+  }, [searchParams, setLearnLang]);
 
   if (!pathname.startsWith("/learn")) return null;
 
@@ -36,19 +42,21 @@ function LearnLanguageNavInner() {
 
   return (
     <div
-      className="inline-flex rounded-lg border border-zinc-200 bg-zinc-100 p-1 text-xs font-medium dark:border-zinc-700 dark:bg-zinc-950"
+      className="inline-flex rounded-lg border border-zinc-300 bg-zinc-100 p-1 text-xs font-medium dark:border-zinc-700 dark:bg-zinc-950"
       role="group"
       aria-label="Idioma del contenido Learn"
     >
       <Link
         href={hrefForLang(pathname, searchParams, track, "es")}
-        className={`rounded-md px-2.5 py-1.5 ${current === "es" ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900" : "text-zinc-600 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:bg-zinc-100/10"}`}
+        onClick={() => setLearnLang("es")}
+        className={`rounded-md px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-zinc-500 dark:focus-visible:ring-offset-zinc-950 ${current === "es" ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900" : "text-zinc-600 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:bg-zinc-100/10"}`}
       >
         ES
       </Link>
       <Link
         href={hrefForLang(pathname, searchParams, track, "en")}
-        className={`rounded-md px-2.5 py-1.5 ${current === "en" ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900" : "text-zinc-600 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:bg-zinc-100/10"}`}
+        onClick={() => setLearnLang("en")}
+        className={`rounded-md px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-zinc-500 dark:focus-visible:ring-offset-zinc-950 ${current === "en" ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900" : "text-zinc-600 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:bg-zinc-100/10"}`}
       >
         EN
       </Link>

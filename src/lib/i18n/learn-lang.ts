@@ -3,7 +3,8 @@ import type { LessonLang } from "@/lib/content/get-lesson";
 export function parseLearnLang(
   value: string | string[] | null | undefined,
 ): LessonLang {
-  if (value === "en") return "en";
+  const v = Array.isArray(value) ? value[0] : value;
+  if (v === "en") return "en";
   return "es";
 }
 
@@ -19,4 +20,16 @@ export function applyLearnLangToSearchParams(
 /** Sufijo para concatenar a un path sin query, p.ej. `?lang=en` o ``. */
 export function learnLangSearchSuffix(lang: LessonLang): string {
   return lang === "en" ? "?lang=en" : "";
+}
+
+/**
+ * Añade `lang=en` a la query cuando el idioma preferido es inglés.
+ * Si el path ya tiene query, fusiona parámetros (Track u otros).
+ */
+export function withLearnLang(path: string, lang: LessonLang): string {
+  if (lang === "es") return path;
+  const [p, query] = path.split("?");
+  const params = new URLSearchParams(query ?? "");
+  params.set("lang", "en");
+  return `${p}?${params.toString()}`;
 }

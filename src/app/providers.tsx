@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ThemeProvider } from "next-themes";
 import { useState } from "react";
 
+import { LearnLangStoreRehydrate } from "@/components/learn/LearnLangStoreRehydrate";
 import { TrackStoreRehydrate } from "@/components/track/TrackStoreRehydrate";
 
 export function Providers({ children }: { children: React.ReactNode }) {
@@ -24,6 +25,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
       <QueryClientProvider client={queryClient}>
         <TrackStoreRehydrate />
+        <LearnLangStoreRehydrate />
         {children}
         {process.env.NODE_ENV === "development" ? (
           <ReactQueryDevtools initialIsOpen={false} />

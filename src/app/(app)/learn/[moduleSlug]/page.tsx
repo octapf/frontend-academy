@@ -46,7 +46,7 @@ export default async function ModulePage({
         </p>
       ) : (
         <>
-          <div className="rounded-xl border border-zinc-200 bg-zinc-100 px-5 py-4 dark:border-zinc-700 dark:bg-zinc-950">
+          <div className="rounded-xl border border-zinc-300 bg-zinc-100 px-5 py-4 dark:border-zinc-700 dark:bg-zinc-950">
             <ModuleProgressStrip
               moduleSlug={moduleSlug}
               totalLessons={lessons.length}

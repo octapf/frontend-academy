@@ -1,5 +1,5 @@
+import { LearnEntryLink } from "@/components/learn/LearnEntryLink";
 import { SlangPracticeCard } from "@/components/reference/SlangPracticeCard";
-import { TrackLink } from "@/components/track/TrackLink";
 
 export default function SlangPage() {
   return (
@@ -15,12 +15,12 @@ export default function SlangPage() {
       <SlangPracticeCard />
 
       <div>
-        <TrackLink
+        <LearnEntryLink
           href="/learn"
           className="text-sm text-zinc-600 underline-offset-4 hover:underline dark:text-zinc-300"
         >
           Volver a Learn
-        </TrackLink>
+        </LearnEntryLink>
       </div>
     </div>
   );

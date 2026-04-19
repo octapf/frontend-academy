@@ -9,6 +9,8 @@ import { UserMenu } from "@/components/app-shell/UserMenu";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { TrackLink } from "@/components/track/TrackLink";
 import { TrackUrlSync } from "@/components/track/TrackUrlSync";
+import { withLearnLang } from "@/lib/i18n/learn-lang";
+import { useLearnLangStore } from "@/stores/useLearnLangStore";
 import { useTrackStore } from "@/stores/useTrackStore";
 
 const NAV_MAIN = [
@@ -36,7 +38,7 @@ export function AppShell({
       <Suspense fallback={null}>
         <TrackUrlSync />
       </Suspense>
-      <header className="sticky top-0 z-10 border-b border-zinc-200/80 bg-zinc-100/90 backdrop-blur dark:border-zinc-700/80 dark:bg-zinc-950/90">
+      <header className="sticky top-0 z-10 border-b border-zinc-300/80 bg-zinc-100/90 backdrop-blur dark:border-zinc-700/80 dark:bg-zinc-950/90">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
           <div className="flex items-center gap-4">
             <TrackLink
@@ -72,7 +74,12 @@ export function AppShell({
                 key={item.href}
                 href={item.href}
                 label={item.label}
-                active={pathname === item.href}
+                active={
+                  item.href === "/learn"
+                    ? pathname.startsWith("/learn")
+                    : pathname === item.href
+                }
+                learnPrefixed={item.href === "/learn"}
               />
             ))}
 
@@ -100,16 +107,21 @@ function NavLink({
   href,
   label,
   active,
+  learnPrefixed = false,
 }: {
   href: string;
   label: string;
   active: boolean;
+  learnPrefixed?: boolean;
 }) {
+  const learnLang = useLearnLangStore((s) => s.lang);
+  const resolvedHref = learnPrefixed ? withLearnLang(href, learnLang) : href;
+
   return (
     <TrackLink
-      href={href}
+      href={resolvedHref}
       className={[
-        "block rounded-lg px-2.5 py-2 text-sm transition-colors",
+        "block rounded-lg px-2.5 py-2 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-zinc-500 dark:focus-visible:ring-offset-zinc-950",
         active
           ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900"
           : "text-zinc-700 hover:bg-zinc-900/5 dark:text-zinc-200 dark:hover:bg-zinc-100/10",
