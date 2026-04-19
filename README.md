@@ -42,28 +42,25 @@ En rutas **Learn**, si la preferencia guardada es inglés y la URL no incluye `?
 - En build, Next genera **`/opengraph-image`** y **`/twitter-image`** (1200×630, PNG) a partir de `src/lib/og/brand-og.tsx`.
 - Los meta tags se inyectan solos; la URL absoluta usa **`NEXT_PUBLIC_APP_URL`** (ver `layout.tsx`).
 
-## Despliegue
+## Despliegue (Vercel + GitHub)
 
-### Opción A — GitHub Actions → Vercel (tras cada push a `main`)
+### En Vercel (esto despliega la app)
 
-1. En [Vercel](https://vercel.com): creá el proyecto (import desde GitHub o vacío) y **una vez** linkeá el repo si hace falta.
-2. Obtené en el proyecto **Settings → General**:
-   - **Project ID** → secreto `VERCEL_PROJECT_ID`
-   - **Team ID** (también llamado *Organization ID* / `team_…`) → secreto `VERCEL_ORG_ID` (misma pantalla, arriba del Project ID en proyectos recientes).
-3. En [Tokens](https://vercel.com/account/tokens) creá un token → secreto **`VERCEL_TOKEN`**.
-4. En GitHub: **repo → Settings → Secrets and variables → Actions** → *New repository secret* y cargá los tres.
+1. **Importar el repo** desde GitHub (como ya hiciste): cada **push a `main`** dispara un deploy automático.
+2. **Settings → Environment Variables** (Production): cargá lo de **`.env.example`** que uses en prod, como mínimo:
+   - **`AUTH_SECRET`** (obligatorio para sesiones en producción).
+   - **`NEXT_PUBLIC_APP_URL`** = tu URL real (`https://tu-proyecto.vercel.app` o dominio custom).
+   - **`MONGODB_URI`** si usás Mongo; si no, queda JSON en el filesystem (en serverless conviene Mongo).
+3. Tras cambiar variables: **Deployments → … → Redeploy** (o un push vacío).
 
-El workflow **`.github/workflows/ci.yml`** corre lint, tests y build en **push y PR** a `main`. Si todo pasa y el evento es **push** a `main`, el job **`deploy-vercel`** ejecuta **`vercel deploy --prod`** (el build corre en la infra de Vercel).
+### En GitHub (no hace falta secretos para deploy)
 
-> Si los secretos no están definidos, el job de deploy fallará hasta configurarlos. Los PR no despliegan producción.
+- **No necesitás** la pantalla *Actions secrets / New secret* para publicar en Vercel: el deploy lo hace la **integración Git de Vercel**.
+- **Actions** solo corre **CI** (lint, test, build) en push/PR a `main`: sirve para ver que todo pase en verde; podés ignorar *Secrets* salvo que más adelante agregues otro workflow que sí los use.
 
-### Opción B — Solo integración Git de Vercel
+### Dominio propio (opcional)
 
-Conectá el repo en el dashboard de Vercel y desactivá o borrá el job `deploy-vercel` si preferís que **Vercel** construya y despliegue solo con su integración (sin duplicar deploy con Actions).
-
-### Variables en Vercel
-
-Definí en el proyecto de Vercel (**Settings → Environment Variables**) las mismas keys que en `.env.example` para **Production** (`AUTH_SECRET`, `NEXT_PUBLIC_APP_URL`, `MONGODB_URI`, etc.).
+Vercel → proyecto → **Settings → Domains** → agregar dominio y seguir el DNS que indiquen.
 
 ## Estructura útil
 
