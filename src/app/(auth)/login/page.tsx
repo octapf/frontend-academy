@@ -30,7 +30,7 @@ export default async function LoginPage({
     : registerBase;
 
   return (
-    <div className="rounded-xl border border-black/10 bg-white p-6 shadow-sm dark:border-white/15 dark:bg-zinc-950">
+    <div className="rounded-xl border border-zinc-200 bg-zinc-100 p-6 shadow-sm dark:border-zinc-700 dark:bg-zinc-950">
       <h1 className="text-xl font-semibold tracking-tight">Ingresar</h1>
       <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
         Frontend Academy · usuario y contraseña
@@ -38,7 +38,7 @@ export default async function LoginPage({
       <div className="mt-6">
         <Suspense
           fallback={
-            <div className="h-40 animate-pulse rounded-lg bg-zinc-100 dark:bg-zinc-900" />
+            <div className="h-40 animate-pulse rounded-lg bg-zinc-200 dark:bg-zinc-900" />
           }
         >
           <LoginForm />

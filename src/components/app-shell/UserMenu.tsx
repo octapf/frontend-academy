@@ -32,7 +32,7 @@ export function UserMenu({ username }: { username: string }) {
         type="button"
         onClick={logout}
         disabled={loading}
-        className="rounded-lg border border-black/10 bg-white px-2.5 py-1.5 text-xs font-medium hover:bg-black/5 disabled:opacity-60 dark:border-white/15 dark:bg-zinc-950 dark:hover:bg-white/10"
+        className="rounded-lg border border-zinc-200 bg-zinc-100 px-2.5 py-1.5 text-xs font-medium hover:bg-zinc-900/5 disabled:opacity-60 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
       >
         {loading ? "…" : "Salir"}
       </button>

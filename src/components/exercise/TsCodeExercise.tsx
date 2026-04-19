@@ -1,8 +1,11 @@
 "use client";
 
+import { javascript } from "@codemirror/lang-javascript";
+import { oneDark } from "@codemirror/theme-one-dark";
+import { EditorView } from "@codemirror/view";
 import { useQueryClient } from "@tanstack/react-query";
 import CodeMirror from "@uiw/react-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
+import { useTheme } from "next-themes";
 import { useMemo, useState } from "react";
 
 import type { TsExercise } from "@/exercises/types";
@@ -12,6 +15,23 @@ import {
 } from "@/hooks/use-progress-query";
 
 type Lang = "es" | "en";
+
+/** Fondo gris (no blanco) para modo claro; alineado con `--background` (~zinc-300). */
+const editorLightZinc = EditorView.theme(
+  {
+    "&": { backgroundColor: "#d4d4d8" },
+    ".cm-scroller": { backgroundColor: "#d4d4d8" },
+    ".cm-content": { color: "#18181b" },
+    ".cm-gutters": {
+      backgroundColor: "#c4c4cc",
+      color: "#71717a",
+      borderRight: "1px solid #b4b4bc",
+    },
+    ".cm-activeLine": { backgroundColor: "rgba(24, 24, 27, 0.06)" },
+    ".cm-activeLineGutter": { backgroundColor: "rgba(24, 24, 27, 0.06)" },
+  },
+  { dark: false },
+);
 
 export function TsCodeExercise({
   exercise,
@@ -31,6 +51,7 @@ export function TsCodeExercise({
       ? progress.exerciseIds.includes(exercise.id)
       : serverCompleted;
 
+  const { resolvedTheme } = useTheme();
   const [code, setCode] = useState(exercise.starter);
   const [output, setOutput] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -40,8 +61,11 @@ export function TsCodeExercise({
     lang === "en" ? exercise.description.en : exercise.description.es;
 
   const extensions = useMemo(
-    () => [javascript({ typescript: true, jsx: false })],
-    []
+    () => [
+      javascript({ typescript: true, jsx: false }),
+      resolvedTheme === "dark" ? oneDark : editorLightZinc,
+    ],
+    [resolvedTheme],
   );
 
   return (
@@ -60,7 +84,7 @@ export function TsCodeExercise({
         </p>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-black/10 font-mono dark:border-white/15">
+      <div className="overflow-hidden rounded-xl border border-zinc-200 font-mono dark:border-zinc-700">
         <CodeMirror
           value={code}
           height="220px"
@@ -74,7 +98,7 @@ export function TsCodeExercise({
         <button
           type="button"
           onClick={() => setCode(exercise.starter)}
-          className="rounded-lg border border-black/10 bg-white px-3 py-2 text-sm hover:bg-black/5 dark:border-white/15 dark:bg-zinc-950 dark:hover:bg-white/10"
+          className="rounded-lg border border-zinc-200 bg-zinc-100 px-3 py-2 text-sm hover:bg-zinc-900/5 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
         >
           {lang === "en" ? "Reset" : "Reiniciar"}
         </button>
@@ -120,14 +144,14 @@ export function TsCodeExercise({
               setLoading(false);
             }
           }}
-          className="rounded-lg bg-black px-3 py-2 text-sm text-white hover:bg-black/80 disabled:opacity-60 dark:bg-white dark:text-black dark:hover:bg-white/80"
+          className="rounded-lg bg-zinc-800 px-3 py-2 text-sm text-white hover:bg-zinc-700 disabled:opacity-60 dark:bg-zinc-200 dark:text-zinc-900 dark:hover:bg-zinc-300"
         >
           {lang === "en" ? "Run tests" : "Ejecutar tests"}
         </button>
       </div>
 
       {output ? (
-        <pre className="whitespace-pre-wrap rounded-xl border border-black/10 bg-zinc-50 p-4 font-mono text-sm text-zinc-800 dark:border-white/15 dark:bg-black/40 dark:text-zinc-100">
+        <pre className="whitespace-pre-wrap rounded-xl border border-zinc-200 bg-zinc-200 p-4 font-mono text-sm text-zinc-800 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100">
           {output}
         </pre>
       ) : null}

@@ -5,6 +5,10 @@ import { TrackLink } from "@/components/track/TrackLink";
 import { getExercise } from "@/exercises/index";
 import type { ExerciseId } from "@/exercises/types";
 import { getSession } from "@/lib/auth/session";
+import {
+  learnLangSearchSuffix,
+  parseLearnLang,
+} from "@/lib/i18n/learn-lang";
 import { getProgressSummary } from "@/lib/progress/progress-store";
 
 type Params = {
@@ -12,10 +16,6 @@ type Params = {
   lessonSlug: string;
   exerciseId: string;
 };
-
-function parseLang(value: string | string[] | undefined): "es" | "en" {
-  return value === "en" ? "en" : "es";
-}
 
 export default async function ExercisePage({
   params,
@@ -26,7 +26,7 @@ export default async function ExercisePage({
 }) {
   const { moduleSlug, lessonSlug, exerciseId } = await params;
   const sp = await searchParams;
-  const lang = parseLang(sp.lang);
+  const lang = parseLearnLang(sp.lang);
 
   const exercise = getExercise(exerciseId);
   if (!exercise || exercise.kind !== "typescript") {
@@ -40,7 +40,7 @@ export default async function ExercisePage({
     serverCompleted = summary.exerciseIds.includes(exercise.id as ExerciseId);
   }
 
-  const langQs = lang === "en" ? "?lang=en" : "?lang=es";
+  const langQs = learnLangSearchSuffix(lang);
 
   return (
     <div className="space-y-6">
@@ -50,7 +50,7 @@ export default async function ExercisePage({
           aria-label="Breadcrumb"
         >
           <TrackLink
-            href="/learn"
+            href={`/learn${langQs}`}
             className="hover:text-zinc-900 hover:underline dark:hover:text-zinc-100"
           >
             Learn

@@ -16,7 +16,7 @@ export function ThemeToggle() {
   if (!mounted) {
     return (
       <span
-        className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-black/10 bg-white/80 text-sm dark:border-white/15 dark:bg-zinc-950/80"
+        className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-100/90 text-sm dark:border-zinc-700 dark:bg-zinc-950/90"
         aria-hidden
       />
     );
@@ -28,7 +28,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={() => setTheme(isDark ? "light" : "dark")}
-      className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-black/10 bg-white text-sm text-zinc-800 hover:bg-black/5 dark:border-white/15 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-white/10"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-zinc-200 bg-zinc-100 text-sm text-zinc-800 hover:bg-zinc-900/5 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-100/10"
       title={isDark ? "Modo claro" : "Modo oscuro"}
       aria-label={isDark ? "Activar modo claro" : "Activar modo oscuro"}
     >

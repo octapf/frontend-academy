@@ -4,14 +4,16 @@
 /* `dark:` sigue a la clase `.dark` de next-themes (además de descendientes). */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* Tema claro: gris un poco más oscuro que zinc-200 (sigue claro, menos brillo). */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #d4d4d8;
+  --foreground: #18181b;
 }
 
+/* Tema oscuro: gris oscuro de página; texto gris muy claro. */
 .dark {
-  --background: #0a0a0a;
-  --foreground: #ededed;
+  --background: #27272a;
+  --foreground: #f4f4f5;
 }
 
 @theme inline {

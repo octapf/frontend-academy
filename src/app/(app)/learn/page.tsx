@@ -1,7 +1,14 @@
 import { LearnModuleGrid } from "@/components/learn/LearnModuleGrid";
 import { getLessonCountsByModule } from "@/lib/content/lesson-counts";
+import { parseLearnLang } from "@/lib/i18n/learn-lang";
 
-export default async function LearnPage() {
+export default async function LearnPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const sp = await searchParams;
+  const lang = parseLearnLang(sp.lang);
   const lessonCounts = await getLessonCountsByModule();
 
   return (
@@ -13,7 +20,7 @@ export default async function LearnPage() {
         </p>
       </div>
 
-      <LearnModuleGrid lessonCounts={lessonCounts} />
+      <LearnModuleGrid lessonCounts={lessonCounts} lang={lang} />
     </div>
   );
 }

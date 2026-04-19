@@ -14,12 +14,12 @@ export function DashboardModuleChips({
 
   if (isPending || isError || !progress) {
     return (
-      <div className="h-16 animate-pulse rounded-xl border border-black/10 bg-zinc-100 dark:border-white/15 dark:bg-zinc-900" />
+      <div className="h-16 animate-pulse rounded-xl border border-zinc-200 bg-zinc-100 dark:border-zinc-700 dark:bg-zinc-900" />
     );
   }
 
   return (
-    <div className="rounded-xl border border-black/10 bg-white p-4 dark:border-white/15 dark:bg-zinc-950">
+    <div className="rounded-xl border border-zinc-200 bg-zinc-100 p-4 dark:border-zinc-700 dark:bg-zinc-950">
       <div className="text-sm font-medium text-zinc-600 dark:text-zinc-300">
         Por módulo
       </div>
@@ -46,7 +46,7 @@ export function DashboardModuleChips({
             <TrackLink
               key={m.slug}
               href={`/learn/${m.slug}`}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-black/10 bg-zinc-50 px-2.5 py-1.5 text-xs transition-colors hover:bg-black/5 dark:border-white/15 dark:bg-black/40 dark:hover:bg-white/10"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-200 bg-zinc-200 px-2.5 py-1.5 text-xs transition-colors hover:bg-zinc-900/5 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
             >
               <span className="font-medium text-zinc-900 dark:text-zinc-100">
                 {m.title}

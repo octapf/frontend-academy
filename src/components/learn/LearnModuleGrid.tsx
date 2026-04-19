@@ -2,15 +2,20 @@
 
 import { TrackLink } from "@/components/track/TrackLink";
 import { useProgressQuery } from "@/hooks/use-progress-query";
+import type { LessonLang } from "@/lib/content/get-lesson";
 import { exerciseIdsInModule } from "@/lib/exercises/exercise-lesson-map";
+import { learnLangSearchSuffix } from "@/lib/i18n/learn-lang";
 import { LEARN_MODULES } from "@/lib/learn/modules";
 
 export function LearnModuleGrid({
   lessonCounts,
+  lang,
 }: {
   lessonCounts: Record<string, number>;
+  lang: LessonLang;
 }) {
   const { data: progress } = useProgressQuery();
+  const langQs = learnLangSearchSuffix(lang);
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
@@ -27,8 +32,8 @@ export function LearnModuleGrid({
         return (
           <TrackLink
             key={m.slug}
-            href={`/learn/${m.slug}`}
-            className="rounded-xl border border-black/10 bg-white p-5 transition-colors hover:bg-black/5 dark:border-white/15 dark:bg-zinc-950 dark:hover:bg-white/10"
+            href={`/learn/${m.slug}${langQs}`}
+            className="rounded-xl border border-zinc-200 bg-zinc-100 p-5 transition-colors hover:bg-zinc-900/5 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
           >
             <div className="text-lg font-semibold">{m.title}</div>
             <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
