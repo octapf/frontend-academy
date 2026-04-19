@@ -32,6 +32,7 @@ export function RegisterForm() {
         ok?: boolean;
         error?: string;
         hint?: string;
+        mongoCode?: number;
         issues?: Record<string, string[] | undefined>;
       };
       try {
@@ -46,7 +47,10 @@ export function RegisterForm() {
         const flat = data.issues ? Object.values(data.issues).flat() : [];
         const first = flat.find((m) => typeof m === "string" && m.length > 0);
         const base = first ?? data.error ?? "Error al registrar";
-        setError(data.hint ? `${base} ${data.hint}` : base);
+        const code =
+          typeof data.mongoCode === "number" ? ` [Mongo código ${data.mongoCode}]` : "";
+        const extra = data.hint ? ` ${data.hint}` : "";
+        setError(`${base}${code}${extra}`.trim());
         return;
       }
       const raw = next ?? "/dashboard";

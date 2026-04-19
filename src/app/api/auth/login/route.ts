@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { SESSION_COOKIE } from "@/lib/auth/constants";
-import { publicMongoErrorHint } from "@/lib/auth/mongo-error-hint";
+import { getMongoDriverCode, publicMongoErrorHint } from "@/lib/auth/mongo-error-hint";
 import { signSessionToken } from "@/lib/auth/jwt";
 import { verifyPassword } from "@/lib/auth/password";
 import { findUser } from "@/lib/auth/user-store";
@@ -31,8 +31,14 @@ export async function POST(req: Request) {
     } catch (e) {
       console.error("[api/auth/login] findUser", e);
       const hint = publicMongoErrorHint(e);
+      const code = getMongoDriverCode(e);
       return NextResponse.json(
-        { ok: false, error: mongoHint, ...(hint ? { hint } : {}) },
+        {
+          ok: false,
+          error: mongoHint,
+          ...(hint ? { hint } : {}),
+          ...(code !== undefined ? { mongoCode: code } : {}),
+        },
         { status: 503 }
       );
     }

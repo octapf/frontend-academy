@@ -1,7 +1,35 @@
+/** Código numérico del driver (p. ej. MongoServerError.code), sin datos sensibles. */
+export function getMongoDriverCode(err: unknown): number | undefined {
+  if (typeof err !== "object" || err === null) return undefined;
+  const c = (err as { code?: unknown }).code;
+  return typeof c === "number" ? c : undefined;
+}
+
+/**
+ * Vercel: filesystem de la función es de solo lectura salvo /tmp; escribir `data/users.json` falla.
+ */
+export function publicFileStoreErrorHint(err: unknown): string | undefined {
+  const msg = (err instanceof Error ? err.message : String(err)).toLowerCase();
+  if (
+    msg.includes("erofs") ||
+    msg.includes("read-only file system") ||
+    msg.includes("eacces") ||
+    msg.includes("enospc")
+  ) {
+    return "Este entorno no puede guardar usuarios en disco. En Vercel definí MONGODB_URI (y redeploy) para usar MongoDB.";
+  }
+  return undefined;
+}
+
 /**
  * Mensaje corto para el cliente (sin datos sensibles). Basado en textos típicos del driver / Atlas.
  */
 export function publicMongoErrorHint(err: unknown): string | undefined {
+  const code = getMongoDriverCode(err);
+  if (code === 18) {
+    return "MongoDB código 18: autenticación fallida. Usuario/contraseña de la URI no coinciden con Database Access en Atlas (contraseña URL-encoded si tiene símbolos).";
+  }
+
   const msg = err instanceof Error ? err.message : String(err);
   const lower = msg.toLowerCase();
 

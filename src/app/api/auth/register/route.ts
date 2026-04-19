@@ -2,7 +2,11 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { SESSION_COOKIE } from "@/lib/auth/constants";
-import { publicMongoErrorHint } from "@/lib/auth/mongo-error-hint";
+import {
+  getMongoDriverCode,
+  publicFileStoreErrorHint,
+  publicMongoErrorHint,
+} from "@/lib/auth/mongo-error-hint";
 import { signSessionToken } from "@/lib/auth/jwt";
 import { hashPassword } from "@/lib/auth/password";
 import { createUser, findUser } from "@/lib/auth/user-store";
@@ -66,9 +70,17 @@ export async function POST(req: Request) {
         );
       }
       console.error("[api/auth/register] createUser", e);
-      const hint = publicMongoErrorHint(e);
+      const hint = [publicMongoErrorHint(e), publicFileStoreErrorHint(e)]
+        .filter(Boolean)
+        .join(" ");
+      const code = getMongoDriverCode(e);
       return NextResponse.json(
-        { ok: false, error: mongoHint, ...(hint ? { hint } : {}) },
+        {
+          ok: false,
+          error: mongoHint,
+          ...(hint ? { hint } : {}),
+          ...(code !== undefined ? { mongoCode: code } : {}),
+        },
         { status: 503 }
       );
     }
