@@ -37,6 +37,11 @@ Copiá `.env.example` a `.env.local` y completá valores. En Vercel u otro host,
 
 En rutas **Learn**, si la preferencia guardada es inglés y la URL no incluye `?lang=en`, el cliente normaliza la query automáticamente (`LearnLangUrlSync`).
 
+## Open Graph / Twitter Card
+
+- En build, Next genera **`/opengraph-image`** y **`/twitter-image`** (1200×630, PNG) a partir de `src/lib/og/brand-og.tsx`.
+- Los meta tags se inyectan solos; la URL absoluta usa **`NEXT_PUBLIC_APP_URL`** (ver `layout.tsx`).
+
 ## Despliegue
 
 1. Conectá el repositorio a [Vercel](https://vercel.com) (o build con `npm run build` + `npm start` en Node).
