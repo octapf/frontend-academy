@@ -20,8 +20,13 @@ export async function POST(req: Request) {
   const json = await req.json().catch(() => null);
   const parsed = bodySchema.safeParse(json);
   if (!parsed.success) {
+    const flat = parsed.error.flatten();
     return NextResponse.json(
-      { ok: false, error: "Datos inválidos", issues: parsed.error.flatten() },
+      {
+        ok: false,
+        error: "Datos inválidos",
+        issues: flat.fieldErrors,
+      },
       { status: 400 }
     );
   }
@@ -44,10 +49,32 @@ export async function POST(req: Request) {
         { status: 409 }
       );
     }
-    throw e;
+    console.error("[api/auth/register] createUser", e);
+    return NextResponse.json(
+      {
+        ok: false,
+        error:
+          "No se pudo guardar el usuario. Revisá en Vercel: MONGODB_URI, MONGODB_DB y en Atlas → Network Access (p. ej. 0.0.0.0/0).",
+      },
+      { status: 503 }
+    );
   }
 
-  const token = await signSessionToken(username);
+  let token: string;
+  try {
+    token = await signSessionToken(username);
+  } catch (e) {
+    console.error("[api/auth/register] signSessionToken", e);
+    return NextResponse.json(
+      {
+        ok: false,
+        error:
+          "El servidor no pudo crear la sesión. En producción hace falta AUTH_SECRET de al menos 32 caracteres en las variables de entorno.",
+      },
+      { status: 500 }
+    );
+  }
+
   const jar = await cookies();
   jar.set(SESSION_COOKIE, token, {
     httpOnly: true,

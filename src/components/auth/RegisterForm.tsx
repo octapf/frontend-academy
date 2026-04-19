@@ -28,9 +28,23 @@ export function RegisterForm() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-      const data = (await res.json()) as { ok?: boolean; error?: string };
+      let data: {
+        ok?: boolean;
+        error?: string;
+        issues?: Record<string, string[] | undefined>;
+      };
+      try {
+        data = (await res.json()) as typeof data;
+      } catch {
+        setError(
+          `El servidor respondió ${res.status} sin JSON. Revisá los logs del deploy en Vercel (Functions → /api/auth/register).`
+        );
+        return;
+      }
       if (!res.ok || !data.ok) {
-        setError(data.error ?? "Error al registrar");
+        const flat = data.issues ? Object.values(data.issues).flat() : [];
+        const first = flat.find((m) => typeof m === "string" && m.length > 0);
+        setError(first ?? data.error ?? "Error al registrar");
         return;
       }
       const raw = next ?? "/dashboard";
