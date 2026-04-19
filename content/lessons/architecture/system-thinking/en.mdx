@@ -1,0 +1,60 @@
+---
+title: "Systems thinking in frontend architecture"
+description: "Boundaries, coupling, and when to extract a module."
+level: mid
+order: 1
+---
+
+# Frontend architecture
+
+```tsx
+// UI separated from data: clear props, no global store reads inside
+function UserCard({ user, onEdit }: { user: User; onEdit: () => void }) {
+  return (
+    <article>
+      <h2>{user.name}</h2>
+      <button type="button" onClick={onEdit}>
+        Edit
+      </button>
+    </article>
+  );
+}
+```
+
+**Systems thinking** is choosing where boundaries live: between features, between layers (UI / domain / data), and between teams. Components with explicit contracts (`props`) are easier to move or test than ones that “read the world” from everywhere.
+
+## Coupling
+
+```ts
+// Tight coupling: module A imports B’s internals
+import { internalCache } from "../featureB/cache";
+
+// Looser coupling: stable interface
+import type { CartRepository } from "./ports";
+export function checkout(cart: Cart, repo: CartRepository) {
+  return repo.charge(cart);
+}
+```
+
+The more parts know about each other, the harder it is to change one without breaking others. Clear interfaces (props, hooks, services) reduce coupling: depend on contracts, not implementations.
+
+```ts
+// Small local duplication sometimes beats a premature abstraction
+function formatMoneyUs(n: number) {
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(n);
+}
+```
+
+<Callout title="Premature optimization">
+Not everything must be “generic” on day one: sometimes honest duplication beats fragile abstractions.
+</Callout>
+
+## Next lesson
+
+```plaintext
+apps/web        → shell + routing
+packages/ui     → design system
+packages/auth   → session client + types
+```
+
+**Micro-frontends** covers a pattern for scaling teams and deployments.

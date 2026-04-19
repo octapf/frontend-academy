@@ -1,0 +1,62 @@
+---
+title: "Utility types útiles"
+description: "Partial, Pick, Omit y Record para modelar datos sin repetir."
+level: mid
+order: 4
+---
+
+# Utility types
+
+```ts
+type User = { id: number; name: string; email: string; role: "admin" | "user" };
+
+type UserPatch = Partial<Pick<User, "name" | "email">>;
+// { name?: string; email?: string }
+```
+
+TypeScript incluye **utility types** que transforman tipos existentes: `Partial<T>`, `Pick<T, K>`, `Omit<T, K>`, `Record<K, T>` y más. Son funciones a nivel de tipos: entrás con un tipo y salís con otro relacionado.
+
+## Menos repetición
+
+```ts
+type User = { id: number; name: string; email: string; passwordHash: string };
+
+type PublicUser = Pick<User, "id" | "name" | "email">;
+type UserForm = Omit<User, "id" | "passwordHash">;
+```
+
+En APIs y formularios, `Pick` y `Omit` ayudan a expresar “este objeto es un subconjunto de `User`” sin duplicar campos a mano: el origen de verdad sigue siendo `User`.
+
+## `Record`
+
+```ts
+type Http = "GET" | "POST";
+
+const defaultTimeout: Record<Http, number> = {
+  GET: 5_000,
+  POST: 15_000,
+};
+```
+
+`Record<string, Id>` modela mapas homogéneos; combinado con uniones literales (`Record<Status, Handler>`) reforzá exhaustividad: si falta una clave del union, el compilador avisa.
+
+## Ejercicio integrado
+
+```ts
+type User = { id: number; name: string; email: string; role: "admin" | "user" };
+
+function userLabel(user: Pick<User, "name" | "email">): string {
+  return `${user.name} <${user.email}>`;
+}
+```
+
+Al final de esta lección podés abrir el ejercicio **`ts-user-label`**: implementá `userLabel` con `Pick<User, "name" | "email">` y un formato de salida exacto validado en el servidor.
+
+```ts
+const theme = { mode: "dark" as const, contrast: "normal" as const };
+type Theme = Readonly<typeof theme>;
+```
+
+<Callout title="Readonly y const assertions">
+`Readonly<T>` y `as const` protegen datos inmutables y mejoran inferencia en configs y design systems: el ejemplo fija literales estrechos y un tipo de solo lectura derivado del valor.
+</Callout>

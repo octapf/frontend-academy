@@ -1,0 +1,39 @@
+---
+title: "Template strings en TypeScript"
+description: "Literales con interpolación, tipos y buenas prácticas en APIs de strings."
+level: junior
+order: 3
+---
+
+# Template literals
+
+```ts
+const user = "Ada";
+const line = `Hola, ${user}!
+Segunda línea sin concatenar +`;
+```
+
+Los **template literals** (backticks) permiten interpolar expresiones con `${...}` y strings multilínea sin encadenar comillas simples.
+
+## Tipado
+
+```ts
+const a = `n=${1 + 2}`; // tipo inferido: string
+
+const modes = ["dark", "light"] as const;
+type Mode = (typeof modes)[number];
+const theme: Mode = "dark";
+const css = `prefers-color-scheme: ${theme}`;
+```
+
+TypeScript infiere el resultado como `string`. Si combinás literales y uniones, podés obtener tipos más finos con `as const` en casos avanzados (tuplas y uniones de literales).
+
+## Ejercicio
+
+```ts
+function greeting(name: string): string {
+  return `Hello, ${name}!`;
+}
+```
+
+Practicá interpolación implementando `greeting(name)` que devuelve exactamente el formato pedido en el ejercicio **`ts-greeting`**.

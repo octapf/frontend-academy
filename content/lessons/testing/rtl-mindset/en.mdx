@@ -1,0 +1,52 @@
+---
+title: "RTL: user-oriented queries"
+description: "getByRole, accessibility, and avoiding tight DOM coupling."
+level: junior
+order: 2
+---
+
+# Testing Library mindset
+
+```tsx
+import { render, screen } from "@testing-library/react";
+
+render(<button type="button">Save draft</button>);
+screen.getByRole("button", { name: /save/i });
+```
+
+React Testing Library encourages finding elements the way a human would: by **role**, **label**, or **visible text**. The `button` role reflects accessibility, not the component’s internal DOM shape.
+
+## `getByRole`
+
+```tsx
+render(
+  <nav aria-label="Main">
+    <a href="/">Home</a>
+  </nav>
+);
+screen.getByRole("navigation", { name: /main/i });
+```
+
+`getByRole('button', { name: /save/i })` ties tests to **accessibility** and stable copy: `name` matches the accessible name (visible text, `aria-label`, etc.).
+
+## Avoid implementation details
+
+```tsx
+// Tight coupling: class or deep tag
+container.querySelector("div.wrapper > span");
+
+// Better: what the user perceives
+screen.getByLabelText(/email/i);
+```
+
+If you assert on CSS class names or deep DOM structure, cosmetic refactors break tests without adding safety. Prefer roles, labels, and visible text.
+
+```tsx
+import userEvent from "@testing-library/user-event";
+
+await userEvent.click(screen.getByRole("checkbox"));
+```
+
+<Callout title="async and userEvent">
+Prefer `userEvent` over `fireEvent` when flows depend on focus or keyboard behavior.
+</Callout>

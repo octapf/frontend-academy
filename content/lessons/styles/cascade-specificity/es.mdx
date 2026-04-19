@@ -1,0 +1,67 @@
+---
+title: "Cascada y especificidad"
+description: "Origen, especificidad y capas: por qué gana un selector."
+level: junior
+order: 3
+---
+
+# Cascada y especificidad
+
+```css
+p {
+  color: #333;
+}
+.intro {
+  color: #111;
+}
+```
+
+La **cascada** define qué reglas compiten y en qué orden se aplican. La **especificidad** desempata cuando dos selectores apuntan al mismo elemento: en el ejemplo, `.intro` gana a `p` para el color si ambos aplican al mismo nodo.
+
+## Origen y orden
+
+```css
+/* Misma especificidad: gana la última en el archivo (si mismo origen) */
+.btn {
+  background: #eee;
+}
+.btn {
+  background: #ddd;
+}
+```
+
+Entre reglas con la misma especificidad, importa el **orden** en el CSS y el origen (author, user, `!important`). Por eso el orden de imports y de capas en build importa.
+
+## Especificidad práctica
+
+```css
+#app .card .title {
+  font-weight: 600;
+}
+.card .title {
+  font-weight: 400;
+}
+```
+
+IDs pesan más que clases; clases más que elementos. Los selectores compuestos suman “peso” de forma predecible si evitás pelear con selectores demasiado largos: cada capa extra es deuda cuando hay que sobreescribir.
+
+```css
+.panel[hidden] {
+  display: none !important; /* último recurso: gana sobre display:flex inline */
+}
+```
+
+<Callout title="!important">
+`!important` es una herramienta de escape, no un estilo de vida: abusar de ella vuelve el sistema imposible de razonar.
+</Callout>
+
+## Siguiente paso
+
+```css
+.layout {
+  display: flex;
+  gap: 16px;
+}
+```
+
+Combiná flex (lección anterior) con buenos límites de especificidad para mantener estilos mantenibles.

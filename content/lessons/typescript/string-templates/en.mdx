@@ -1,0 +1,39 @@
+---
+title: "Template strings in TypeScript"
+description: "Interpolation literals, types, and practical string APIs."
+level: junior
+order: 3
+---
+
+# Template literals
+
+```ts
+const user = "Ada";
+const line = `Hello, ${user}!
+Second line without + concatenation`;
+```
+
+**Template literals** (backticks) let you interpolate expressions with `${...}` and write multi-line strings without chaining quotes.
+
+## Typing
+
+```ts
+const a = `n=${1 + 2}`; // inferred type: string
+
+const modes = ["dark", "light"] as const;
+type Mode = (typeof modes)[number];
+const theme: Mode = "dark";
+const css = `prefers-color-scheme: ${theme}`;
+```
+
+TypeScript infers the result as `string`. With literal unions you can get finer types using `as const` in advanced cases (tuple and literal unions).
+
+## Exercise
+
+```ts
+function greeting(name: string): string {
+  return `Hello, ${name}!`;
+}
+```
+
+Practice interpolation by implementing `greeting(name)` with the exact format required in **`ts-greeting`**.

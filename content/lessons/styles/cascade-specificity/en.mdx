@@ -1,0 +1,67 @@
+---
+title: "Cascade and specificity"
+description: "Origin, specificity, and layers: why one selector wins."
+level: junior
+order: 3
+---
+
+# Cascade and specificity
+
+```css
+p {
+  color: #333;
+}
+.intro {
+  color: #111;
+}
+```
+
+The **cascade** defines which rules compete and in what order they apply. **Specificity** breaks ties when two selectors target the same element: here `.intro` beats `p` for `color` when both match the same node.
+
+## Origin and order
+
+```css
+/* Same specificity: last declaration wins (same origin) */
+.btn {
+  background: #eee;
+}
+.btn {
+  background: #ddd;
+}
+```
+
+With equal specificity, **order** in CSS and origin (author, user, `!important`) decide the winner. That is why import order and layer ordering in builds matter.
+
+## Practical specificity
+
+```css
+#app .card .title {
+  font-weight: 600;
+}
+.card .title {
+  font-weight: 400;
+}
+```
+
+IDs beat classes; classes beat elements. Compound selectors add weight in a predictable way if you avoid overly long arms races: every extra layer is debt when you need overrides.
+
+```css
+.panel[hidden] {
+  display: none !important; /* last resort: beats inline display:flex */
+}
+```
+
+<Callout title="!important">
+`!important` is an escape hatch, not a lifestyle: overusing it makes the system impossible to reason about.
+</Callout>
+
+## Next step
+
+```css
+.layout {
+  display: flex;
+  gap: 16px;
+}
+```
+
+Combine flex (previous lesson) with healthy specificity boundaries to keep styles maintainable.

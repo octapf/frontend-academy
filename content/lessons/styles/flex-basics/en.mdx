@@ -1,0 +1,54 @@
+---
+title: "Flexbox: rows, columns, and gap"
+description: "Flex containers, axes, justify-content, and align-items."
+level: junior
+order: 2
+---
+
+# Flexbox
+
+```css
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+```
+
+A container with `display: flex` lays out children along a **main axis** (horizontal by default). Children become **flex items** and the container distributes free space based on your rules.
+
+## Alignment
+
+```css
+.toolbar {
+  display: flex;
+  justify-content: space-between; /* main axis */
+  align-items: center; /* cross axis */
+}
+```
+
+- `justify-content` aligns on the **main axis** (where the row/column “flows”).
+- `align-items` aligns on the **cross axis** (perpendicular to the main axis).
+
+## `gap`
+
+```css
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px; /* row column */
+}
+```
+
+`gap` separates items without brittle sibling margins: spacing is owned by the container, not each child with `margin-right`.
+
+```css
+.flex-row > * {
+  min-width: 0; /* keep long content from blowing out the flex item */
+  border: 1px solid #e4e4e7;
+}
+```
+
+<Callout title="Flex and the box model">
+Each flex item is still a box: padding, border, and `min-width` matter when space is tight.
+</Callout>

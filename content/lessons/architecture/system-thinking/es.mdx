@@ -1,0 +1,60 @@
+---
+title: "Pensamiento en sistemas en frontend"
+description: "Límites, acoplamiento y cuándo extraer un módulo."
+level: mid
+order: 1
+---
+
+# Arquitectura de frontend
+
+```tsx
+// UI separada de datos: props claras, sin leer store global adentro
+function UserCard({ user, onEdit }: { user: User; onEdit: () => void }) {
+  return (
+    <article>
+      <h2>{user.name}</h2>
+      <button type="button" onClick={onEdit}>
+        Editar
+      </button>
+    </article>
+  );
+}
+```
+
+**Pensar en sistemas** es decidir dónde viven las fronteras: entre features, entre capas (UI / dominio / datos) y entre equipos. Componentes con contratos explícitos (`props`) son más fáciles de mover o testear que los que “leen el mundo” desde cualquier lado.
+
+## Acoplamiento
+
+```ts
+// Alto acoplamiento: módulo A importa detalles internos de B
+import { internalCache } from "../featureB/cache";
+
+// Menor acoplamiento: interfaz estable
+import type { CartRepository } from "./ports";
+export function checkout(cart: Cart, repo: CartRepository) {
+  return repo.charge(cart);
+}
+```
+
+Cuanto más cosas “saben” unas de otras, más caro es cambiar una pieza sin romper otras. Las interfaces claras (props, hooks, servicios) reducen ese acoplamiento: dependés de contratos, no de implementaciones.
+
+```ts
+// Duplicación pequeña y local a veces vence a una abstracción prematura
+function formatMoneyEs(n: number) {
+  return new Intl.NumberFormat("es-AR", { style: "currency", currency: "ARS" }).format(n);
+}
+```
+
+<Callout title="Prematura optimización">
+No todo debe ser “genérico” desde el día uno: a veces un poco de duplicación honesta es mejor que abstracciones frágiles.
+</Callout>
+
+## Siguiente lección
+
+```plaintext
+apps/web        → shell + routing
+packages/ui     → design system
+packages/auth   → cliente y tipos de sesión
+```
+
+En **Micro-frontends** repasamos un patrón para escalar equipos y despliegues.

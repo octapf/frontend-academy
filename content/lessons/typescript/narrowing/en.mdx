@@ -1,0 +1,66 @@
+---
+title: "Narrowing and type predicates"
+description: "Refine unions with typeof, instanceof, and custom predicates."
+level: junior
+order: 2
+---
+
+# Narrowing
+
+```ts
+function len(x: string | string[]) {
+  if (Array.isArray(x)) return x.length;
+  return x.length;
+}
+```
+
+When a value has a **union type** (`string | number`), each branch can **narrow** the type using checks: inside the `if`, TS knows the refined shape.
+
+## typeof and instanceof
+
+```ts
+function describe(e: unknown) {
+  if (typeof e === "string") return e.toUpperCase();
+  if (e instanceof Error) return e.message;
+  return String(e);
+}
+```
+
+`typeof value === "string"` and `value instanceof Error` are common patterns that tell the compiler the shape of the value in that branch. `unknown` almost always requires narrowing before use.
+
+## Type predicates
+
+```ts
+function isFileList(x: unknown): x is FileList {
+  return typeof FileList !== "undefined" && x instanceof FileList;
+}
+
+function readFiles(input: unknown) {
+  if (isFileList(input)) {
+    return input.length; // FileList here
+  }
+}
+```
+
+A function whose return type is **`value is SomeType`** is a **type predicate**: if it returns `true`, TypeScript treats the value as `SomeType` in the following block.
+
+```ts
+// Bad practice: lying predicate (type-checks, breaks at runtime)
+function badIsString(x: unknown): x is string {
+  return true;
+}
+```
+
+<Callout title="Honest predicates">
+The function body must match the predicate. If you return `true` when the value is not actually that type, you are lying to the compiler.
+</Callout>
+
+## Exercise
+
+```ts
+export function isPositive(n: unknown): n is number {
+  return typeof n === "number" && n > 0;
+}
+```
+
+At the end of this lesson you will find the **`ts-positive`** exercise: implement `isPositive` as a predicate and validate against server-side tests.

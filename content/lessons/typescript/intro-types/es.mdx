@@ -1,0 +1,63 @@
+---
+title: "TypeScript: tipos y anotaciones"
+description: "Inferencia, anotaciones explícitas y el contrato entre datos y funciones."
+level: junior
+order: 1
+---
+
+# Tipos en TypeScript
+
+```ts
+function repeat(text: string, times: number): string {
+  return text.repeat(times);
+}
+// repeat("a", 3) → "aaa"
+// repeat(1, 3)   → error en compilación
+```
+
+TypeScript añade **tipos estáticos** sobre JavaScript. El compilador te avisa cuando los datos no encajan con lo que espera tu código: el error aparece antes de ejecutar en el navegador.
+
+## Inferencia
+
+```ts
+const n = 42; // inferido: number
+const xs = [1, 2, 3]; // number[]
+const user = { id: 1, name: "Ada" }; // { id: number; name: string }
+```
+
+Muchas veces no hace falta anotar todo: TS **infiere** tipos a partir de valores y del flujo del programa. Anotás cuando la inferencia es demasiado amplia (`any` implícito) o cuando querés documentar APIs.
+
+## Anotaciones explícitas
+
+```ts
+type User = { id: string; name: string };
+
+function greet(user: User): string {
+  return `Hola, ${user.name}`;
+}
+```
+
+Cuando diseñás APIs públicas o querés documentar intención, las **anotaciones** (`: string`, `: User`) hacen el contrato explícito para quien llama y para el compilador.
+
+```json
+{
+  "compilerOptions": {
+    "strict": true
+  }
+}
+```
+
+<Callout title="Strict mode">
+Con `strict: true` (recomendado) evitás muchos bugs típicos de `null`/`undefined` y asignaciones dudosas.
+</Callout>
+
+## Siguiente paso
+
+```ts
+function format(x: string | number) {
+  // En Narrowing verás cómo reducir string | number con checks
+  return typeof x === "string" ? x.toUpperCase() : x.toFixed(0);
+}
+```
+
+En la lección **Narrowing** vas a ver cómo **reducir** uniones de tipos con comprobaciones en runtime.

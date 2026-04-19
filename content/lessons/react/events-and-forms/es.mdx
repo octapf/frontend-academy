@@ -1,0 +1,57 @@
+---
+title: "Eventos y formularios controlados"
+description: "onClick, onChange y el patrón value + onChange en inputs."
+level: junior
+order: 3
+---
+
+# Eventos en React
+
+```tsx
+<button
+  type="button"
+  onClick={(e) => {
+    e.preventDefault();
+    console.log("click");
+  }}
+>
+  Guardar
+</button>
+```
+
+Los **event handlers** en JSX siguen la convención de camelCase (`onClick`, `onSubmit`). React envuelve el evento nativo en un **SyntheticEvent** con una API estable entre navegadores; en formularios suele usarse `onSubmit` en el `<form>`.
+
+## Formularios controlados
+
+```tsx
+import { useState } from "react";
+
+function EmailField() {
+  const [email, setEmail] = useState("");
+  return (
+    <label>
+      Email
+      <input
+        name="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+    </label>
+  );
+}
+```
+
+Un input **controlado** recibe `value` desde el estado y actualiza ese estado en `onChange`. Así la UI y el estado siguen siendo la misma fuente de verdad: lo que ves en pantalla es lo que hay en memoria.
+
+<Callout title="Performance en listas grandes">
+Si tenés miles de inputs, considerá **debounce**, **virtualización** o dividir estado para no re-renderizar todo el árbol en cada tecla.
+</Callout>
+
+## Relación con hooks
+
+```tsx
+const [form, setForm] = useState({ user: "", pass: "" });
+// Campos controlados leen/escriben `form` vía onChange por campo
+```
+
+`useState` suele ser suficiente para formularios simples; librerías como React Hook Form ayudan cuando crece la complejidad y las validaciones (menos re-renders, esquemas, errores por campo).

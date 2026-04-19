@@ -1,0 +1,61 @@
+---
+title: "Hooks básicos: useState y useEffect"
+description: "Estado local, efectos y el array de dependencias."
+level: junior
+order: 2
+---
+
+# Hooks básicos
+
+```tsx
+import { useState } from "react";
+
+function Counter() {
+  const [n, setN] = useState(0);
+  return (
+    <button type="button" onClick={() => setN((c) => c + 1)}>
+      {n}
+    </button>
+  );
+}
+```
+
+Los **hooks** te permiten usar estado y efectos en componentes de función: son funciones cuyo nombre empieza por `use` y solo pueden llamarse en el nivel superior del componente (no dentro de condicionales arbitrarios).
+
+## useState
+
+```tsx
+const [text, setText] = useState("");
+// setText("hola") → re-render con nuevo estado
+```
+
+`useState` modela **estado local** que, al cambiar, dispara un re-render del componente. El setter puede recibir valor nuevo o una función `(prev) => next` para evitar condiciones de carrera.
+
+## useEffect
+
+```tsx
+import { useEffect, useState } from "react";
+
+function DocTitle({ count }: { count: number }) {
+  useEffect(() => {
+    document.title = `Clicks: ${count}`;
+  }, [count]);
+  return null;
+}
+```
+
+`useEffect` ejecuta trabajo **después del render** (por ejemplo, suscripciones o fetch). El **array de dependencias** define cuándo se vuelve a ejecutar: `[]` una vez al montar, `[count]` cuando `count` cambia.
+
+<Callout title="Ojo con dependencias incompletas">
+Si omitís valores usados dentro del efecto, podés crear **stale closures** (valores viejos) o efectos que no se actualizan como esperás.
+</Callout>
+
+## Ejercicio (TypeScript)
+
+```ts
+export function sum(a: number, b: number): number {
+  return a + b;
+}
+```
+
+Implementá `sum` para practicar TS puro antes de mezclarlo con React en lecciones posteriores.

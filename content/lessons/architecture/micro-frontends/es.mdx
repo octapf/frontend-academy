@@ -1,0 +1,45 @@
+---
+title: "Micro-frontends: ideas y trade-offs"
+description: "Composición en runtime, rutas y costos operativos."
+level: senior
+order: 2
+---
+
+# Micro-frontends
+
+```html
+<!-- Integración vía iframe: aislamiento fuerte, comunicación postMessage -->
+<iframe src="https://checkout.example.com/embed" title="Checkout"></iframe>
+```
+
+Los **micro-frontends** intentan llevar la idea de microservicios al browser: equipos autónomos despliegan partes de la UI de forma independiente. El iframe es el ejemplo más burdo de frontera dura entre equipos.
+
+## Integración
+
+```js
+// Module Federation (conceptual): host carga remoto en runtime
+// __webpack_require__.e("remote") → expone "./Widget"
+import("checkout/CheckoutApp");
+```
+
+Podés componer con **iframes** (aislado pero tosco), **Module Federation** (Webpack/Rspack), o **rutas por subdominio** según restricciones de equipo y runtime. Cada opción cambia cómo compartís dependencias (React, design system) y versiones.
+
+## Trade-offs
+
+```json
+{
+  "name": "shell",
+  "dependencies": { "react": "^18.3.0" },
+  "remotes": { "search": "search@https://cdn.example/search.js" }
+}
+```
+
+Ganás autonomía y velocidad por dominio; pagás con **duplicación de dependencias**, complejidad de build y consistencia de diseño: dos remotes pueden traer dos Reacts si no coordinás.
+
+```plaintext
+repo único + boundaries por package  →  “monolito modular”
+```
+
+<Callout title="Monolito modular">
+Muchas veces un monorepo con boundaries fuertes y releases coordinados da el 80% del beneficio con menos costo operativo.
+</Callout>

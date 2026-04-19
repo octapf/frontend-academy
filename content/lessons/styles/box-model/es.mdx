@@ -1,0 +1,62 @@
+---
+title: "Modelo de caja (box model)"
+description: "content-box, border-box y cómo se apilan width, padding y border."
+level: junior
+order: 1
+---
+
+# Box model
+
+```css
+.card {
+  width: 200px;
+  padding: 16px;
+  border: 2px solid #ccc;
+  margin: 8px;
+}
+```
+
+Cada elemento se representa como una **caja** con capas: contenido, padding, borde y margen. El `width` por defecto (`content-box`) suele medir solo el contenido; padding y border se suman afuera.
+
+## `box-sizing`
+
+```css
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.panel {
+  width: 320px;
+  padding: 24px;
+  border: 1px solid #e4e4e7;
+}
+```
+
+Con `box-sizing: border-box`, el `width` incluye **padding y border**, lo que simplifica layouts responsive: el ancho declarado coincide mejor con lo que ocupás en fila.
+
+```css
+h2 {
+  margin-top: 1.5rem;
+}
+p {
+  margin-bottom: 1.5rem;
+}
+/* Dos márgenes verticales adyacentes pueden colapsar a uno solo */
+```
+
+<Callout title="Margen colapsado">
+Entre bloques adyacentes, los márgenes verticales pueden **colapsar**: el espacio final no es la suma de ambos.
+</Callout>
+
+## Práctica
+
+```css
+.row {
+  display: flex;
+  gap: 12px;
+}
+```
+
+En la siguiente lección verás **flex** para alinear cajas en fila o columna sin flotar.

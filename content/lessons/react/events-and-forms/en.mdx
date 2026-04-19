@@ -1,0 +1,57 @@
+---
+title: "Events and controlled forms"
+description: "onClick, onChange, and the value + onChange pattern for inputs."
+level: junior
+order: 3
+---
+
+# Events in React
+
+```tsx
+<button
+  type="button"
+  onClick={(e) => {
+    e.preventDefault();
+    console.log("click");
+  }}
+>
+  Save
+</button>
+```
+
+**Event handlers** in JSX use camelCase (`onClick`, `onSubmit`). React wraps the native event in a **SyntheticEvent** with a stable API across browsers; on forms you often handle `onSubmit` on `<form>`.
+
+## Controlled forms
+
+```tsx
+import { useState } from "react";
+
+function EmailField() {
+  const [email, setEmail] = useState("");
+  return (
+    <label>
+      Email
+      <input
+        name="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+    </label>
+  );
+}
+```
+
+A **controlled** input receives `value` from state and updates that state in `onChange`. UI and state stay aligned as a single source of truth: what you see is what is stored.
+
+<Callout title="Performance in large lists">
+With thousands of inputs, consider **debounce**, **virtualization**, or splitting state to avoid re-rendering the whole tree on every keystroke.
+</Callout>
+
+## Hooks
+
+```tsx
+const [form, setForm] = useState({ user: "", pass: "" });
+// Controlled fields read/write `form` via onChange per field
+```
+
+`useState` is often enough for simple forms; libraries like React Hook Form help when validation and scale grow (fewer re-renders, schemas, field-level errors).

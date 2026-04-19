@@ -1,0 +1,61 @@
+---
+title: "Basic hooks: useState and useEffect"
+description: "Local state, effects, and the dependency array."
+level: junior
+order: 2
+---
+
+# Basic hooks
+
+```tsx
+import { useState } from "react";
+
+function Counter() {
+  const [n, setN] = useState(0);
+  return (
+    <button type="button" onClick={() => setN((c) => c + 1)}>
+      {n}
+    </button>
+  );
+}
+```
+
+**Hooks** let you use state and side effects in function components: functions whose names start with `use`, called only at the top level of the component (not inside arbitrary conditionals).
+
+## useState
+
+```tsx
+const [text, setText] = useState("");
+// setText("hello") → re-render with new state
+```
+
+`useState` models **local state** that, when updated, triggers a re-render. The setter accepts a new value or an updater `(prev) => next` to avoid racey reads of stale state.
+
+## useEffect
+
+```tsx
+import { useEffect, useState } from "react";
+
+function DocTitle({ count }: { count: number }) {
+  useEffect(() => {
+    document.title = `Clicks: ${count}`;
+  }, [count]);
+  return null;
+}
+```
+
+`useEffect` runs work **after render** (for example subscriptions or fetching). The **dependency array** controls when it runs again: `[]` once on mount, `[count]` whenever `count` changes.
+
+<Callout title="Watch incomplete dependencies">
+If you omit values used inside the effect, you can create **stale closures** or effects that do not update as you expect.
+</Callout>
+
+## Exercise (TypeScript)
+
+```ts
+export function sum(a: number, b: number): number {
+  return a + b;
+}
+```
+
+Implement `sum` to practice pure TS before mixing it with React in later lessons.

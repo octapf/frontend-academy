@@ -1,0 +1,50 @@
+---
+title: "Por qué testear frontend"
+description: "Confianza al refactor, regresiones y contratos de UI."
+level: junior
+order: 1
+---
+
+# Tests en el frontend
+
+```ts
+import { sum } from "./math";
+
+it("suma positivos", () => {
+  expect(sum(2, 3)).toBe(5);
+});
+```
+
+Los tests automatizados reducen el miedo a **cambiar código**: si rompés algo importante, un test debería fallar antes de llegar a producción. El ejemplo es un test unitario mínimo sobre una función pura.
+
+## Pirámide práctica
+
+```ts
+// Unit: función pura
+export function discount(price: number, pct: number) {
+  return price * (1 - pct / 100);
+}
+
+// Integration: varios módulos (p.ej. hook + formatter)
+// E2E: Playwright/Cypress abre el browser y hace click real
+```
+
+Muchos equipos combinan **tests unitarios** (funciones puras), **integración** (varios módulos juntos) y **E2E** (flujo real en browser) según costo y valor: más arriba en la pirámide, más lento y más caro de mantener.
+
+```js
+// Ejemplo frágil: acoplado a clase CSS generada
+screen.getByClassName("sc-12ab");
+```
+
+<Callout title="Tests frágiles">
+Si un test depende de tiempos, orden de red o selectores CSS muy volátiles, se vuelve **flaky** (a veces pasa, a veces no) y pierde credibilidad.
+</Callout>
+
+## Siguiente lección
+
+```tsx
+render(<Form onSave={fn} />);
+await userEvent.click(screen.getByRole("button", { name: /guardar/i }));
+```
+
+En **RTL mindset** vemos cómo pensar en lo que ve el usuario, no en detalles de implementación.

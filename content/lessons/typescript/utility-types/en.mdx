@@ -1,0 +1,62 @@
+---
+title: "Useful utility types"
+description: "Partial, Pick, Omit, and Record to shape data without repetition."
+level: mid
+order: 4
+---
+
+# Utility types
+
+```ts
+type User = { id: number; name: string; email: string; role: "admin" | "user" };
+
+type UserPatch = Partial<Pick<User, "name" | "email">>;
+// { name?: string; email?: string }
+```
+
+TypeScript ships **utility types** that transform existing types: `Partial<T>`, `Pick<T, K>`, `Omit<T, K>`, `Record<K, T>`, and more. They are type-level functions: you put a type in and get a related type out.
+
+## Less repetition
+
+```ts
+type User = { id: number; name: string; email: string; passwordHash: string };
+
+type PublicUser = Pick<User, "id" | "name" | "email">;
+type UserForm = Omit<User, "id" | "passwordHash">;
+```
+
+For APIs and forms, `Pick` and `Omit` express “this object is a subset of `User`” without duplicating fields manually: `User` stays the single source of truth.
+
+## `Record`
+
+```ts
+type Http = "GET" | "POST";
+
+const defaultTimeout: Record<Http, number> = {
+  GET: 5_000,
+  POST: 15_000,
+};
+```
+
+`Record<string, Id>` models homogeneous maps; combined with literal unions (`Record<Status, Handler>`) you get stronger exhaustiveness: if a union key is missing, the compiler reports it.
+
+## Integrated exercise
+
+```ts
+type User = { id: number; name: string; email: string; role: "admin" | "user" };
+
+function userLabel(user: Pick<User, "name" | "email">): string {
+  return `${user.name} <${user.email}>`;
+}
+```
+
+At the end of this lesson you can open the **`ts-user-label`** exercise: implement `userLabel` with `Pick<User, "name" | "email">` and an exact output format validated on the server.
+
+```ts
+const theme = { mode: "dark" as const, contrast: "normal" as const };
+type Theme = Readonly<typeof theme>;
+```
+
+<Callout title="Readonly and const assertions">
+`Readonly<T>` and `as const` protect immutable data and improve inference in configs and design systems: the snippet pins narrow literals and a read-only type derived from the value.
+</Callout>

@@ -1,0 +1,53 @@
+---
+title: "Introduction to React components"
+description: "Props, composition, and the UI tree."
+level: junior
+order: 1
+---
+
+# Introduction to React components
+
+```tsx
+function Welcome({ name }: { name: string }) {
+  return <h1>Hello, {name}</h1>;
+}
+```
+
+A **component** is a reusable piece of UI you can compose like Lego blocks: a function (or class) that receives input and returns a description of UI.
+
+## Props
+
+```tsx
+function App() {
+  return <Welcome name="Ada" />;
+}
+```
+
+**Props** are data passed from a parent component to a child. They are read-only: do not mutate them directly; if values must change, the parent should pass new props or own state further up the tree.
+
+## Composition
+
+```tsx
+function Layout({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="layout">
+      <header>…</header>
+      <main>{children}</main>
+    </div>
+  );
+}
+```
+
+Instead of deep inheritance, React favors **composition**: small components assembled into larger screens. `children` is the simplest pattern for UI “slots”.
+
+<Callout title="Practical rule">
+If a component grows too large, split it by responsibility (presentation vs logic) or by UI sections.
+</Callout>
+
+## Next step
+
+```tsx
+// Next lesson: hooks (useState, useEffect)
+```
+
+In the next lesson you will use **hooks** and learn how to model effects and state without breaking the rules of hooks.

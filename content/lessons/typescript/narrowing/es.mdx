@@ -1,0 +1,66 @@
+---
+title: "Narrowing y type predicates"
+description: "Reducir uniones con typeof, instanceof y predicados personalizados."
+level: junior
+order: 2
+---
+
+# Narrowing
+
+```ts
+function len(x: string | string[]) {
+  if (Array.isArray(x)) return x.length;
+  return x.length;
+}
+```
+
+Cuando un valor tiene un **tipo unión** (`string | number`), cada rama del código puede **reducir** (narrow) el tipo usando comprobaciones: dentro del `if`, TS sabe qué forma tiene el valor.
+
+## typeof e instanceof
+
+```ts
+function describe(e: unknown) {
+  if (typeof e === "string") return e.toUpperCase();
+  if (e instanceof Error) return e.message;
+  return String(e);
+}
+```
+
+`typeof value === "string"` y `value instanceof Error` son patrones habituales que informan al compilador qué forma tiene el valor en esa rama. `unknown` casi siempre exige narrowing antes de usarlo.
+
+## Type predicates
+
+```ts
+function isFileList(x: unknown): x is FileList {
+  return typeof FileList !== "undefined" && x instanceof FileList;
+}
+
+function readFiles(input: unknown) {
+  if (isFileList(input)) {
+    return input.length; // FileList aquí
+  }
+}
+```
+
+Una función con retorno del tipo **`value is SomeType`** es un **type predicate**: si devuelve `true`, TypeScript trata el valor como `SomeType` en el bloque siguiente.
+
+```ts
+// Mala práctica: predicado mentiroso (compila, rompe en runtime)
+function badIsString(x: unknown): x is string {
+  return true;
+}
+```
+
+<Callout title="Predicados honestos">
+El cuerpo de la función debe ser coherente con el predicado. Si devolvés `true` cuando el valor no es realmente de ese tipo, estarás mintiendo al compilador.
+</Callout>
+
+## Ejercicio
+
+```ts
+export function isPositive(n: unknown): n is number {
+  return typeof n === "number" && n > 0;
+}
+```
+
+Al final de esta lección tenés un ejercicio **`ts-positive`**: implementá `isPositive` como predicado y validá contra casos de prueba en el servidor.

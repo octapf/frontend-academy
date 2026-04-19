@@ -1,0 +1,50 @@
+---
+title: "Why test the frontend"
+description: "Refactor confidence, regressions, and UI contracts."
+level: junior
+order: 1
+---
+
+# Frontend testing
+
+```ts
+import { sum } from "./math";
+
+it("adds positives", () => {
+  expect(sum(2, 3)).toBe(5);
+});
+```
+
+Automated tests reduce the fear of **changing code**: if you break something important, a test should fail before production. The snippet is a minimal unit test on a pure function.
+
+## A practical pyramid
+
+```ts
+// Unit: pure function
+export function discount(price: number, pct: number) {
+  return price * (1 - pct / 100);
+}
+
+// Integration: multiple modules (e.g. hook + formatter)
+// E2E: Playwright/Cypress drives a real browser flow
+```
+
+Teams often mix **unit tests** (pure functions), **integration** (multiple modules), and **E2E** (real browser flows) based on cost vs value: higher in the pyramid tends to be slower and more expensive to maintain.
+
+```js
+// Fragile example: coupled to generated CSS class
+screen.getByClassName("sc-12ab");
+```
+
+<Callout title="Fragile tests">
+If a test depends on timing, network ordering, or very volatile CSS selectors, it becomes **flaky** (sometimes passes, sometimes fails) and loses trust.
+</Callout>
+
+## Next lesson
+
+```tsx
+render(<Form onSave={fn} />);
+await userEvent.click(screen.getByRole("button", { name: /save/i }));
+```
+
+**RTL mindset** covers testing what the user sees, not implementation details.

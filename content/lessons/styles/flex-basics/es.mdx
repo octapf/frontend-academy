@@ -1,0 +1,54 @@
+---
+title: "Flexbox: filas, columnas y gap"
+description: "Contenedor flex, ejes, justify-content y align-items."
+level: junior
+order: 2
+---
+
+# Flexbox
+
+```css
+.toolbar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+```
+
+Un contenedor con `display: flex` organiza hijos a lo largo de un **eje principal** (por defecto horizontal). Los hijos pasan a ser **flex items** y el contenedor distribuye el espacio libre según tus reglas.
+
+## Alineación
+
+```css
+.toolbar {
+  display: flex;
+  justify-content: space-between; /* eje principal */
+  align-items: center; /* eje transversal */
+}
+```
+
+- `justify-content` alinea en el **eje principal** (dónde “corre” la fila o columna).
+- `align-items` alinea en el **eje transversal** (perpendicular al principal).
+
+## `gap`
+
+```css
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px; /* fila columna */
+}
+```
+
+`gap` separa ítems sin márgenes frágiles entre hermanos: el espacio lo define el contenedor, no cada hijo con `margin-right`.
+
+```css
+.flex-row > * {
+  min-width: 0; /* evita que el contenido empuje el flex item */
+  border: 1px solid #e4e4e7;
+}
+```
+
+<Callout title="Flex y el box model">
+Cada ítem flex sigue siendo una caja: padding, border y `min-width` importan cuando el espacio es ajustado.
+</Callout>

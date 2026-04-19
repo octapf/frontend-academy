@@ -1,0 +1,52 @@
+---
+title: "RTL: queries orientadas al usuario"
+description: "getByRole, accesibilidad y evitar acoplarse al DOM."
+level: junior
+order: 2
+---
+
+# Testing Library mindset
+
+```tsx
+import { render, screen } from "@testing-library/react";
+
+render(<button type="button">Guardar borrador</button>);
+screen.getByRole("button", { name: /guardar/i });
+```
+
+React Testing Library anima a buscar elementos como lo haría una persona: por **rol**, **etiqueta** o **texto visible**. El rol `button` refleja lo que expone la accesibilidad, no la estructura interna del componente.
+
+## `getByRole`
+
+```tsx
+render(
+  <nav aria-label="Principal">
+    <a href="/">Inicio</a>
+  </nav>
+);
+screen.getByRole("navigation", { name: /principal/i });
+```
+
+`getByRole('button', { name: /guardar/i })` conecta el test con **accesibilidad** y textos estables: el `name` usa el nombre accesible (texto visible, `aria-label`, etc.).
+
+## Evitar detalles internos
+
+```tsx
+// Mal acoplamiento: clase o tag profundo
+container.querySelector("div.wrapper > span");
+
+// Mejor: lo que percibe el usuario
+screen.getByLabelText(/correo/i);
+```
+
+Si testeás nombres de clases CSS o estructura profunda del DOM, cada refactor cosmético rompe tests sin valor. Preferí roles, labels y texto visible.
+
+```tsx
+import userEvent from "@testing-library/user-event";
+
+await userEvent.click(screen.getByRole("checkbox"));
+```
+
+<Callout title="async y userEvent">
+Para interacciones reales preferí `userEvent` sobre `fireEvent` cuando el flujo depende de foco o teclado.
+</Callout>
