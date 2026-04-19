@@ -1,7 +1,12 @@
-import { MongoClient } from "mongodb";
+import { MongoClient, type MongoClientOptions } from "mongodb";
 
 const globalForMongo = globalThis as typeof globalThis & {
   __feaMongoClientPromise?: Promise<MongoClient>;
+};
+
+const clientOptions: MongoClientOptions = {
+  serverSelectionTimeoutMS: 15_000,
+  maxPoolSize: 10,
 };
 
 function getUri(): string {
@@ -12,11 +17,24 @@ function getUri(): string {
   return uri.trim();
 }
 
-/** Cliente compartido (recomendado para Next.js / serverless-friendly reuse en proceso). */
+/**
+ * Cliente compartido (serverless-friendly).
+ * Si `connect()` falla, no dejamos una promesa rechazada en global: el siguiente request reintenta
+ * (útil tras corregir MONGODB_URI en Vercel sin esperar cold start).
+ */
 export function getMongoClientPromise(): Promise<MongoClient> {
   if (!globalForMongo.__feaMongoClientPromise) {
-    const client = new MongoClient(getUri());
-    globalForMongo.__feaMongoClientPromise = client.connect();
+    const client = new MongoClient(getUri(), clientOptions);
+    const connected = client.connect();
+    globalForMongo.__feaMongoClientPromise = connected.catch(async (err) => {
+      globalForMongo.__feaMongoClientPromise = undefined;
+      try {
+        await client.close();
+      } catch {
+        /* ignore */
+      }
+      throw err;
+    });
   }
   return globalForMongo.__feaMongoClientPromise;
 }

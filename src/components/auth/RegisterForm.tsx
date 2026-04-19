@@ -31,6 +31,7 @@ export function RegisterForm() {
       let data: {
         ok?: boolean;
         error?: string;
+        hint?: string;
         issues?: Record<string, string[] | undefined>;
       };
       try {
@@ -44,7 +45,8 @@ export function RegisterForm() {
       if (!res.ok || !data.ok) {
         const flat = data.issues ? Object.values(data.issues).flat() : [];
         const first = flat.find((m) => typeof m === "string" && m.length > 0);
-        setError(first ?? data.error ?? "Error al registrar");
+        const base = first ?? data.error ?? "Error al registrar";
+        setError(data.hint ? `${base} ${data.hint}` : base);
         return;
       }
       const raw = next ?? "/dashboard";

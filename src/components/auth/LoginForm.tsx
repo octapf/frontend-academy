@@ -29,9 +29,10 @@ export function LoginForm() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-      const data = (await res.json()) as { ok?: boolean; error?: string };
+      const data = (await res.json()) as { ok?: boolean; error?: string; hint?: string };
       if (!res.ok || !data.ok) {
-        setError(data.error ?? "Error al ingresar");
+        const base = data.error ?? "Error al ingresar";
+        setError(data.hint ? `${base} ${data.hint}` : base);
         return;
       }
       const raw = next ?? "/dashboard";

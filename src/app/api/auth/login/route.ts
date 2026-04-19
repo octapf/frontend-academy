@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 
 import { SESSION_COOKIE } from "@/lib/auth/constants";
+import { publicMongoErrorHint } from "@/lib/auth/mongo-error-hint";
 import { signSessionToken } from "@/lib/auth/jwt";
 import { verifyPassword } from "@/lib/auth/password";
 import { findUser } from "@/lib/auth/user-store";
@@ -29,7 +30,11 @@ export async function POST(req: Request) {
       user = await findUser(username);
     } catch (e) {
       console.error("[api/auth/login] findUser", e);
-      return NextResponse.json({ ok: false, error: mongoHint }, { status: 503 });
+      const hint = publicMongoErrorHint(e);
+      return NextResponse.json(
+        { ok: false, error: mongoHint, ...(hint ? { hint } : {}) },
+        { status: 503 }
+      );
     }
 
     if (!user || !verifyPassword(password, user.passwordHash)) {
