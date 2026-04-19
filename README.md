@@ -31,7 +31,7 @@ App Next.js (App Router) con lecciones MDX, ejercicios TypeScript con validació
 | `MONGODB_DB`, `MONGODB_PROGRESS_COLLECTION`, `MONGODB_USERS_COLLECTION`, … | Opcionales; ver código en `src/lib/auth/` y `src/lib/progress/`. |
 | `UPSTASH_REDIS_REST_URL`, `UPSTASH_REDIS_REST_TOKEN` | Rate limit distribuido para ejecutar ejercicios; sin ellos, límite en memoria por proceso. |
 | `EXERCISE_RUN_RATE_LIMIT_PER_MIN` | Opcional; tope de ejecuciones por minuto (ver `src/lib/rate-limit/exercise-config.ts`). |
-| `NEXT_PUBLIC_APP_URL` | URL canónica del sitio (metadata / Open Graph). Ej.: `https://tu-app.vercel.app`. |
+| `NEXT_PUBLIC_APP_URL` | URL canónica (metadata / Open Graph). Prod.: `https://frontendacademy.miralab.ar`. |
 
 Copiá `.env.example` a `.env.local` y completá valores. En Vercel u otro host, configurá las mismas keys en el panel del proyecto.
 
@@ -49,7 +49,7 @@ En rutas **Learn**, si la preferencia guardada es inglés y la URL no incluye `?
 1. **Importar el repo** desde GitHub (como ya hiciste): cada **push a `main`** dispara un deploy automático.
 2. **Settings → Environment Variables** (Production): cargá lo de **`.env.example`** que uses en prod, como mínimo:
    - **`AUTH_SECRET`** (obligatorio para sesiones en producción).
-   - **`NEXT_PUBLIC_APP_URL`** = tu URL real (`https://tu-proyecto.vercel.app` o dominio custom).
+   - **`NEXT_PUBLIC_APP_URL`** = `https://frontendacademy.miralab.ar` (sin barra final).
    - **`MONGODB_URI`** si usás Mongo; si no, queda JSON en el filesystem (en serverless conviene Mongo).
 3. Tras cambiar variables: **Deployments → … → Redeploy** (o un push vacío).
 
@@ -58,9 +58,23 @@ En rutas **Learn**, si la preferencia guardada es inglés y la URL no incluye `?
 - **No necesitás** la pantalla *Actions secrets / New secret* para publicar en Vercel: el deploy lo hace la **integración Git de Vercel**.
 - **Actions** solo corre **CI** (lint, test, build) en push/PR a `main`: sirve para ver que todo pase en verde; podés ignorar *Secrets* salvo que más adelante agregues otro workflow que sí los use.
 
-### Dominio propio (opcional)
+### Dominio `frontendacademy.miralab.ar` (Vercel + DNS)
 
-Vercel → proyecto → **Settings → Domains** → agregar dominio y seguir el DNS que indiquen.
+1. **Vercel** → proyecto **frontend-academy** → **Settings → Domains** → **Add** → escribí exactamente:
+   - `frontendacademy.miralab.ar`  
+   Vercel va a mostrar el registro DNS que espera (suele ser un **CNAME**).
+
+2. **DNS del dominio `miralab.ar`** (donde gestionés las zonas: Cloudflare, DonWeb, NIC, etc.):
+   - Tipo: **CNAME**
+   - **Nombre / host:** `frontendacademy` (a veces la UI pide solo el subdominio, sin `.miralab.ar`).
+   - **Valor / destino:** el que indique Vercel, habitualmente **`cname.vercel-dns.com.`** (con o sin punto final según el proveedor).
+   - Si usás **Cloudflare** con proxy naranja, para el certificado SSL a veces hace falta dejar **DNS only** (nube gris) hasta que Vercel marque el dominio como válido; después podés volver a proxy si querés.
+
+3. Esperá propagación DNS (minutos a unas horas). En Vercel el dominio pasa a **Valid** cuando resuelve bien.
+
+4. En **Environment Variables** dejá **`NEXT_PUBLIC_APP_URL=https://frontendacademy.miralab.ar`** y redeploy.
+
+5. **Producción:** en Vercel podés marcar `frontendacademy.miralab.ar` como **Primary** y dejar el `*.vercel.app` como redirect o secundario (**Settings → Domains**).
 
 ## Estructura útil
 
