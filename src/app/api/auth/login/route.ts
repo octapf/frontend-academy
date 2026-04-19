@@ -1,4 +1,3 @@
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -12,31 +11,63 @@ const bodySchema = z.object({
   password: z.string().min(1).max(128),
 });
 
-export async function POST(req: Request) {
-  const json = await req.json().catch(() => null);
-  const parsed = bodySchema.safeParse(json);
-  if (!parsed.success) {
-    return NextResponse.json({ ok: false, error: "Datos inválidos" }, { status: 400 });
-  }
+const mongoHint =
+  "No se pudo conectar a la base de datos. Revisá MONGODB_URI, MONGODB_DB y Atlas → Network Access.";
 
-  const { username, password } = parsed.data;
-  const user = await findUser(username);
-  if (!user || !verifyPassword(password, user.passwordHash)) {
+export async function POST(req: Request) {
+  try {
+    const json = await req.json().catch(() => null);
+    const parsed = bodySchema.safeParse(json);
+    if (!parsed.success) {
+      return NextResponse.json({ ok: false, error: "Datos inválidos" }, { status: 400 });
+    }
+
+    const { username, password } = parsed.data;
+
+    let user;
+    try {
+      user = await findUser(username);
+    } catch (e) {
+      console.error("[api/auth/login] findUser", e);
+      return NextResponse.json({ ok: false, error: mongoHint }, { status: 503 });
+    }
+
+    if (!user || !verifyPassword(password, user.passwordHash)) {
+      return NextResponse.json(
+        { ok: false, error: "Usuario o contraseña incorrectos" },
+        { status: 401 }
+      );
+    }
+
+    let token: string;
+    try {
+      token = await signSessionToken(user.username);
+    } catch (e) {
+      console.error("[api/auth/login] signSessionToken", e);
+      return NextResponse.json(
+        {
+          ok: false,
+          error:
+            "El servidor no pudo crear la sesión. En producción hace falta AUTH_SECRET de al menos 32 caracteres.",
+        },
+        { status: 500 }
+      );
+    }
+
+    const res = NextResponse.json({ ok: true });
+    res.cookies.set(SESSION_COOKIE, token, {
+      httpOnly: true,
+      sameSite: "lax",
+      secure: process.env.NODE_ENV === "production",
+      path: "/",
+      maxAge: 60 * 60 * 24 * 7,
+    });
+    return res;
+  } catch (e) {
+    console.error("[api/auth/login] unhandled", e);
     return NextResponse.json(
-      { ok: false, error: "Usuario o contraseña incorrectos" },
-      { status: 401 }
+      { ok: false, error: "Error inesperado del servidor. Revisá los logs en Vercel." },
+      { status: 500 }
     );
   }
-
-  const token = await signSessionToken(user.username);
-  const jar = await cookies();
-  jar.set(SESSION_COOKIE, token, {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7,
-  });
-
-  return NextResponse.json({ ok: true });
 }
