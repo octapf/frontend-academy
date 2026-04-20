@@ -50,10 +50,10 @@ export function AppShell({
               aria-label="Frontend Academy"
             >
               <Image
-                src="/logos/brand/04-vertical-lockup.png"
+                src="/logos/brand/02-wordmark-stacked-navy-cropped.png"
                 alt="Frontend Academy"
-                width={220}
-                height={64}
+                width={720}
+                height={169}
                 priority
                 className="h-12 w-auto select-none"
               />
