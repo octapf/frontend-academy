@@ -3,8 +3,9 @@ import { notFound } from "next/navigation";
 import { LessonProgressBadges } from "@/components/lesson/LessonProgressBadges";
 import { LessonProgressBeacon } from "@/components/lesson/LessonProgressBeacon";
 import { TrackLink } from "@/components/track/TrackLink";
-import { loadLessonMdx } from "@/lib/content/get-lesson";
+import { listLessonsForModule, loadLessonMdx } from "@/lib/content/get-lesson";
 import { learnLangSearchSuffix, parseLearnLang } from "@/lib/i18n/learn-lang";
+import { LEARN_MODULES } from "@/lib/learn/modules";
 import { lessonCodeExerciseFor } from "@/lib/learn/lesson-code-exercises";
 
 type Params = { moduleSlug: string; lessonSlug: string };
@@ -31,11 +32,35 @@ export default async function LessonPage({
     notFound();
   }
 
+  const moduleMeta = LEARN_MODULES.find((m) => m.slug === moduleSlug);
+  const moduleTitle = moduleMeta?.title ?? moduleSlug;
+  const allLessons = await listLessonsForModule(moduleSlug);
+  const idx = allLessons.findIndex((l) => l.slug === lessonSlug);
+  const prev = idx > 0 ? allLessons[idx - 1] : null;
+  const next = idx >= 0 && idx < allLessons.length - 1 ? allLessons[idx + 1] : null;
+
   const codeExercise = lessonCodeExerciseFor(moduleSlug, lessonSlug);
 
   return (
     <div className="space-y-4">
       <LessonProgressBeacon moduleSlug={moduleSlug} lessonSlug={lessonSlug} />
+      <nav className="flex flex-wrap items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
+        <TrackLink
+          href={`/learn${langQs}`}
+          className="underline decoration-brand/50 underline-offset-4 hover:text-brand"
+        >
+          Learn
+        </TrackLink>
+        <span className="text-zinc-400 dark:text-zinc-500">/</span>
+        <TrackLink
+          href={`/learn/${moduleSlug}${langQs}`}
+          className="underline decoration-brand/50 underline-offset-4 hover:text-brand"
+        >
+          {moduleTitle}
+        </TrackLink>
+        <span className="text-zinc-400 dark:text-zinc-500">/</span>
+        <span className="text-zinc-900 dark:text-zinc-100">{lesson.frontmatter.title}</span>
+      </nav>
       <div className="space-y-2">
         <h1 className="text-2xl font-semibold tracking-tight">
           {lesson.frontmatter.title}
@@ -70,13 +95,29 @@ export default async function LessonPage({
         </div>
       ) : null}
 
-      <div className="flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <TrackLink
           href={`/learn/${moduleSlug}${langQs}`}
           className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
         >
           Volver al módulo
         </TrackLink>
+        {prev ? (
+          <TrackLink
+            href={`/learn/${moduleSlug}/${prev.slug}${langQs}`}
+            className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
+          >
+            ← Anterior
+          </TrackLink>
+        ) : null}
+        {next ? (
+          <TrackLink
+            href={`/learn/${moduleSlug}/${next.slug}${langQs}`}
+            className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
+          >
+            Siguiente →
+          </TrackLink>
+        ) : null}
         <TrackLink
           href="/reference/glossary"
           className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"

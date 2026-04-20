@@ -100,6 +100,9 @@ export function TsCodeExercise({
   const title = lang === "en" ? exercise.title.en : exercise.title.es;
   const description =
     lang === "en" ? exercise.description.en : exercise.description.es;
+  const hints = exercise.hints ?? [];
+  const [showHints, setShowHints] = useState(false);
+  const [hintCount, setHintCount] = useState(1);
 
   const extensions = useMemo(
     () => [
@@ -127,6 +130,45 @@ export function TsCodeExercise({
           {description}
         </p>
       </div>
+
+      {hints.length ? (
+        <div className="rounded-xl border border-zinc-300 bg-zinc-100 p-4 dark:border-zinc-700 dark:bg-zinc-950">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div className="text-sm font-medium">
+              {lang === "en" ? "Hints" : "Pistas"}
+            </div>
+            <Button
+              type="button"
+              size="sm"
+              variant="ghost"
+              onClick={() => setShowHints((v) => !v)}
+            >
+              {showHints ? (lang === "en" ? "Hide" : "Ocultar") : lang === "en" ? "Show" : "Ver"}
+            </Button>
+          </div>
+          {showHints ? (
+            <>
+              <ol className="mt-3 list-decimal space-y-2 pl-5 text-sm text-zinc-700 dark:text-zinc-200">
+                {hints.slice(0, Math.min(hintCount, hints.length)).map((h, i) => (
+                  <li key={i}>{lang === "en" ? h.en : h.es}</li>
+                ))}
+              </ol>
+              {hintCount < hints.length ? (
+                <div className="mt-3">
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="secondary"
+                    onClick={() => setHintCount((n) => Math.min(n + 1, hints.length))}
+                  >
+                    {lang === "en" ? "Reveal next hint" : "Mostrar otra pista"}
+                  </Button>
+                </div>
+              ) : null}
+            </>
+          ) : null}
+        </div>
+      ) : null}
 
       <div className="overflow-hidden rounded-xl border border-zinc-200 font-mono dark:border-zinc-700">
         <CodeMirror

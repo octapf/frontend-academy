@@ -99,3 +99,25 @@ export async function getProgressSummaryJson(username: string): Promise<{
     exerciseIds: Object.keys(u.exercises),
   };
 }
+
+export async function mergeProgressJson(
+  username: string,
+  lessonKeys: string[],
+  exerciseIds: ExerciseId[]
+): Promise<void> {
+  if (!lessonKeys.length && !exerciseIds.length) return;
+
+  const data = await readSafe();
+  const u = data.users[username] ?? emptyUser();
+  const now = new Date().toISOString();
+
+  for (const k of lessonKeys) {
+    if (!u.lessons[k]) u.lessons[k] = { viewedAt: now };
+  }
+  for (const id of exerciseIds) {
+    if (!u.exercises[id]) u.exercises[id] = { passedAt: now };
+  }
+
+  data.users[username] = u;
+  await writeAll(data);
+}

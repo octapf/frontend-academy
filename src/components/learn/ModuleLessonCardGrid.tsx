@@ -6,6 +6,7 @@ import type { LessonLang } from "@/lib/content/get-lesson";
 import { exerciseIdForLesson } from "@/lib/exercises/exercise-lesson-map";
 import { learnLangSearchSuffix } from "@/lib/i18n/learn-lang";
 import { lessonProgressKey } from "@/lib/progress/keys";
+import { useMemo, useState } from "react";
 
 type Row = {
   slug: string;
@@ -24,31 +25,106 @@ export function ModuleLessonCardGrid({
   lang: LessonLang;
 }) {
   const { data: progress } = useProgressQuery();
-  const viewed = new Set(progress?.lessonKeys ?? []);
-  const exercisesDone = new Set(progress?.exerciseIds ?? []);
+  const viewed = useMemo(() => new Set(progress?.lessonKeys ?? []), [progress?.lessonKeys]);
+  const exercisesDone = useMemo(
+    () => new Set(progress?.exerciseIds ?? []),
+    [progress?.exerciseIds]
+  );
   const langQs = learnLangSearchSuffix(lang);
+  const [q, setQ] = useState("");
+  const [status, setStatus] = useState<"all" | "unseen" | "in_progress" | "done">(
+    "all"
+  );
 
-  const ordered = [...lessons].sort((a, b) => {
-    const ka = lessonProgressKey(moduleSlug, a.slug);
-    const kb = lessonProgressKey(moduleSlug, b.slug);
-    const viewedA = viewed.has(ka);
-    const viewedB = viewed.has(kb);
-    const exA = exerciseIdForLesson(moduleSlug, a.slug);
-    const exB = exerciseIdForLesson(moduleSlug, b.slug);
-    const okA = exA !== undefined && exercisesDone.has(exA);
-    const okB = exB !== undefined && exercisesDone.has(exB);
+  const ordered = useMemo(() => {
+    const normQ = q.trim().toLowerCase();
+    const matchesQ = (row: Row) => {
+      if (!normQ) return true;
+      const title = lang === "en" ? row.titleEn : row.titleEs;
+      const subtitle = lang === "en" ? row.titleEs : row.titleEn;
+      const hay = `${title} ${subtitle} ${row.slug} ${row.level ?? ""}`.toLowerCase();
+      return hay.includes(normQ);
+    };
 
-    // 0: not viewed, 1: viewed not ok, 2: ok
-    const rank = (v: boolean, ok: boolean) => (ok ? 2 : v ? 1 : 0);
-    const ra = rank(viewedA, okA);
-    const rb = rank(viewedB, okB);
-    if (ra !== rb) return ra - rb;
-    return a.slug.localeCompare(b.slug);
-  });
+    const matchesStatus = (row: Row) => {
+      const key = lessonProgressKey(moduleSlug, row.slug);
+      const done = viewed.has(key);
+      const linkedExercise = exerciseIdForLesson(moduleSlug, row.slug);
+      const exerciseOk =
+        linkedExercise !== undefined && exercisesDone.has(linkedExercise);
+      const inProgress = done && !exerciseOk;
+
+      if (status === "all") return true;
+      if (status === "unseen") return !done;
+      if (status === "in_progress") return inProgress;
+      return exerciseOk;
+    };
+
+    return [...lessons]
+      .filter((row) => matchesQ(row) && matchesStatus(row))
+      .sort((a, b) => {
+        const ka = lessonProgressKey(moduleSlug, a.slug);
+        const kb = lessonProgressKey(moduleSlug, b.slug);
+        const viewedA = viewed.has(ka);
+        const viewedB = viewed.has(kb);
+        const exA = exerciseIdForLesson(moduleSlug, a.slug);
+        const exB = exerciseIdForLesson(moduleSlug, b.slug);
+        const okA = exA !== undefined && exercisesDone.has(exA);
+        const okB = exB !== undefined && exercisesDone.has(exB);
+
+        // 0: not viewed, 1: viewed not ok, 2: ok
+        const rank = (v: boolean, ok: boolean) => (ok ? 2 : v ? 1 : 0);
+        const ra = rank(viewedA, okA);
+        const rb = rank(viewedB, okB);
+        if (ra !== rb) return ra - rb;
+        return a.slug.localeCompare(b.slug);
+      });
+  }, [exercisesDone, lang, lessons, moduleSlug, q, status, viewed]);
 
   return (
-    <div className="grid gap-4 md:grid-cols-2">
-      {ordered.map((l) => {
+    <div className="space-y-3">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex-1">
+          <label className="sr-only" htmlFor="lesson-search">
+            Buscar
+          </label>
+          <input
+            id="lesson-search"
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            placeholder="Buscar por título, slug o nivel…"
+            className="w-full rounded-lg border border-zinc-200 bg-zinc-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/60 dark:border-zinc-600 dark:bg-zinc-950 dark:focus:ring-brand/50"
+          />
+        </div>
+
+        <div className="flex items-center gap-2">
+          <label className="sr-only" htmlFor="lesson-status">
+            Estado
+          </label>
+          <select
+            id="lesson-status"
+            value={status}
+            onChange={(e) =>
+              setStatus(e.target.value as typeof status)
+            }
+            className="rounded-lg border border-zinc-200 bg-zinc-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/60 dark:border-zinc-600 dark:bg-zinc-950 dark:focus:ring-brand/50"
+          >
+            <option value="all">Todas</option>
+            <option value="unseen">No vistas</option>
+            <option value="in_progress">En progreso</option>
+            <option value="done">Completas</option>
+          </select>
+        </div>
+      </div>
+
+      {ordered.length === 0 ? (
+        <div className="rounded-xl border border-zinc-300 bg-zinc-100 p-5 text-sm text-zinc-600 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-300">
+          No hay resultados con esos filtros.
+        </div>
+      ) : null}
+
+      <div className="grid gap-4 md:grid-cols-2">
+        {ordered.map((l) => {
         const key = lessonProgressKey(moduleSlug, l.slug);
         const done = viewed.has(key);
         const linkedExercise = exerciseIdForLesson(moduleSlug, l.slug);
@@ -94,6 +170,7 @@ export function ModuleLessonCardGrid({
           </TrackLink>
         );
       })}
+      </div>
     </div>
   );
 }

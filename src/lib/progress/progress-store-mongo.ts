@@ -93,3 +93,36 @@ export async function getProgressSummaryMongo(username: string): Promise<{
   const doc = await coll.findOne({ [USERNAME_FIELD]: username });
   return docToSummary(doc);
 }
+
+export async function mergeProgressMongo(
+  username: string,
+  lessonKeys: string[],
+  exerciseIds: ExerciseId[]
+): Promise<void> {
+  if (!lessonKeys.length && !exerciseIds.length) return;
+
+  const db = await getMongoDb();
+  const coll = db.collection(collectionName());
+  const now = new Date().toISOString();
+
+  const lessons: Record<string, { viewedAt: string }> = {};
+  for (const k of lessonKeys) lessons[k] = { viewedAt: now };
+
+  const exercises: Record<string, { passedAt: string }> = {};
+  for (const id of exerciseIds) exercises[id] = { passedAt: now };
+
+  // Keep existing values (timestamps) if present.
+  await coll.updateOne(
+    { [USERNAME_FIELD]: username },
+    [
+      {
+        $set: {
+          lessons: { $mergeObjects: [lessons, "$lessons"] },
+          exercises: { $mergeObjects: [exercises, "$exercises"] },
+        },
+      },
+      { $setOnInsert: { [USERNAME_FIELD]: username } },
+    ],
+    { upsert: true }
+  );
+}

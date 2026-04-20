@@ -3,11 +3,13 @@ import type { ExerciseId } from "@/exercises/types";
 import { isMongoEnvConfigured } from "@/lib/auth/mongo-uri";
 import {
   getProgressSummaryJson,
+  mergeProgressJson,
   recordExercisePassJson,
   recordLessonViewJson,
 } from "@/lib/progress/progress-store-json";
 import {
   getProgressSummaryMongo,
+  mergeProgressMongo,
   recordExercisePassMongo,
   recordLessonViewMongo,
 } from "@/lib/progress/progress-store-mongo";
@@ -50,4 +52,15 @@ export async function getProgressSummary(username: string): Promise<{
     return getProgressSummaryMongo(username);
   }
   return getProgressSummaryJson(username);
+}
+
+export async function mergeProgress(
+  username: string,
+  lessonKeys: string[],
+  exerciseIds: ExerciseId[]
+): Promise<void> {
+  if (isMongoConfigured()) {
+    return mergeProgressMongo(username, lessonKeys, exerciseIds);
+  }
+  return mergeProgressJson(username, lessonKeys, exerciseIds);
 }

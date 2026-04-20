@@ -24,6 +24,7 @@ const NAV_MAIN = [
 const NAV_REF = [
   { href: "/reference/glossary", label: "Glossary" },
   { href: "/reference/slang", label: "Slang" },
+  { href: "/roadmap", label: "Roadmap" },
   { href: "/settings", label: "Settings" },
 ];
 

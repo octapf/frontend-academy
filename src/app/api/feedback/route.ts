@@ -1,0 +1,77 @@
+import { NextResponse } from "next/server";
+import { z } from "zod";
+
+import { getSession } from "@/lib/auth/session";
+import { getMongoDb } from "@/lib/auth/mongo-client";
+import { isMongoEnvConfigured } from "@/lib/auth/mongo-uri";
+
+export const runtime = "nodejs";
+
+const schema = z.object({
+  message: z.string().min(3).max(2000),
+  contact: z.string().trim().max(200).optional(),
+  page: z.string().trim().max(200).optional(),
+});
+
+type FeedbackFile = {
+  items: Array<{
+    message: string;
+    contact?: string;
+    page?: string;
+    username?: string;
+    createdAtIso: string;
+  }>;
+};
+
+async function writeFeedbackJson(item: FeedbackFile["items"][number]) {
+  const { mkdir, readFile, writeFile } = await import("node:fs/promises");
+  const path = await import("node:path");
+  const DATA_DIR = path.join(process.cwd(), "data");
+  const FILE = path.join(DATA_DIR, "feedback.json");
+
+  await mkdir(DATA_DIR, { recursive: true });
+  let data: FeedbackFile = { items: [] };
+  try {
+    const raw = await readFile(FILE, "utf8");
+    const parsed = JSON.parse(raw) as FeedbackFile;
+    if (parsed && Array.isArray(parsed.items)) data = parsed;
+  } catch {
+    // ignore
+  }
+  data.items.unshift(item);
+  await writeFile(FILE, JSON.stringify(data, null, 2), "utf8");
+}
+
+export async function POST(req: Request) {
+  const json = await req.json().catch(() => null);
+  const parsed = schema.safeParse(json);
+  if (!parsed.success) {
+    return NextResponse.json({ ok: false, error: "Invalid body" }, { status: 400 });
+  }
+
+  const session = await getSession();
+  const createdAtIso = new Date().toISOString();
+  const doc = {
+    ...parsed.data,
+    username: session?.username,
+    createdAtIso,
+  };
+
+  try {
+    if (isMongoEnvConfigured()) {
+      const db = await getMongoDb();
+      const coll = db.collection(
+        process.env.MONGODB_FEEDBACK_COLLECTION?.trim() || "feedback"
+      );
+      await coll.insertOne(doc);
+    } else {
+      await writeFeedbackJson(doc);
+    }
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : "Feedback error";
+    return NextResponse.json({ ok: false, error: msg }, { status: 500 });
+  }
+
+  return NextResponse.json({ ok: true });
+}
+

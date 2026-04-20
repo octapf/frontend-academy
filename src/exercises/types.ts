@@ -11,4 +11,6 @@ export type TsExercise = {
   title: Localized;
   description: Localized;
   starter: string;
+  /** Optional progressive hints (UI may reveal one-by-one). */
+  hints?: Localized[];
 };
