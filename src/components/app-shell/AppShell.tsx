@@ -23,6 +23,7 @@ const NAV_MAIN = [
 const NAV_REF = [
   { href: "/reference/glossary", label: "Glossary" },
   { href: "/reference/slang", label: "Slang" },
+  { href: "/settings", label: "Settings" },
 ];
 
 export function AppShell({

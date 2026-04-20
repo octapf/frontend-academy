@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { Button } from "@/components/ui/Button";
 import { TrackLink } from "@/components/track/TrackLink";
 import { getSession } from "@/lib/auth/session";
 
@@ -28,18 +29,12 @@ export default async function HomePage() {
         </div>
 
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
-          <TrackLink
-            href="/login"
-            className="inline-flex justify-center rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-zinc-900 outline-none transition-colors hover:bg-brand/90 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-          >
-            Ingresar
-          </TrackLink>
-          <TrackLink
-            href="/register"
-            className="inline-flex justify-center rounded-lg border border-zinc-300 bg-zinc-100 px-4 py-2.5 text-sm font-medium text-zinc-900 outline-none transition-colors hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-600 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-100/10"
-          >
-            Crear cuenta
-          </TrackLink>
+          <Button asChild variant="primary">
+            <TrackLink href="/login">Ingresar</TrackLink>
+          </Button>
+          <Button asChild variant="secondary">
+            <TrackLink href="/register">Crear cuenta</TrackLink>
+          </Button>
         </div>
 
         <p className="text-center text-xs text-zinc-500 dark:text-zinc-400">

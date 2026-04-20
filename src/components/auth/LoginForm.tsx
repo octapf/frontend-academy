@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
+import { Button } from "@/components/ui/Button";
 import { sanitizeNextParam } from "@/lib/auth/next-redirect";
 import { hrefWithTrack } from "@/lib/track/href";
 import { parseTrackParam } from "@/lib/track";
@@ -89,13 +90,9 @@ export function LoginForm() {
           {error}
         </p>
       ) : null}
-      <button
-        type="submit"
-        disabled={loading}
-        className="w-full rounded-lg bg-brand py-2.5 text-sm font-medium text-zinc-900 outline-none transition-colors hover:bg-brand/90 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background disabled:opacity-60"
-      >
+      <Button type="submit" disabled={loading} variant="primary" className="w-full">
         {loading ? "Ingresando…" : "Ingresar"}
-      </button>
+      </Button>
     </form>
   );
 }

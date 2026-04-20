@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { useTrackStore } from "@/stores/useTrackStore";
 
+import { Button } from "@/components/ui/Button";
 type MinTrack = "junior" | "mid" | "senior";
 type Pair = { term: string; definition: string; minTrack: MinTrack };
 
@@ -122,26 +123,27 @@ export function GlossaryPracticeCard() {
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <button
-          type="button"
+        <Button
           onClick={() => {
             setSelected(null);
             setMatches({});
           }}
-          className="rounded-lg border border-zinc-200 bg-zinc-100 px-3 py-2 text-sm hover:bg-zinc-900/5 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
+          variant="secondary"
+          size="sm"
         >
           Reset
-        </button>
-        <button
+        </Button>
+        <Button
           type="button"
           onClick={() => {
             // placeholder: scoring real + tracking en backend
             alert("Placeholder: scoring + tracking");
           }}
-          className="rounded-lg bg-brand px-3 py-2 text-sm font-medium text-zinc-900 outline-none transition-colors hover:bg-brand/90 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-offset-zinc-950"
+          variant="primary"
+          size="sm"
         >
           Comprobar
-        </button>
+        </Button>
       </div>
     </div>
   );
