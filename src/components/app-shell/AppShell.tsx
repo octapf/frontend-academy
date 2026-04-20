@@ -2,6 +2,7 @@
 
 import { Suspense } from "react";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 import { LearnLanguageNav } from "@/components/app-shell/LearnLanguageNav";
 import { LearnLangUrlSync } from "@/components/learn/LearnLangUrlSync";
@@ -45,9 +46,17 @@ export function AppShell({
           <div className="flex items-center gap-4">
             <TrackLink
               href="/dashboard"
-              className="font-semibold tracking-tight"
+              className="flex items-center"
+              aria-label="Frontend Academy"
             >
-              Frontend Academy
+              <Image
+                src="/logos/brand/04-vertical-lockup.png"
+                alt="Frontend Academy"
+                width={220}
+                height={64}
+                priority
+                className="h-8 w-auto select-none"
+              />
             </TrackLink>
             <div className="hidden md:block">
               <TrackSelector />
