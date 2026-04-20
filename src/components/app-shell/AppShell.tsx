@@ -33,7 +33,7 @@ export function AppShell({
   username: string;
 }) {
   const pathname = usePathname();
-  const track = useTrackStore((s) => s.track);
+  useTrackStore((s) => s.track);
 
   return (
     <div className="min-h-dvh bg-background text-zinc-900 dark:bg-zinc-900 dark:text-zinc-100">
@@ -58,17 +58,14 @@ export function AppShell({
                 </span>
               </span>
             </TrackLink>
-            <div className="hidden md:block">
-              <TrackSelector />
-            </div>
           </div>
 
           <div className="flex items-center gap-3">
+            <div className="hidden md:block">
+              <TrackSelector />
+            </div>
             <LearnLanguageNav />
             <ThemeToggle />
-            <span className="hidden text-sm text-zinc-600 dark:text-zinc-300 md:block">
-              Track: <span className="font-medium">{track}</span>
-            </span>
             <UserMenu username={username} />
           </div>
         </div>
