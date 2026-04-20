@@ -29,6 +29,9 @@ export function publicMongoErrorHint(err: unknown): string | undefined {
   if (code === 18) {
     return "MongoDB código 18: autenticación fallida. Usuario/contraseña de la URI no coinciden con Database Access en Atlas (contraseña URL-encoded si tiene símbolos).";
   }
+  if (code === 13) {
+    return "MongoDB código 13: no autorizado. El Database User no tiene permisos sobre esta base/colección. En Atlas → Database Access, dale rol readWrite (o mayor) sobre la DB usada (por ej. frontendacademy).";
+  }
 
   const msg = err instanceof Error ? err.message : String(err);
   const lower = msg.toLowerCase();
@@ -40,6 +43,9 @@ export function publicMongoErrorHint(err: unknown): string | undefined {
     lower.includes("mongoservererror: bad auth")
   ) {
     return "Atlas rechazó usuario o contraseña. Regenerá la contraseña del usuario de BD, pegá la URI nueva en Vercel y si la contraseña tiene @ # : / ? & encodéala en la URI.";
+  }
+  if (lower.includes("not authorized") || lower.includes("unauthorized")) {
+    return "MongoDB no autorizó la operación. Revisá roles del Database User en Atlas (readWrite sobre la DB objetivo) y que MONGODB_DB apunte a esa DB.";
   }
   if (
     lower.includes("server selection timed out") ||
