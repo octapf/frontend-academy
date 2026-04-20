@@ -220,6 +220,39 @@ export const LESSON_CODE_EXERCISES: LessonCodeExerciseMeta[] = [
     },
     cta: { es: "Ir al ejercicio", en: "Open exercise" },
   },
+  {
+    moduleSlug: "architecture",
+    lessonSlug: "feature-flags",
+    exerciseId: "ts-resolve-flag",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Leé `unknown` como flag booleano con default seguro.",
+      en: "Read `unknown` as a boolean flag with a safe default.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "styles",
+    lessonSlug: "box-model",
+    exerciseId: "ts-parse-pixel",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Strings: validar y extraer valores `px` para layout.",
+      en: "Strings: validate and extract `px` values for layout.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "typescript",
+    lessonSlug: "intro-types",
+    exerciseId: "ts-strict-int",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Tipos y strings: entero estricto o `null`.",
+      en: "Types and strings: strict integer or `null`.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
 ];
 
 export function lessonCodeExerciseFor(

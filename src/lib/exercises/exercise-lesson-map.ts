@@ -23,6 +23,9 @@ const LESSON_KEY_BY_EXERCISE: Record<ExerciseId, string> = {
   "ts-shallow-equal": lessonProgressKey("react", "performance-memo"),
   "ts-assert-never": lessonProgressKey("react", "context-basics"),
   "ts-parse-number": lessonProgressKey("react", "forms-and-validation"),
+  "ts-resolve-flag": lessonProgressKey("architecture", "feature-flags"),
+  "ts-parse-pixel": lessonProgressKey("styles", "box-model"),
+  "ts-strict-int": lessonProgressKey("typescript", "intro-types"),
 };
 
 const EXERCISE_BY_LESSON_KEY = Object.fromEntries(

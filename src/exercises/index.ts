@@ -7,6 +7,9 @@ import { tsErrorMessageExercise } from "@/exercises/ts-error-message";
 import { tsGroupByExercise } from "@/exercises/ts-group-by";
 import { tsInvariantExercise } from "@/exercises/ts-invariant";
 import { tsParseNumberExercise } from "@/exercises/ts-parse-number";
+import { tsParsePixelExercise } from "@/exercises/ts-parse-pixel";
+import { tsResolveFlagExercise } from "@/exercises/ts-resolve-flag";
+import { tsStrictIntExercise } from "@/exercises/ts-strict-int";
 import { tsParseQueryExercise } from "@/exercises/ts-parse-query";
 import { tsPickKeysExercise } from "@/exercises/ts-pick-keys";
 import { tsSafeJsonParseExercise } from "@/exercises/ts-safe-json-parse";
@@ -39,6 +42,9 @@ const BY_ID: Record<ExerciseId, TsExercise> = {
   "ts-shallow-equal": tsShallowEqualExercise,
   "ts-assert-never": tsAssertNeverExercise,
   "ts-parse-number": tsParseNumberExercise,
+  "ts-resolve-flag": tsResolveFlagExercise,
+  "ts-parse-pixel": tsParsePixelExercise,
+  "ts-strict-int": tsStrictIntExercise,
 };
 
 export function getExercise(id: string): TsExercise | undefined {

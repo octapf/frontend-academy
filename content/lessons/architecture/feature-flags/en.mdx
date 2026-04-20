@@ -18,3 +18,7 @@ A **feature flag** is a value (often loaded from the server) that toggles a UI b
 ## Trade-off
 
 More flags mean more combinations and more bug surface. Document what each flag controls and who owns turning it off.
+
+## `unknown` values
+
+At runtime flags often arrive as JSON or query params: sometimes booleans, sometimes strings (`"on"`, `"false"`). Prefer **normalizing** in a small helper with a clear **default** when the value is not recognized (this lesson has a linked code exercise in Learn).

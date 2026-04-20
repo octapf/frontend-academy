@@ -1,0 +1,20 @@
+---
+title: "Contratos en fronteras (API ↔ UI)"
+description: "Schemas, versionado y errores predecibles."
+level: mid
+order: 5
+---
+
+# Fronteras claras
+
+Entre **API y UI** el contrato es el tipo de datos + reglas de evolución. Sin un contrato explícito, cada deploy rompe silenciosamente al otro lado.
+
+## Prácticas útiles
+
+- **Schema validation** en el borde (zod, etc.) antes de tocar estado global.
+- **Versionado** o campos opcionales bien documentados cuando el backend crece más rápido que el front.
+- **Errores normalizados** (status + código + mensaje seguro) para que la UI muestre algo consistente.
+
+## Relación con error handling
+
+En **Error handling** profundizás en `unknown` en `catch` y mensajes seguros; acá el foco es el **contrato** entre sistemas.

@@ -1,0 +1,29 @@
+---
+title: "Composition: children and slots"
+description: "Flexible APIs without endless prop drilling."
+level: mid
+order: 10
+---
+
+# Composition in React
+
+**Composition** means building UI from small pieces that do not know every parent detail. `children` is the most common case: the parent defines the frame and callers inject content.
+
+```tsx
+function Panel({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <section>
+      <h2>{title}</h2>
+      {children}
+    </section>
+  );
+}
+```
+
+## Render props and “slots”
+
+When you need **data from the child outward** or multiple regions (`header`, `footer`), use function props (**render props**) or multiple node props (`header`, `actions`). Pick the most readable shape for your team: not everything has to be `children`.
+
+## Trade-off
+
+Too many nested `children` layers makes data flow harder. If you only pass callbacks and data through five levels, consider Context or colocated state.

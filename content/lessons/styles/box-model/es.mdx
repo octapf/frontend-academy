@@ -60,3 +60,7 @@ Entre bloques adyacentes, los márgenes verticales pueden **colapsar**: el espac
 ```
 
 En la siguiente lección verás **flex** para alinear cajas en fila o columna sin flotar.
+
+## Medidas como texto
+
+En design tokens o props de UI a veces conviene validar strings como `"16px"` antes de convertirlos a número para cálculos (espaciado, animaciones). Un parser chico y estricto evita `NaN` silenciosos.

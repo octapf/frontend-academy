@@ -51,6 +51,10 @@ Cuando diseñás APIs públicas o querés documentar intención, las **anotacion
 Con `strict: true` (recomendado) evitás muchos bugs típicos de `null`/`undefined` y asignaciones dudosas.
 </Callout>
 
+## Strings con “forma”
+
+Aunque un valor venga como `string`, a veces querés **reglas estrictas**: por ejemplo aceptar solo enteros decimales (`"42"`) y rechazar `"3.14"` o `"12px"`. Eso combina tipos (`number | null`) con validación en runtime.
+
 ## Siguiente paso
 
 ```ts

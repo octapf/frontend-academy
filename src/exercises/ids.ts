@@ -20,6 +20,9 @@ export const EXERCISE_IDS = [
   "ts-shallow-equal",
   "ts-assert-never",
   "ts-parse-number",
+  "ts-resolve-flag",
+  "ts-parse-pixel",
+  "ts-strict-int",
 ] as const;
 
 export type ExerciseId = (typeof EXERCISE_IDS)[number];

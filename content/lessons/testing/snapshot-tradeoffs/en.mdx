@@ -1,0 +1,20 @@
+---
+title: "Snapshots: when they help and when they hurt"
+description: "Cheap regressions vs noisy diffs."
+level: mid
+order: 7
+---
+
+# Snapshots in tests
+
+A **snapshot** stores the serialized output of a component or function and compares it on the next run. They are cheap for catching **accidental regressions** in stable markup.
+
+## When to avoid them
+
+If the snapshot is huge or changes on every PR without clear signal, teams start **blindly updating** and lose trust. Prefer targeted assertions (RTL: role, text, state) for behavior.
+
+## Good uses
+
+- Small stable outputs (serialization of a helper, JSON from an adapter).
+- “Leaf” components with fixed props in the test.
+- Combine a **small** snapshot with semantic matchers where it makes sense.

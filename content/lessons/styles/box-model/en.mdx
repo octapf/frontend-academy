@@ -60,3 +60,7 @@ Between adjacent block boxes, vertical margins can **collapse**: the final gap i
 ```
 
 The next lesson covers **flex** to align boxes in rows or columns without floats.
+
+## Measurements as text
+
+With design tokens or UI props you sometimes validate strings like `"16px"` before converting to a number for layout math (spacing, motion). A small strict parser avoids silent `NaN` values.

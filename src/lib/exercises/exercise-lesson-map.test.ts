@@ -21,17 +21,22 @@ describe("exerciseIdsInModule", () => {
       "ts-positive",
       "ts-safe-json-parse",
       "ts-shape-area",
+      "ts-strict-int",
       "ts-user-label",
     ]);
     expect(exerciseIdsInModule("styles").sort()).toEqual([
       "ts-classnames",
+      "ts-parse-pixel",
       "ts-to-title-case",
     ]);
     expect(exerciseIdsInModule("testing").sort()).toEqual([
       "ts-backoff",
       "ts-invariant",
     ]);
-    expect(exerciseIdsInModule("architecture").sort()).toEqual(["ts-error-message"]);
+    expect(exerciseIdsInModule("architecture").sort()).toEqual([
+      "ts-error-message",
+      "ts-resolve-flag",
+    ]);
   });
 });
 
@@ -48,6 +53,6 @@ describe("exerciseIdForLesson", () => {
   });
 
   it("returns undefined when no exercise", () => {
-    expect(exerciseIdForLesson("styles", "box-model")).toBeUndefined();
+    expect(exerciseIdForLesson("styles", "flex-basics")).toBeUndefined();
   });
 });

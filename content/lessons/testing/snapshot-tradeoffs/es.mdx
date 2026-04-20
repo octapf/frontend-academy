@@ -1,0 +1,20 @@
+---
+title: "Snapshots: cuándo ayudan y cuándo duelen"
+description: "Regresiones baratas vs. ruido en el diff."
+level: mid
+order: 7
+---
+
+# Snapshots en tests
+
+Un **snapshot** guarda la salida serializada de un componente o función y la compara en la próxima corrida. Son baratos para detectar **regresiones accidentales** en markup estable.
+
+## Cuándo evitarlos
+
+Si el snapshot es enorme o cambia en cada PR sin señal clara, el equipo empieza a **actualizar a ciegas** y pierde confianza. Preferí aserciones dirigidas (RTL: rol, texto, estado) para comportamiento.
+
+## Buen uso
+
+- Salidas pequeñas y estables (serialización de un helper, JSON de un adapter).
+- Componentes “leaf” con props fijas en el test.
+- Combinar snapshot **reducido** con matchers semánticos donde tenga sentido.

@@ -16,6 +16,9 @@ import { runTsGroupBy } from "@/lib/exercises/run-ts-group-by";
 import { runTsInvariant } from "@/lib/exercises/run-ts-invariant";
 import { runTsParseQuery } from "@/lib/exercises/run-ts-parse-query";
 import { runTsParseNumber } from "@/lib/exercises/run-ts-parse-number";
+import { runTsParsePixel } from "@/lib/exercises/run-ts-parse-pixel";
+import { runTsResolveFlag } from "@/lib/exercises/run-ts-resolve-flag";
+import { runTsStrictInt } from "@/lib/exercises/run-ts-strict-int";
 import { runTsPickKeys } from "@/lib/exercises/run-ts-pick-keys";
 import { runTsPositive } from "@/lib/exercises/run-ts-positive";
 import { runTsSafeJsonParse } from "@/lib/exercises/run-ts-safe-json-parse";
@@ -87,6 +90,9 @@ export async function POST(req: Request) {
     "ts-shallow-equal": runTsShallowEqual,
     "ts-assert-never": runTsAssertNever,
     "ts-parse-number": runTsParseNumber,
+    "ts-resolve-flag": runTsResolveFlag,
+    "ts-parse-pixel": runTsParsePixel,
+    "ts-strict-int": runTsStrictInt,
   };
 
   const run = runners[exercise.id];

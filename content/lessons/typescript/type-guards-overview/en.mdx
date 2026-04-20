@@ -1,0 +1,31 @@
+---
+title: "Type guards and practical narrowing"
+description: "From a runtime check to a finer type."
+level: mid
+order: 9
+---
+
+# Type guards
+
+A **type guard** is a runtime check TypeScript understands to **narrow** a union. You already saw `typeof` and `in`; here the focus is **reusable contracts**.
+
+```ts
+function isUser(x: unknown): x is { id: string; name: string } {
+  return (
+    typeof x === "object" &&
+    x !== null &&
+    "id" in x &&
+    "name" in x &&
+    typeof (x as { id: unknown }).id === "string" &&
+    typeof (x as { name: unknown }).name === "string"
+  );
+}
+```
+
+## Why they matter
+
+External data (`fetch`, `postMessage`, storage) often arrives as `unknown` or `any`. A centralized guard documents the accepted shape and where to fail early.
+
+## Link to Narrowing
+
+This lesson bridges into **Narrowing**: there you practice predicates and discriminated unions in more depth.

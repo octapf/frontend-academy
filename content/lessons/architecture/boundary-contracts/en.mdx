@@ -1,0 +1,20 @@
+---
+title: "Contracts at boundaries (API ↔ UI)"
+description: "Schemas, versioning, and predictable errors."
+level: mid
+order: 5
+---
+
+# Clear boundaries
+
+Between **API and UI**, the contract is the data shape plus evolution rules. Without an explicit contract, each deploy can silently break the other side.
+
+## Useful practices
+
+- **Schema validation** at the edge (zod, etc.) before touching global state.
+- **Versioning** or well-documented optional fields when the backend outpaces the UI.
+- **Normalized errors** (status + code + safe message) so the UI can render consistently.
+
+## Link to error handling
+
+**Error handling** goes deeper on `unknown` in `catch` and safe messages; here the focus is the **contract** between systems.

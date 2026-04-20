@@ -51,6 +51,10 @@ For public APIs or clearer intent, **annotations** (`: string`, `: User`) make t
 With `strict: true` (recommended) you catch many bugs around `null`/`undefined` and questionable assignments.
 </Callout>
 
+## Strings with “shape”
+
+Even when a value is a `string`, you may want **strict rules**: for example accept only decimal integers (`"42"`) and reject `"3.14"` or `"12px"`. That combines types (`number | null`) with runtime validation.
+
 ## Next
 
 ```ts

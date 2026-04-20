@@ -18,3 +18,7 @@ Un **feature flag** es una variable (suelen venir del servidor) que decide si un
 ## Trade-off
 
 Más flags implican más combinaciones y más superficie para bugs. Documentá qué flag controla qué y quién es dueño de apagarlo.
+
+## Valores `unknown`
+
+En runtime los flags suelen llegar como JSON o query params: a veces son boolean, a veces strings (`"on"`, `"false"`). Conviene **normalizar** en una función pequeña y usar un **default** claro cuando el valor no es reconocible (en Learn: ejercicio de código asociado a esta lección).
