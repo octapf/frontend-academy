@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 
 import { getJwtSecretKey } from "@/lib/auth/secret";
 import { getMongoDb } from "@/lib/auth/mongo-client";
-import { isMongoEnvConfigured } from "@/lib/auth/mongo-uri";
+import { isMongoEnvConfigured, mongoUriScheme } from "@/lib/auth/mongo-uri";
 
 export const runtime = "nodejs";
 
@@ -15,13 +15,15 @@ export async function GET() {
     auth.error = e instanceof Error ? e.message : "AUTH_SECRET error";
   }
 
-  const db: { configured: boolean; ok: boolean; error?: string } = {
+  const db: { configured: boolean; ok: boolean; scheme: string | null; error?: string } = {
     configured: isMongoEnvConfigured(),
     ok: true,
+    scheme: null,
   };
 
   if (db.configured) {
     try {
+      db.scheme = process.env.MONGODB_URI ? mongoUriScheme(process.env.MONGODB_URI) : null;
       const mongo = await getMongoDb();
       await mongo.command({ ping: 1 });
     } catch (e) {

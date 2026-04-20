@@ -10,7 +10,24 @@ export function normalizeMongoUri(raw: string): string {
   ) {
     uri = uri.slice(1, -1).trim().replace(/\r?\n/g, "");
   }
+  // Pegado típico en Vercel / docs: "MONGODB_URI=mongodb+srv://..."
+  uri = uri.replace(/^MONGODB_URI\s*=\s*/i, "");
+  // Si quedó algún prefijo antes del scheme, recortarlo (sin exponer secretos)
+  const idx = uri.indexOf("mongodb://");
+  const idxSrv = uri.indexOf("mongodb+srv://");
+  const best =
+    idx >= 0 && idxSrv >= 0 ? Math.min(idx, idxSrv) : Math.max(idx, idxSrv);
+  if (best > 0) {
+    uri = uri.slice(best);
+  }
   return uri;
+}
+
+export function mongoUriScheme(raw: string): string | null {
+  const uri = normalizeMongoUri(raw);
+  if (uri.startsWith("mongodb+srv://")) return "mongodb+srv://";
+  if (uri.startsWith("mongodb://")) return "mongodb://";
+  return null;
 }
 
 /** True si hay una URI usable (misma lógica que el cliente Mongo). */
