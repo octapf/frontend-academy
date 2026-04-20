@@ -1,17 +1,30 @@
 ---
 title: "Playwright vs RTL: capas"
 description: "Dónde va cada herramienta."
-level: "mid"
+level: mid
 order: 12
 ---
 
 # Playwright vs RTL: capas
 
+## Qué vas a entender
+
 RTL valida comportamiento en JSDOM rápido; Playwright valida navegador real y red.
+
+## Detalle
 
 No dupliques la misma aserción en tres capas: elegí la más barata que detecte el bug.
 
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Copiar el snippet sin adaptar convenciones del equipo (nombres, capas, tests, accesibilidad).
+
 ## Recursos
 
-- MDN Web Docs
-- Documentación oficial del tema cuando aplique
+- [MDN Web Docs](https://developer.mozilla.org/es/)
+- Documentación oficial de React, TypeScript o tu bundler, según el tema.

@@ -22,3 +22,13 @@ More flags mean more combinations and more bug surface. Document what each flag 
 ## `unknown` values
 
 At runtime flags often arrive as JSON or query params: sometimes booleans, sometimes strings (`"on"`, `"false"`). Prefer **normalizing** in a small helper with a clear **default** when the value is not recognized (this lesson has a linked code exercise in Learn).
+
+## Quick checklist
+
+- Does the flag have an **owner** and a sunset date?
+- Is the default on network failure **safe** for users?
+- Is there **minimal telemetry** to know how many people see each variant?
+
+<Callout title="Conscious debt">
+Every new flag is **debt**: more branches and tests. If you can’t explain its purpose in one line, you probably don’t need it.
+</Callout>

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Genera 50 lecciones nuevas (es.mdx + en.mdx) con contenido breve y único.
- * Idempotente: no sobrescribe si ya existe es.mdx.
+ * Genera 50 lecciones (es.mdx + en.mdx) con estructura pedagógica fija.
+ * Por defecto no sobrescribe si existe `es.mdx`. Pasá `--force` para regenerar.
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -10,12 +10,30 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, "..");
 const lessonsDir = path.join(root, "content", "lessons");
+const force = process.argv.includes("--force");
+
+const SECTION = {
+  es: {
+    goal: "Qué vas a entender",
+    detail: "Detalle",
+    practice: "Práctica recomendada",
+    pitfalls: "Errores comunes",
+    resources: "Recursos",
+  },
+  en: {
+    goal: "What you’ll take away",
+    detail: "Details",
+    practice: "Recommended practice",
+    pitfalls: "Common pitfalls",
+    resources: "Resources",
+  },
+};
 
 function fm({ title, description, level, order }) {
   return `---
 title: ${JSON.stringify(title)}
 description: ${JSON.stringify(description)}
-level: ${JSON.stringify(level)}
+level: ${level}
 order: ${order}
 ---
 
@@ -937,17 +955,55 @@ const LESSONS = [
   },
 ];
 
-function body(title, paras) {
-  return `# ${title}\n\n${paras.map((p) => `${p}\n\n`).join("")}## Recursos\n\n- MDN Web Docs\n- Documentación oficial del tema cuando aplique\n`;
+function body(title, paras, lang) {
+  const s = SECTION[lang];
+  const [first, second] = paras;
+  const practiceBullets =
+    lang === "es"
+      ? `- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).\n- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.`
+      : `- Write down **one real case** from your repo where this topic showed up (or should have).\n- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.`;
+  const pitfall =
+    lang === "es"
+      ? "Copiar el snippet sin adaptar convenciones del equipo (nombres, capas, tests, accesibilidad)."
+      : "Copying snippets without adapting team conventions (names, layers, tests, accessibility).";
+  const res =
+    lang === "es"
+      ? `- [MDN Web Docs](https://developer.mozilla.org/es/)\n- Documentación oficial de React, TypeScript o tu bundler, según el tema.`
+      : `- [MDN Web Docs](https://developer.mozilla.org/en-US/)\n- Official docs for React, TypeScript, or your bundler, depending on the topic.`;
+
+  return `# ${title}
+
+## ${s.goal}
+
+${first}
+
+## ${s.detail}
+
+${second}
+
+## ${s.practice}
+
+${practiceBullets}
+
+## ${s.pitfalls}
+
+- ${pitfall}
+
+## ${s.resources}
+
+${res}
+`;
 }
 
 let created = 0;
 let skipped = 0;
+let overwritten = 0;
 
 for (const L of LESSONS) {
   const dir = path.join(lessonsDir, L.module, L.slug);
   const esPath = path.join(dir, "es.mdx");
-  if (fs.existsSync(esPath)) {
+  const existed = fs.existsSync(esPath);
+  if (existed && !force) {
     skipped += 1;
     continue;
   }
@@ -957,16 +1013,19 @@ for (const L of LESSONS) {
     description: L.descEs,
     level: L.level,
     order: L.order,
-  }) + body(L.titleEs, L.pEs);
+  }) + body(L.titleEs, L.pEs, "es");
   const en = fm({
     title: L.titleEn,
     description: L.descEn,
     level: L.level,
     order: L.order,
-  }) + body(L.titleEn, L.pEn);
+  }) + body(L.titleEn, L.pEn, "en");
   fs.writeFileSync(esPath, es, "utf8");
   fs.writeFileSync(path.join(dir, "en.mdx"), en, "utf8");
-  created += 1;
+  if (existed && force) overwritten += 1;
+  else created += 1;
 }
 
-console.log(`Lessons created: ${created}, skipped (already exist): ${skipped}`);
+console.log(
+  `Lessons written: ${created + overwritten} (new: ${created}, overwritten: ${overwritten}), skipped: ${skipped}. Force=${force}`
+);

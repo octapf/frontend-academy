@@ -22,3 +22,13 @@ Más flags implican más combinaciones y más superficie para bugs. Documentá q
 ## Valores `unknown`
 
 En runtime los flags suelen llegar como JSON o query params: a veces son boolean, a veces strings (`"on"`, `"false"`). Conviene **normalizar** en una función pequeña y usar un **default** claro cuando el valor no es reconocible (en Learn: ejercicio de código asociado a esta lección).
+
+## Checklist rápida
+
+- ¿El flag tiene **dueño** y fecha de apagado?
+- ¿El default ante error de red es **seguro** para el usuario?
+- ¿Hay **telemetría** mínima para saber cuánta gente ve cada variante?
+
+<Callout title="Deuda consciente">
+Cada flag nuevo es **deuda**: suma ramas y tests. Si no podés explicar en una línea para qué sirve, probablemente no haga falta.
+</Callout>
