@@ -1,0 +1,848 @@
+#!/usr/bin/env node
+/**
+ * Segundo lote: 50 lecciones ES/EN (misma plantilla que batch 1).
+ * Uso: node scripts/generate-50-lessons-batch2.mjs [--force]
+ */
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const root = path.join(__dirname, "..");
+const lessonsDir = path.join(root, "content", "lessons");
+const force = process.argv.includes("--force");
+
+const SECTION = {
+  es: {
+    goal: "Qué vas a entender",
+    detail: "Detalle",
+    practice: "Práctica recomendada",
+    pitfalls: "Errores comunes",
+    resources: "Recursos",
+  },
+  en: {
+    goal: "What you’ll take away",
+    detail: "Details",
+    practice: "Recommended practice",
+    pitfalls: "Common pitfalls",
+    resources: "Resources",
+  },
+};
+
+function fm({ title, description, level, order }) {
+  return `---
+title: ${JSON.stringify(title)}
+description: ${JSON.stringify(description)}
+level: ${level}
+order: ${order}
+---
+
+`;
+}
+
+function body(title, paras, lang) {
+  const s = SECTION[lang];
+  const [first, second] = paras;
+  const practiceBullets =
+    lang === "es"
+      ? `- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).\n- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.`
+      : `- Write down **one real case** from your repo where this topic showed up (or should have).\n- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.`;
+  const pitfall =
+    lang === "es"
+      ? "Copiar el snippet sin adaptar convenciones del equipo (nombres, capas, tests, accesibilidad)."
+      : "Copying snippets without adapting team conventions (names, layers, tests, accessibility).";
+  const res =
+    lang === "es"
+      ? `- [MDN Web Docs](https://developer.mozilla.org/es/)\n- Documentación oficial de React, TypeScript o tu bundler, según el tema.`
+      : `- [MDN Web Docs](https://developer.mozilla.org/en-US/)\n- Official docs for React, TypeScript, or your bundler, depending on the topic.`;
+
+  return `# ${title}
+
+## ${s.goal}
+
+${first}
+
+## ${s.detail}
+
+${second}
+
+## ${s.practice}
+
+${practiceBullets}
+
+## ${s.pitfalls}
+
+- ${pitfall}
+
+## ${s.resources}
+
+${res}
+`;
+}
+
+/** @type {(m:string,s:string,o:number,l:string,tEs:string,tEn:string,dEs:string,dEn:string,aEs:string,bEs:string,aEn:string,bEn:string) => object} */
+function L(m, s, o, l, tEs, tEn, dEs, dEn, aEs, bEs, aEn, bEn) {
+  return {
+    module: m,
+    slug: s,
+    order: o,
+    level: l,
+    titleEs: tEs,
+    titleEn: tEn,
+    descEs: dEs,
+    descEn: dEn,
+    pEs: [aEs, bEs],
+    pEn: [aEn, bEn],
+  };
+}
+
+const LESSONS = [
+  // React 30–44
+  L(
+    "react",
+    "aria-live-regions",
+    30,
+    "mid",
+    "Regiones `aria-live`",
+    "`aria-live` regions",
+    "Anunciar cambios sin robar el foco.",
+    "Announce changes without stealing focus.",
+    "`aria-live=\"polite\"` avisa sin interrumpir; `assertive` solo para urgencias reales.",
+    "Evitá spamear: agrupá mensajes y no uses live regions para cada tecla.",
+    "`aria-live=\"polite\"` informs without interrupting; reserve `assertive` for true urgency.",
+    "Avoid spam: batch messages; don’t use live regions for every keystroke.",
+  ),
+  L(
+    "react",
+    "native-lazy-images",
+    31,
+    "junior",
+    "Imágenes lazy nativas",
+    "Native lazy images",
+    "`loading` y dimensiones explícitas.",
+    "`loading` and explicit dimensions.",
+    "`loading=\"lazy\"` + `width`/`height` reduce CLS y trabajo del main thread.",
+    "Para hero crítico, cargá eager o preload según medición.",
+    "`loading=\"lazy\"` plus `width`/`height` reduces CLS and main-thread work.",
+    "For critical hero imagery, use eager or preload based on measurement.",
+  ),
+  L(
+    "react",
+    "svg-sprites-accessibility",
+    32,
+    "mid",
+    "SVG sprites y a11y",
+    "SVG sprites and accessibility",
+    "Iconos reutilizables con títulos coherentes.",
+    "Reusable icons with coherent titles.",
+    "Centralizá `<symbol>` y referenciá con `<use>`; documentá cuándo ocultar decorativos con `aria-hidden`.",
+    "Si el icono aporta significado, exponé nombre accesible (`aria-label` o texto visible).",
+    "Centralize `<symbol>` and reference with `<use>`; document when icons are decorative (`aria-hidden`).",
+    "If the icon conveys meaning, expose an accessible name (`aria-label` or visible text).",
+  ),
+  L(
+    "react",
+    "micro-interactions-css",
+    33,
+    "junior",
+    "Microinteracciones con CSS",
+    "Micro-interactions with CSS",
+    "Feedback sin librerías pesadas.",
+    "Feedback without heavy libraries.",
+    "`transition` corta en `transform`/`opacity` da sensación de calidad sin bloquear input.",
+    "Respetá `prefers-reduced-motion` para no forzar animación.",
+    "Short `transition` on `transform`/`opacity` feels polished without blocking input.",
+    "Respect `prefers-reduced-motion` so motion isn’t forced.",
+  ),
+  L(
+    "react",
+    "drag-drop-a11y-basics",
+    34,
+    "mid",
+    "Drag & drop accesible (bases)",
+    "Accessible drag & drop (basics)",
+    "Teclado y roles.",
+    "Keyboard and roles.",
+    "No dependas solo del mouse: alternativa por teclado o flujo equivalente.",
+    "Anunciá estados con texto visible o live region acotada.",
+    "Don’t rely on mouse alone: keyboard path or equivalent flow.",
+    "Announce state with visible text or a scoped live region.",
+  ),
+  L(
+    "react",
+    "focus-management-routing",
+    35,
+    "mid",
+    "Foco y navegación SPA",
+    "Focus and SPA routing",
+    "Evitar trampas de foco al cambiar ruta.",
+    "Avoid focus traps when routes change.",
+    "Al cambiar de página, mové foco al `h1` principal o contenedor con `tabIndex={-1}`.",
+    "Coordiná con el router para no pelear con portales/modales.",
+    "On route change, move focus to the main `h1` or a container with `tabIndex={-1}`.",
+    "Coordinate with the router so focus doesn’t fight portals/modals.",
+  ),
+  L(
+    "react",
+    "loading-skeleton-patterns",
+    36,
+    "junior",
+    "Skeletons de carga",
+    "Loading skeleton patterns",
+    "Percepción de velocidad honesta.",
+    "Honest perceived speed.",
+    "Los skeletons deben aproximar layout final para reducir CLS.",
+    "No uses skeleton eterno: timeout y estado de error visible.",
+    "Skeletons should approximate final layout to reduce CLS.",
+    "Avoid infinite skeletons: timeout and visible error state.",
+  ),
+  L(
+    "react",
+    "empty-states-ux",
+    37,
+    "junior",
+    "Estados vacíos (UX)",
+    "Empty states (UX)",
+    "Primera impresión sin datos.",
+    "First impression without data.",
+    "Explicá por qué está vacío y la siguiente acción (crear, filtrar, reintentar).",
+    "Evitá culpar al usuario (“no hiciste nada”) sin contexto.",
+    "Explain why it’s empty and the next action (create, filter, retry).",
+    "Don’t blame the user (“you did nothing”) without context.",
+  ),
+  L(
+    "react",
+    "toast-patterns-a11y",
+    38,
+    "mid",
+    "Toasts: patrones y a11y",
+    "Toasts: patterns and a11y",
+    "No tapar controles críticos.",
+    "Don’t cover critical controls.",
+    "Apilá toasts con límite; cerrá automático solo si no bloquea lectura.",
+    "Teclado: foco no debe perderse al abrir/cerrar toast.",
+    "Stack toasts with a cap; auto-dismiss only if it doesn’t block reading.",
+    "Keyboard: focus shouldn’t get lost when toasts open/close.",
+  ),
+  L(
+    "react",
+    "breadcrumb-a11y",
+    39,
+    "junior",
+    "Breadcrumbs accesibles",
+    "Accessible breadcrumbs",
+    "Jerarquía clara para todos.",
+    "Clear hierarchy for everyone.",
+    "Usá `nav` + lista o roles adecuados; el separador no debe ser solo color.",
+    "El último ítem suele ser la página actual sin link.",
+    "Use `nav` + list or appropriate roles; separators aren’t color-only.",
+    "The last item is usually the current page without a link.",
+  ),
+  L(
+    "react",
+    "pagination-a11y",
+    40,
+    "junior",
+    "Paginación accesible",
+    "Accessible pagination",
+    "Navegación por teclado y anuncios.",
+    "Keyboard navigation and announcements.",
+    "Botones con nombre claro (“Página siguiente”) mejor que solo iconos.",
+    "Indicá página actual con `aria-current=\"page\"`.",
+    "Buttons with clear names (“Next page”) beat icon-only controls.",
+    "Mark the current page with `aria-current=\"page\"`.",
+  ),
+  L(
+    "react",
+    "infinite-scroll-tradeoffs",
+    41,
+    "mid",
+    "Scroll infinito: trade-offs",
+    "Infinite scroll trade-offs",
+    "Descubrimiento vs rendimiento.",
+    "Discovery vs performance.",
+    "Perdés el footer y el sentido de “fin”; ofrecé alternativa paginada si aplica.",
+    "Virtualizá listas largas y preservá posición al volver atrás.",
+    "You lose the footer and a sense of “end”; offer paginated mode when it fits.",
+    "Virtualize long lists and preserve position when navigating back.",
+  ),
+  L(
+    "react",
+    "memo-event-handlers",
+    42,
+    "mid",
+    "`useCallback` y handlers",
+    "`useCallback` and handlers",
+    "Referencias estables sin fanatismo.",
+    "Stable references without dogma.",
+    "Útil cuando hijos memoizados dependen de identidad de función.",
+    "Si el hijo no es `memo`, medí antes de complicar el código.",
+    "Useful when memoized children depend on function identity.",
+    "If the child isn’t `memo`, measure before complicating code.",
+  ),
+  L(
+    "react",
+    "tabs-pattern-controlled",
+    43,
+    "mid",
+    "Tabs controlados (patrón)",
+    "Controlled tabs pattern",
+    "Teclado y estado compartido.",
+    "Keyboard and shared state.",
+    "Seguí el patrón ARIA tabs: flechas, Home/End, foco en el panel activo.",
+    "Evitá montar todos los paneles si el contenido es pesado.",
+    "Follow the ARIA tabs pattern: arrows, Home/End, focus on the active panel.",
+    "Don’t mount every panel if content is heavy.",
+  ),
+  L(
+    "react",
+    "radio-group-a11y",
+    44,
+    "junior",
+    "Grupos de radio accesibles",
+    "Accessible radio groups",
+    "Etiquetas y agrupación.",
+    "Labels and grouping.",
+    "`fieldset`/`legend` o `role=\"radiogroup\"` con nombre accesible.",
+    "El error de validación debe asociarse al grupo o al ítem concreto.",
+    "`fieldset`/`legend` or `role=\"radiogroup\"` with an accessible name.",
+    "Validation errors should tie to the group or the specific item.",
+  ),
+
+  // TypeScript 26–37
+  L(
+    "typescript",
+    "exhaustiveness-checking",
+    26,
+    "mid",
+    "Exhaustividad en `switch`",
+    "Exhaustiveness in `switch`",
+    "Cerrar unions con `never`.",
+    "Close unions with `never`.",
+    "Un `default` con `assertNever(x)` atrapa casos olvidados en compile-time.",
+    "Mantené discriminantes literales estables (sin strings mágicos sueltos).",
+    "A `default` with `assertNever(x)` catches forgotten cases at compile time.",
+    "Keep literal discriminants stable (no loose magic strings).",
+  ),
+  L(
+    "typescript",
+    "type-predicates-vs-assertions",
+    27,
+    "mid",
+    "Predicados vs aserciones",
+    "Predicates vs assertions",
+    "Cuándo cada uno miente menos.",
+    "Which lies less.",
+    "Un predicado documenta un check real; `as` fuerza sin evidencia.",
+    "Si necesitás `as`, dejá comentario con invariante esperada.",
+    "A predicate documents a real check; `as` forces without evidence.",
+    "If you need `as`, comment the expected invariant.",
+  ),
+  L(
+    "typescript",
+    "tuple-rest-parameters",
+    28,
+    "mid",
+    "Tuplas y rest en parámetros",
+    "Tuples and rest in parameters",
+    "APIs ordenadas y tipadas.",
+    "Ordered typed APIs.",
+    "Las tuplas modelan posiciones fijas; `...rest` captura colas variables con tipos útiles.",
+    "Evitá tuplas kilométricas: pasá a objeto con nombre si crece.",
+    "Tuples model fixed positions; `...rest` captures tails with useful types.",
+    "Avoid huge tuples: switch to a named object if it grows.",
+  ),
+  L(
+    "typescript",
+    "jsdoc-public-api",
+    29,
+    "junior",
+    "JSDoc en APIs públicas",
+    "JSDoc on public APIs",
+    "DX sin sacrificar TS.",
+    "DX without giving up TS.",
+    "Comentarios en puntos de fricción: parámetros no obvios y errores posibles.",
+    "No dupliques lo que ya dice el tipo salvo que agregue semántica.",
+    "Comment at friction points: non-obvious params and possible errors.",
+    "Don’t duplicate what the type already says unless it adds semantics.",
+  ),
+  L(
+    "typescript",
+    "void-vs-undefined-returns",
+    30,
+    "junior",
+    "`void` vs `undefined` en retornos",
+    "`void` vs `undefined` returns",
+    "Callbacks y callbacks de librerías.",
+    "Callbacks and library callbacks.",
+    "`void` ignora el valor de retorno en callbacks; útil con APIs flexibles.",
+    "Mezclar `undefined` explícito e implícito confunde en APIs públicas.",
+    "`void` ignores return values in callbacks; useful with flexible APIs.",
+    "Mixing explicit and implicit `undefined` confuses public APIs.",
+  ),
+  L(
+    "typescript",
+    "const-assertion-literal-inference",
+    31,
+    "mid",
+    "`as const` e inferencia literal",
+    "`as const` and literal inference",
+    "Tuplas y literales estrechos.",
+    "Narrow tuples and literals.",
+    "`as const` congela literales para APIs que requieren uniones finas.",
+    "Ojo con serialización: runtime sigue siendo JSON genérico.",
+    "`as const` freezes literals for APIs that need fine unions.",
+    "Watch serialization: runtime is still generic JSON.",
+  ),
+  L(
+    "typescript",
+    "non-null-assertion-caution",
+    32,
+    "junior",
+    "El operador `!` (cautela)",
+    "The `!` operator (caution)",
+    "Cuándo es aceptable.",
+    "When it’s acceptable.",
+    "Solo tras invariantes verificadas justo arriba (DOM, parser propio).",
+    "En código compartido preferí narrowing explícito.",
+    "Only after invariants checked just above (DOM, your own parser).",
+    "In shared code prefer explicit narrowing.",
+  ),
+  L(
+    "typescript",
+    "double-assertion-caution",
+    33,
+    "senior",
+    "Doble aserción (`as unknown as`)",
+    "Double assertion (`as unknown as`)",
+    "Escape hatch peligroso.",
+    "Dangerous escape hatch.",
+    "Rompe el contrato del compilador: usalo solo en bordes con validación externa.",
+    "Documentá el porqué y el test que lo respalda.",
+    "It breaks the compiler contract: use only at boundaries with external validation.",
+    "Document why and which test backs it.",
+  ),
+  L(
+    "typescript",
+    "module-augmentation-intro",
+    34,
+    "senior",
+    "Module augmentation (intro)",
+    "Module augmentation (intro)",
+    "Extender tipos de librerías.",
+    "Extending library types.",
+    "Útil para declarar props extra en tipos cerrados.",
+    "Versioná con el release de la librería: puede romperse en upgrades.",
+    "Useful to declare extra props on closed types.",
+    "Version with the library release: upgrades can break it.",
+  ),
+  L(
+    "typescript",
+    "esm-cjs-interop",
+    35,
+    "mid",
+    "ESM y CJS: interoperabilidad",
+    "ESM and CJS interoperability",
+    "Imports default vs namespace.",
+    "Default vs namespace imports.",
+    "Algunos paquetes CJS exportan `module.exports` raro para ESM.",
+    "Tu `moduleResolution` y `verbatimModuleSyntax` cambian el diagnóstico.",
+    "Some CJS packages export odd `module.exports` shapes for ESM.",
+    "`moduleResolution` and `verbatimModuleSyntax` change diagnostics.",
+  ),
+  L(
+    "typescript",
+    "zod-runtime-validation-intro",
+    36,
+    "mid",
+    "Zod: validación en runtime (intro)",
+    "Zod: runtime validation (intro)",
+    "Schemas cercanos al borde.",
+    "Schemas near the boundary.",
+    "Parseá respuestas HTTP y `unknown` antes de tocar estado global.",
+    "Compartí tipos inferidos (`z.infer`) con el resto del código.",
+    "Parse HTTP responses and `unknown` before touching global state.",
+    "Share inferred types (`z.infer`) across the codebase.",
+  ),
+  L(
+    "typescript",
+    "opaque-branded-strings",
+    37,
+    "senior",
+    "Strings opacos (branded)",
+    "Opaque branded strings",
+    "Evitar mezclar IDs distintos.",
+    "Avoid mixing different ids.",
+    "Nombrá tipos distintos aunque en runtime sean `string`.",
+    "No abuses: complejidad para equipos pequeños puede no valer la pena.",
+    "Name different types even if runtime is `string`.",
+    "Don’t overuse: complexity may not pay off for tiny teams.",
+  ),
+
+  // Testing 20–27
+  L(
+    "testing",
+    "bdd-gherkin-skeptic",
+    20,
+    "mid",
+    "BDD/Gherkin: mirada crítica",
+    "BDD/Gherkin: a skeptical view",
+    "Cuándo aporta y cuándo es teatro.",
+    "When it helps vs theater.",
+    "Gherkin útil si producto y QA leen los escenarios; si no, es costo.",
+    "Mantené escenarios cortos y ejecutables, no novelas.",
+    "Gherkin helps if product and QA read scenarios; otherwise it’s cost.",
+    "Keep scenarios short and executable, not novels.",
+  ),
+  L(
+    "testing",
+    "filesystem-test-isolation",
+    21,
+    "mid",
+    "Aislar tests del filesystem",
+    "Filesystem test isolation",
+    "Tmp dirs y cleanup.",
+    "Tmp dirs and cleanup.",
+    "Evitá rutas absolutas del dev en assertions.",
+    "`afterEach` borra artefactos aunque el test falle.",
+    "Avoid dev-specific absolute paths in assertions.",
+    "`afterEach` cleans artifacts even when tests fail.",
+  ),
+  L(
+    "testing",
+    "mutation-testing-intro",
+    22,
+    "senior",
+    "Mutation testing (intro)",
+    "Mutation testing (intro)",
+    "¿Los tests realmente fallan?",
+    "Do tests actually fail?",
+    "Stryker u otras herramientas rompen código a propósito.",
+    "Es caro en CI: corré en nightly o en módulos críticos.",
+    "Stryker and friends intentionally break code.",
+    "It’s expensive in CI: run nightly or on critical modules.",
+  ),
+  L(
+    "testing",
+    "approval-testing-intro",
+    23,
+    "mid",
+    "Approval testing (intro)",
+    "Approval testing (intro)",
+    "Salidas grandes con golden master.",
+    "Large outputs with golden masters.",
+    "Útil para serializadores y snapshots de texto revisables.",
+    "Revisá diffs en PR como parte del ritual de review.",
+    "Useful for serializers and reviewable text snapshots.",
+    "Review diffs in PR as part of review ritual.",
+  ),
+  L(
+    "testing",
+    "test-tags-ci-splits",
+    24,
+    "mid",
+    "Tags de tests y CI",
+    "Test tags and CI",
+    "Partir suites por velocidad.",
+    "Split suites by speed.",
+    "`@fast` vs `@slow` o proyectos separados en config de test runner.",
+    "Documentá qué job es required para merge.",
+    "`@fast` vs `@slow` or separate projects in runner config.",
+    "Document which job is merge-required.",
+  ),
+  L(
+    "testing",
+    "shrinking-flaky-suite",
+    25,
+    "mid",
+    "Encoger una suite flaky",
+    "Shrinking a flaky suite",
+    "Bisect y cuarentena.",
+    "Bisect and quarantine.",
+    "Corré por archivo, luego por test, con seed fijo si aplica.",
+    "Marcá `@skip` temporal con ticket enlazado, no silencio eterno.",
+    "Run by file, then by test, with a fixed seed when applicable.",
+    "Use temporary `@skip` with a linked ticket, not eternal silence.",
+  ),
+  L(
+    "testing",
+    "storybook-contract-intro",
+    26,
+    "mid",
+    "Storybook como contrato visual",
+    "Storybook as a visual contract",
+    "Estados reproducibles.",
+    "Reproducible states.",
+    "Stories son documentación viva para diseño y QA.",
+    "No reemplaza tests de interacción si el riesgo es alto.",
+    "Stories are living docs for design and QA.",
+    "They don’t replace interaction tests when risk is high.",
+  ),
+  L(
+    "testing",
+    "perf-budget-ci-intro",
+    27,
+    "senior",
+    "Performance budget en CI (intro)",
+    "Performance budgets in CI (intro)",
+    "Tamaño de bundle y métricas.",
+    "Bundle size and metrics.",
+    "Lighthouse CI o comparadores de stats.json pueden fallar builds regresivas.",
+    "Ajustá umbrales con datos, no con números mágicos iniciales.",
+    "Lighthouse CI or stats.json diffing can fail regressive builds.",
+    "Tune thresholds from data, not magic initial numbers.",
+  ),
+
+  // Styles 18–25
+  L(
+    "styles",
+    "subgrid-basics",
+    18,
+    "mid",
+    "Subgrid (bases)",
+    "Subgrid basics",
+    "Alinear hijos con la grilla del padre.",
+    "Align children to the parent grid.",
+    "`subgrid` hereda tracks del contenedor para layouts anidados.",
+    "Soporte y casos raros: probá en navegadores objetivo.",
+    "`subgrid` inherits tracks for nested layouts.",
+    "Support and edge cases: test in target browsers.",
+  ),
+  L(
+    "styles",
+    "anchor-positioning-intro",
+    19,
+    "senior",
+    "Anchor positioning (intro)",
+    "Anchor positioning (intro)",
+    "Anclar tooltips a elementos.",
+    "Anchor tooltips to elements.",
+    "API emergente para popovers anclados sin JS pesado.",
+    "Degradá con layout clásico si el navegador no soporta.",
+    "Emerging API for anchored popovers without heavy JS.",
+    "Degrade to classic layout when unsupported.",
+  ),
+  L(
+    "styles",
+    "isolation-stacking-context",
+    20,
+    "mid",
+    "`isolation` y stacking",
+    "`isolation` and stacking",
+    "Contener efectos de mezcla y z-index.",
+    "Contain blending and z-index effects.",
+    "`isolation: isolate` crea contexto útil para overlays.",
+    "Abusar puede esconder bugs de capa: medí con DevTools.",
+    "`isolation: isolate` creates useful overlay contexts.",
+    "Overuse can hide stacking bugs: measure with DevTools.",
+  ),
+  L(
+    "styles",
+    "scrollbar-styling-basics",
+    21,
+    "junior",
+    "Estilo de scrollbars (bases)",
+    "Scrollbar styling basics",
+    "WebKit y estándar.",
+    "WebKit and standards.",
+    "Prefijos y accesibilidad: no achiques demasiado el hit target.",
+    "Considerá contraste del thumb vs track.",
+    "Prefixes and accessibility: don’t shrink hit targets too much.",
+    "Consider thumb vs track contrast.",
+  ),
+  L(
+    "styles",
+    "font-display-strategies",
+    22,
+    "mid",
+    "`font-display` y FOIT/FOUT",
+    "`font-display` and FOIT/FOUT",
+    "Estrategias de carga de fuentes.",
+    "Font loading strategies.",
+    "`swap` vs `optional` cambia CLS y texto invisible.",
+    "Subset y peso de archivo siguen siendo críticos.",
+    "`swap` vs `optional` changes CLS and invisible text.",
+    "Subsetting and file weight still matter.",
+  ),
+  L(
+    "styles",
+    "image-set-responsive",
+    23,
+    "mid",
+    "`image-set()` responsive",
+    "`image-set()` responsive",
+    "DPR y formatos modernos.",
+    "DPR and modern formats.",
+    "Combiná resoluciones y tipos (`avif`, `webp`) con fallback.",
+    "Probá en dispositivos reales, no solo emulador.",
+    "Combine resolutions and types (`avif`, `webp`) with fallbacks.",
+    "Test on real devices, not only emulators.",
+  ),
+  L(
+    "styles",
+    "aspect-ratio-layouts",
+    24,
+    "junior",
+    "`aspect-ratio` en layouts",
+    "`aspect-ratio` in layouts",
+    "Reservar espacio antes de cargar media.",
+    "Reserve space before media loads.",
+    "Evita saltos cuando llegan imágenes o videos.",
+    "Complementá con `object-fit` para recortes limpios.",
+    "Avoids jumps when images or videos arrive.",
+    "Pair with `object-fit` for clean crops.",
+  ),
+  L(
+    "styles",
+    "safe-area-insets",
+    25,
+    "mid",
+    "Safe area (`env(safe-area-inset-*)`)",
+    "Safe area insets",
+    "Móviles con notch y home indicator.",
+    "Phones with notch and home indicator.",
+    "Padding en contenedores fijos evita que CTAs queden bajo el gesto.",
+    "Probá rotación y landscape.",
+    "Padding on fixed containers keeps CTAs above gestures.",
+    "Test rotation and landscape.",
+  ),
+
+  // Architecture 13–17
+  L(
+    "architecture",
+    "sticky-sessions-load-balancing",
+    13,
+    "senior",
+    "Sticky sessions y balanceo",
+    "Sticky sessions and load balancing",
+    "Estado en servidor y afinidad.",
+    "Server state and affinity.",
+    "Simplifica algunos flujos pero complica despliegues y caídas de nodo.",
+    "Preferí stateless + store compartido cuando puedas.",
+    "It simplifies some flows but complicates deploys and node loss.",
+    "Prefer stateless + shared store when you can.",
+  ),
+  L(
+    "architecture",
+    "rate-limiting-from-frontend-view",
+    14,
+    "mid",
+    "Rate limits vistos desde el front",
+    "Rate limits from the frontend view",
+    "429 y backoff honesto.",
+    "429 and honest backoff.",
+    "Mostrá mensaje claro y exponé `Retry-After` si existe.",
+    "No reintentes infinitos en bucle sin jitter.",
+    "Show a clear message and surface `Retry-After` when present.",
+    "Don’t retry forever without jitter.",
+  ),
+  L(
+    "architecture",
+    "secrets-env-frontend",
+    15,
+    "senior",
+    "Secretos y variables en front",
+    "Secrets and env in the frontend",
+    "Nada privado en el bundle.",
+    "Nothing private in the bundle.",
+    "Todo lo empaquetado es público: asumí filtración.",
+    "Usá tokens de corta vida y endpoints server-side.",
+    "Anything bundled is public: assume leakage.",
+    "Use short-lived tokens and server-side endpoints.",
+  ),
+  L(
+    "architecture",
+    "blue-green-deployments",
+    16,
+    "mid",
+    "Blue / green deployments (idea)",
+    "Blue / green deployments (idea)",
+    "Cambiar tráfico entre versiones.",
+    "Shift traffic between versions.",
+    "Reduce downtime si el healthcheck y migraciones están alineados.",
+    "El front puede cachear agresivamente: invalidá por versión.",
+    "Cuts downtime when health checks and migrations align.",
+    "Front caching can be aggressive: invalidate by version.",
+  ),
+  L(
+    "architecture",
+    "db-migrations-frontend-impact",
+    17,
+    "mid",
+    "Migraciones DB e impacto en UI",
+    "DB migrations and UI impact",
+    "Compatibilidad hacia atrás temporal.",
+    "Temporary backward compatibility.",
+    "Expand/contract: primero soportá ambos formatos, luego migrá clientes.",
+    "Coordiná feature flags con despliegues de API.",
+    "Expand/contract: support both shapes first, then migrate clients.",
+    "Coordinate feature flags with API rollouts.",
+  ),
+
+  // Vocab 5–6
+  L(
+    "vocab",
+    "estimation-terms-en-es",
+    5,
+    "junior",
+    "Estimación: términos EN/ES",
+    "Estimation: EN/ES terms",
+    "Story points, t-shirt, scope.",
+    "Story points, t-shirt, scope.",
+    "**Estimate** vs **commit**: estimás incertidumbre; te comprometés a entregar.",
+    "**Scope creep**: crecimiento de alcance; acordá cómo se renegocia.",
+    "**Estimate** vs **commit**: estimate uncertainty; commit to delivery.",
+    "**Scope creep**: growing scope; agree how to renegotiate.",
+  ),
+  L(
+    "vocab",
+    "retro-meeting-phrases",
+    6,
+    "junior",
+    "Retros: frases útiles EN",
+    "Retros: useful English phrases",
+    "Start / stop / continue.",
+    "Start / stop / continue.",
+    "**What went well?** / **What slowed us down?** / **Action items**.",
+    "Pedí **timebox** explícito para no divagar.",
+    "**What went well?** / **What slowed us down?** / **Action items**.",
+    "Ask for an explicit **timebox** to avoid rambling.",
+  ),
+];
+
+let created = 0;
+let skipped = 0;
+let overwritten = 0;
+
+for (const L of LESSONS) {
+  const dir = path.join(lessonsDir, L.module, L.slug);
+  const esPath = path.join(dir, "es.mdx");
+  const existed = fs.existsSync(esPath);
+  if (existed && !force) {
+    skipped += 1;
+    continue;
+  }
+  fs.mkdirSync(dir, { recursive: true });
+  const es =
+    fm({
+      title: L.titleEs,
+      description: L.descEs,
+      level: L.level,
+      order: L.order,
+    }) + body(L.titleEs, L.pEs, "es");
+  const en =
+    fm({
+      title: L.titleEn,
+      description: L.descEn,
+      level: L.level,
+      order: L.order,
+    }) + body(L.titleEn, L.pEn, "en");
+  fs.writeFileSync(esPath, es, "utf8");
+  fs.writeFileSync(path.join(dir, "en.mdx"), en, "utf8");
+  if (existed && force) overwritten += 1;
+  else created += 1;
+}
+
+console.log(
+  `Batch2 lessons: ${created + overwritten} written (new: ${created}, overwritten: ${overwritten}), skipped: ${skipped}. force=${force}`
+);
