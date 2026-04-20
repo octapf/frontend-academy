@@ -1,0 +1,17 @@
+---
+title: "Retries y backoff"
+description: "Cuándo reintentar y cómo evitar pegarle al server."
+level: mid
+order: 4
+---
+
+# Retries y backoff
+
+Reintentar puede ayudar cuando hay fallas transitorias (timeouts, red, rate limits), pero si lo hacés mal empeora todo.
+
+## Ideas clave
+
+- Reintentá solo errores transitorios
+- Usá **backoff exponencial**
+- Agregá jitter si hay muchos clientes
+

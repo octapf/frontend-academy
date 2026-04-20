@@ -5,7 +5,14 @@ import {
 
 describe("exerciseIdsInModule", () => {
   it("lists exercises hosted in the module", () => {
-    expect(exerciseIdsInModule("react")).toEqual(["ts-sum"]);
+    expect(exerciseIdsInModule("react").sort()).toEqual([
+      "ts-assert-never",
+      "ts-clamp",
+      "ts-parse-number",
+      "ts-shallow-equal",
+      "ts-sum",
+      "ts-unique",
+    ]);
     expect(exerciseIdsInModule("typescript").sort()).toEqual([
       "ts-greeting",
       "ts-group-by",
@@ -16,7 +23,15 @@ describe("exerciseIdsInModule", () => {
       "ts-shape-area",
       "ts-user-label",
     ]);
-    expect(exerciseIdsInModule("styles")).toEqual([]);
+    expect(exerciseIdsInModule("styles").sort()).toEqual([
+      "ts-classnames",
+      "ts-to-title-case",
+    ]);
+    expect(exerciseIdsInModule("testing").sort()).toEqual([
+      "ts-backoff",
+      "ts-invariant",
+    ]);
+    expect(exerciseIdsInModule("architecture").sort()).toEqual(["ts-error-message"]);
   });
 });
 

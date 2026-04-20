@@ -1,0 +1,19 @@
+---
+title: "Lists and keys"
+description: "Render lists without subtle bugs."
+level: junior
+order: 5
+---
+
+# Lists and keys
+
+When rendering arrays in React, you need a stable `key` so React can reconcile correctly.
+
+## Don’t
+
+- Use the index if the list can reorder/filter.
+
+## Do
+
+- Use a stable item id (for example `user.id`).
+

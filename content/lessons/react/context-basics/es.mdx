@@ -1,0 +1,21 @@
+---
+title: "Context: bases"
+description: "Compartir estado sin prop drilling."
+level: mid
+order: 7
+---
+
+# Context: bases
+
+`Context` sirve para pasar valores a muchos componentes sin encadenar props.
+
+## Cuándo usarlo
+
+- Tema (light/dark)
+- Usuario/sesión
+- Config global de la app
+
+## Cuándo NO
+
+Si cambia todo el tiempo (alta frecuencia), puede disparar renders: preferí state local, store o memo.
+

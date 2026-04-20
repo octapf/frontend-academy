@@ -1,0 +1,19 @@
+---
+title: "Error handling"
+description: "Normalize unknown, add context, and produce useful messages."
+level: mid
+order: 3
+---
+
+# Error handling
+
+In both frontend and backend you often handle errors as `unknown`.
+
+## Goals
+
+- Don’t crash the UI
+- Show useful messages to users
+- Log context for debugging (without leaking PII)
+
+A common practice is to normalize any `unknown` into a safe string.
+

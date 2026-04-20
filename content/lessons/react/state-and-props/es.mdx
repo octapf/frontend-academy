@@ -1,0 +1,20 @@
+---
+title: "State vs Props"
+description: "Qué cambia y qué viene de arriba."
+level: junior
+order: 4
+---
+
+# State vs Props
+
+En React, **props** son datos que llegan desde el padre. **state** es estado local del componente.
+
+## Regla práctica
+
+- Si algo viene de afuera y el componente solo lo usa: **props**.
+- Si el componente lo cambia (por input, click, fetch): **state**.
+
+## Señal de smell
+
+Si un valor vive en state, pero **siempre** se puede derivar de props, probablemente no debería estar duplicado.
+

@@ -13,6 +13,16 @@ const LESSON_KEY_BY_EXERCISE: Record<ExerciseId, string> = {
   "ts-parse-query": lessonProgressKey("typescript", "url-search-params"),
   "ts-group-by": lessonProgressKey("typescript", "array-reduce"),
   "ts-safe-json-parse": lessonProgressKey("typescript", "json-parse"),
+  "ts-clamp": lessonProgressKey("react", "state-and-props"),
+  "ts-unique": lessonProgressKey("react", "lists-and-keys"),
+  "ts-classnames": lessonProgressKey("styles", "utility-classes"),
+  "ts-to-title-case": lessonProgressKey("styles", "typography-basics"),
+  "ts-invariant": lessonProgressKey("testing", "arrange-act-assert"),
+  "ts-backoff": lessonProgressKey("testing", "retry-backoff"),
+  "ts-error-message": lessonProgressKey("architecture", "error-handling"),
+  "ts-shallow-equal": lessonProgressKey("react", "performance-memo"),
+  "ts-assert-never": lessonProgressKey("react", "context-basics"),
+  "ts-parse-number": lessonProgressKey("react", "forms-and-validation"),
 };
 
 const EXERCISE_BY_LESSON_KEY = Object.fromEntries(

@@ -1,0 +1,17 @@
+---
+title: "Retries and backoff"
+description: "When to retry and how to avoid hammering servers."
+level: mid
+order: 4
+---
+
+# Retries and backoff
+
+Retries can help for transient failures (timeouts, network, rate limits), but done poorly they make things worse.
+
+## Key ideas
+
+- Retry only transient errors
+- Use **exponential backoff**
+- Add jitter when many clients retry
+

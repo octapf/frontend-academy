@@ -1,0 +1,19 @@
+---
+title: "Listas y keys"
+description: "Render de listas sin bugs sutiles."
+level: junior
+order: 5
+---
+
+# Listas y keys
+
+Cuando renderizás arrays en React, necesitás una `key` estable para que React pueda reconciliar.
+
+## Qué NO hacer
+
+- Usar el índice si la lista puede reordenarse/filtrarse.
+
+## Qué sí
+
+- Usar un id estable del item (por ejemplo `user.id`).
+

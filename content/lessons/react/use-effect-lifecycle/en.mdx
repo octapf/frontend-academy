@@ -1,0 +1,19 @@
+---
+title: "useEffect: when to use it"
+description: "Side effects, dependencies, and cleanup."
+level: junior
+order: 6
+---
+
+# useEffect: when to use it
+
+`useEffect` is for **syncing with the outside world**: timers, subscriptions, DOM, fetch.
+
+## Dependencies
+
+- If you read a variable inside the effect, it usually belongs in the dependency array.
+
+## Cleanup
+
+If you start a subscription or timer, return a cleanup function.
+

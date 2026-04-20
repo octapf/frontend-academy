@@ -110,6 +110,116 @@ export const LESSON_CODE_EXERCISES: LessonCodeExerciseMeta[] = [
     },
     cta: { es: "Ir al ejercicio", en: "Open exercise" },
   },
+  {
+    moduleSlug: "react",
+    lessonSlug: "state-and-props",
+    exerciseId: "ts-clamp",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Función pura: clamp con tests en servidor.",
+      en: "Pure function: clamp with server tests.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "react",
+    lessonSlug: "lists-and-keys",
+    exerciseId: "ts-unique",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Colecciones: uniqueBy con Set.",
+      en: "Collections: uniqueBy with Set.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "styles",
+    lessonSlug: "utility-classes",
+    exerciseId: "ts-classnames",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Helpers: unir clases condicionales sin ruido.",
+      en: "Helpers: join conditional classes cleanly.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "styles",
+    lessonSlug: "typography-basics",
+    exerciseId: "ts-to-title-case",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Strings: title case con reglas simples.",
+      en: "Strings: title case with simple rules.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "testing",
+    lessonSlug: "arrange-act-assert",
+    exerciseId: "ts-invariant",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Assertion helper: invariant con tests en servidor.",
+      en: "Assertion helper: invariant with server tests.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "testing",
+    lessonSlug: "retry-backoff",
+    exerciseId: "ts-backoff",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Backoff exponencial: delays determinísticos.",
+      en: "Exponential backoff: deterministic delays.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "architecture",
+    lessonSlug: "error-handling",
+    exerciseId: "ts-error-message",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Normalizá unknown a string segura (observabilidad).",
+      en: "Normalize unknown to a safe string (observability).",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "react",
+    lessonSlug: "performance-memo",
+    exerciseId: "ts-shallow-equal",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Memoización: comparador shallowEqual para props.",
+      en: "Memoization: shallowEqual comparator for props.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "react",
+    lessonSlug: "context-basics",
+    exerciseId: "ts-assert-never",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Exhaustividad: helper assertNever.",
+      en: "Exhaustiveness: assertNever helper.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "react",
+    lessonSlug: "forms-and-validation",
+    exerciseId: "ts-parse-number",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Forms: parseo seguro de números (inputs).",
+      en: "Forms: safe number parsing (inputs).",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
 ];
 
 export function lessonCodeExerciseFor(

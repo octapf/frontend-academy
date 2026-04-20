@@ -1,0 +1,17 @@
+---
+title: "Performance: memoization"
+description: "Memo, callbacks, and comparators."
+level: mid
+order: 9
+---
+
+# Performance: memoization
+
+Before optimizing, **measure**. Still, there are common patterns:
+
+- `React.memo` to avoid re-renders when props are stable
+- `useMemo` for expensive computations
+- `useCallback` to pass stable callbacks
+
+Warning: memoizing everything can backfire (complexity, memory).
+

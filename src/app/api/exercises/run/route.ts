@@ -8,13 +8,23 @@ import { getExercise } from "@/exercises/index";
 import { limitExerciseRun } from "@/lib/rate-limit/exercise-run-limit";
 import { recordExercisePass } from "@/lib/progress/progress-store";
 import { runTsGreeting } from "@/lib/exercises/run-ts-greeting";
+import { runTsClamp } from "@/lib/exercises/run-ts-clamp";
+import { runTsClassnames } from "@/lib/exercises/run-ts-classnames";
+import { runTsBackoff } from "@/lib/exercises/run-ts-backoff";
+import { runTsErrorMessage } from "@/lib/exercises/run-ts-error-message";
 import { runTsGroupBy } from "@/lib/exercises/run-ts-group-by";
+import { runTsInvariant } from "@/lib/exercises/run-ts-invariant";
 import { runTsParseQuery } from "@/lib/exercises/run-ts-parse-query";
+import { runTsParseNumber } from "@/lib/exercises/run-ts-parse-number";
 import { runTsPickKeys } from "@/lib/exercises/run-ts-pick-keys";
 import { runTsPositive } from "@/lib/exercises/run-ts-positive";
 import { runTsSafeJsonParse } from "@/lib/exercises/run-ts-safe-json-parse";
+import { runTsAssertNever } from "@/lib/exercises/run-ts-assert-never";
+import { runTsShallowEqual } from "@/lib/exercises/run-ts-shallow-equal";
 import { runTsShapeArea } from "@/lib/exercises/run-ts-shape-area";
 import { runTsSum } from "@/lib/exercises/run-ts-sum";
+import { runTsToTitleCase } from "@/lib/exercises/run-ts-to-title-case";
+import { runTsUnique } from "@/lib/exercises/run-ts-unique";
 import { runTsUserLabel } from "@/lib/exercises/run-ts-user-label";
 
 export const runtime = "nodejs";
@@ -67,6 +77,16 @@ export async function POST(req: Request) {
     "ts-parse-query": runTsParseQuery,
     "ts-group-by": runTsGroupBy,
     "ts-safe-json-parse": runTsSafeJsonParse,
+    "ts-clamp": runTsClamp,
+    "ts-unique": runTsUnique,
+    "ts-classnames": runTsClassnames,
+    "ts-to-title-case": runTsToTitleCase,
+    "ts-invariant": runTsInvariant,
+    "ts-backoff": runTsBackoff,
+    "ts-error-message": runTsErrorMessage,
+    "ts-shallow-equal": runTsShallowEqual,
+    "ts-assert-never": runTsAssertNever,
+    "ts-parse-number": runTsParseNumber,
   };
 
   const run = runners[exercise.id];

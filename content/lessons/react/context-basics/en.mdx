@@ -1,0 +1,21 @@
+---
+title: "Context: basics"
+description: "Share state without prop drilling."
+level: mid
+order: 7
+---
+
+# Context: basics
+
+`Context` lets you pass values through the tree without threading props everywhere.
+
+## When to use it
+
+- Theme (light/dark)
+- User/session
+- Global app configuration
+
+## When not to
+
+If it updates very frequently, it can trigger many renders—prefer local state, a store, or memoization.
+

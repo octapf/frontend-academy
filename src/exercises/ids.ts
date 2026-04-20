@@ -10,6 +10,16 @@ export const EXERCISE_IDS = [
   "ts-parse-query",
   "ts-group-by",
   "ts-safe-json-parse",
+  "ts-clamp",
+  "ts-unique",
+  "ts-classnames",
+  "ts-to-title-case",
+  "ts-invariant",
+  "ts-backoff",
+  "ts-error-message",
+  "ts-shallow-equal",
+  "ts-assert-never",
+  "ts-parse-number",
 ] as const;
 
 export type ExerciseId = (typeof EXERCISE_IDS)[number];

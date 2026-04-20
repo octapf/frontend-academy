@@ -1,0 +1,20 @@
+---
+title: "State vs Props"
+description: "What changes vs what comes from above."
+level: junior
+order: 4
+---
+
+# State vs Props
+
+In React, **props** are inputs coming from the parent. **state** is local component state.
+
+## Practical rule
+
+- If it comes from outside and the component only uses it: **props**.
+- If the component changes it (input, click, fetch): **state**.
+
+## Smell
+
+If something lives in state but can always be derived from props, you may be duplicating source of truth.
+
