@@ -15,9 +15,9 @@ export function TrackSelector() {
           type="button"
           onClick={() => setTrack(id)}
           className={[
-            "rounded-md px-2.5 py-1.5 transition-colors",
+            "rounded-md px-2.5 py-1.5 outline-none transition-colors focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-brand/50 dark:focus-visible:ring-offset-zinc-950",
             track === id
-              ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900"
+              ? "bg-brand text-zinc-900"
               : "text-zinc-700 hover:bg-zinc-900/5 dark:text-zinc-200 dark:hover:bg-zinc-100/10",
           ].join(" ")}
           aria-pressed={track === id}

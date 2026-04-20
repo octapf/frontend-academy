@@ -144,7 +144,7 @@ export function TsCodeExercise({
               setLoading(false);
             }
           }}
-          className="rounded-lg bg-zinc-800 px-3 py-2 text-sm text-white hover:bg-zinc-700 disabled:opacity-60 dark:bg-zinc-200 dark:text-zinc-900 dark:hover:bg-zinc-300"
+          className="rounded-lg bg-brand px-3 py-2 text-sm font-medium text-zinc-900 outline-none transition-colors hover:bg-brand/90 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 disabled:opacity-60 dark:focus-visible:ring-offset-zinc-950"
         >
           {lang === "en" ? "Run tests" : "Ejecutar tests"}
         </button>

@@ -75,7 +75,7 @@ export function GlossaryPracticeCard() {
                 className={[
                   "rounded-lg border px-3 py-2 text-left text-sm transition-colors",
                   selected === p.term
-                    ? "border-zinc-800 bg-zinc-800 text-white dark:border-zinc-200 dark:bg-zinc-200 dark:text-zinc-900"
+                    ? "border-brand bg-brand text-zinc-900"
                     : "border-zinc-200 bg-zinc-100 hover:bg-zinc-900/5 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10",
                 ].join(" ")}
               >
@@ -138,7 +138,7 @@ export function GlossaryPracticeCard() {
             // placeholder: scoring real + tracking en backend
             alert("Placeholder: scoring + tracking");
           }}
-          className="rounded-lg bg-zinc-800 px-3 py-2 text-sm text-white hover:bg-zinc-700 dark:bg-zinc-200 dark:text-zinc-900 dark:hover:bg-zinc-300"
+          className="rounded-lg bg-brand px-3 py-2 text-sm font-medium text-zinc-900 outline-none transition-colors hover:bg-brand/90 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-offset-zinc-950"
         >
           Comprobar
         </button>

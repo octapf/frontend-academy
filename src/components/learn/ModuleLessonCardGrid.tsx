@@ -43,7 +43,7 @@ export function ModuleLessonCardGrid({
           <TrackLink
             key={l.slug}
             href={`/learn/${moduleSlug}/${l.slug}${langQs}`}
-            className="flex flex-col rounded-xl border border-zinc-300 bg-zinc-100 p-5 outline-none transition-colors hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:focus-visible:ring-zinc-500 dark:hover:bg-zinc-100/10"
+            className="flex flex-col rounded-xl border border-zinc-300 bg-zinc-100 p-5 outline-none transition-colors hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:focus-visible:ring-brand/50 dark:hover:bg-zinc-100/10"
           >
             <div className="min-w-0 flex-1">
               <div className="text-lg font-semibold leading-snug">{title}</div>

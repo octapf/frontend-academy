@@ -49,7 +49,7 @@ export function DashboardModuleChips({
             <TrackLink
               key={m.slug}
               href={withLearnLang(`/learn/${m.slug}`, learnLang)}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-300 bg-zinc-200 px-2.5 py-1.5 text-xs outline-none transition-colors hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:border-zinc-700 dark:bg-zinc-950 dark:focus-visible:ring-zinc-500 dark:focus-visible:ring-offset-zinc-950 dark:hover:bg-zinc-100/10"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-300 bg-zinc-200 px-2.5 py-1.5 text-xs outline-none transition-colors hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:border-zinc-700 dark:bg-zinc-950 dark:focus-visible:ring-brand/50 dark:focus-visible:ring-offset-zinc-950 dark:hover:bg-zinc-100/10"
             >
               <span className="font-medium text-zinc-900 dark:text-zinc-100">
                 {m.title}

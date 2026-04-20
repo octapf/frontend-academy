@@ -49,14 +49,14 @@ function LearnLanguageNavInner() {
       <Link
         href={hrefForLang(pathname, searchParams, track, "es")}
         onClick={() => setLearnLang("es")}
-        className={`rounded-md px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-zinc-500 dark:focus-visible:ring-offset-zinc-950 ${current === "es" ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900" : "text-zinc-600 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:bg-zinc-100/10"}`}
+        className={`rounded-md px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-brand/50 dark:focus-visible:ring-offset-zinc-950 ${current === "es" ? "bg-brand text-zinc-900" : "text-zinc-600 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:bg-zinc-100/10"}`}
       >
         ES
       </Link>
       <Link
         href={hrefForLang(pathname, searchParams, track, "en")}
         onClick={() => setLearnLang("en")}
-        className={`rounded-md px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-zinc-500 dark:focus-visible:ring-offset-zinc-950 ${current === "en" ? "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-900" : "text-zinc-600 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:bg-zinc-100/10"}`}
+        className={`rounded-md px-2.5 py-1.5 outline-none focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-brand/50 dark:focus-visible:ring-offset-zinc-950 ${current === "en" ? "bg-brand text-zinc-900" : "text-zinc-600 hover:bg-zinc-900/5 dark:text-zinc-300 dark:hover:bg-zinc-100/10"}`}
       >
         EN
       </Link>

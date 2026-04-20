@@ -30,13 +30,13 @@ export default async function HomePage() {
         <div className="flex flex-col gap-3 sm:flex-row sm:justify-center">
           <TrackLink
             href="/login"
-            className="inline-flex justify-center rounded-lg bg-zinc-800 px-4 py-2.5 text-sm font-medium text-white outline-none transition-colors hover:bg-zinc-700 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:bg-zinc-200 dark:text-zinc-900 dark:hover:bg-zinc-300 dark:focus-visible:ring-zinc-500"
+            className="inline-flex justify-center rounded-lg bg-brand px-4 py-2.5 text-sm font-medium text-zinc-900 outline-none transition-colors hover:bg-brand/90 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
             Ingresar
           </TrackLink>
           <TrackLink
             href="/register"
-            className="inline-flex justify-center rounded-lg border border-zinc-300 bg-zinc-100 px-4 py-2.5 text-sm font-medium text-zinc-900 outline-none transition-colors hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-600 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-100/10 dark:focus-visible:ring-zinc-500"
+            className="inline-flex justify-center rounded-lg border border-zinc-300 bg-zinc-100 px-4 py-2.5 text-sm font-medium text-zinc-900 outline-none transition-colors hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-600 dark:bg-zinc-950 dark:text-zinc-100 dark:hover:bg-zinc-100/10"
           >
             Crear cuenta
           </TrackLink>
@@ -46,7 +46,7 @@ export default async function HomePage() {
           ¿Ya tenés sesión en otra pestaña?{" "}
           <Link
             href="/dashboard"
-            className="font-medium text-zinc-800 underline-offset-4 hover:underline dark:text-zinc-200"
+            className="font-medium text-zinc-800 underline decoration-brand/50 underline-offset-4 hover:text-brand dark:text-zinc-200 dark:hover:text-brand"
           >
             Ir al dashboard
           </Link>

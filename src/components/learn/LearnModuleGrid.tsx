@@ -33,7 +33,7 @@ export function LearnModuleGrid({
           <TrackLink
             key={m.slug}
             href={`/learn/${m.slug}${langQs}`}
-            className="rounded-xl border border-zinc-300 bg-zinc-100 p-5 outline-none transition-colors hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:focus-visible:ring-zinc-500 dark:hover:bg-zinc-100/10"
+            className="rounded-xl border border-zinc-300 bg-zinc-100 p-5 outline-none transition-colors hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:focus-visible:ring-brand/50 dark:hover:bg-zinc-100/10"
           >
             <div className="text-lg font-semibold">{m.title}</div>
             <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">

@@ -10,7 +10,7 @@ import { lessonCodeExerciseFor } from "@/lib/learn/lesson-code-exercises";
 type Params = { moduleSlug: string; lessonSlug: string };
 
 const exerciseCardBtn =
-  "mt-3 inline-flex rounded-lg bg-zinc-800 px-3 py-2 text-sm text-white outline-none hover:bg-zinc-700 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:bg-zinc-200 dark:text-zinc-900 dark:hover:bg-zinc-300 dark:focus-visible:ring-zinc-500 dark:focus-visible:ring-offset-zinc-950";
+  "mt-3 inline-flex rounded-lg bg-brand px-3 py-2 text-sm font-medium text-zinc-900 outline-none transition-colors hover:bg-brand/90 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-offset-zinc-950";
 
 export default async function LessonPage({
   params,
@@ -51,7 +51,7 @@ export default async function LessonPage({
         />
       </div>
 
-      <article className="prose prose-zinc max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-a:text-zinc-900 prose-a:underline dark:prose-a:text-zinc-100">
+      <article className="prose prose-zinc max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-a:text-zinc-900 prose-a:underline prose-a:decoration-brand/50 prose-a:underline-offset-4 hover:prose-a:text-brand dark:prose-a:text-zinc-100">
         {lesson.content}
       </article>
 
@@ -73,19 +73,19 @@ export default async function LessonPage({
       <div className="flex flex-wrap gap-2">
         <TrackLink
           href={`/learn/${moduleSlug}${langQs}`}
-          className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:focus-visible:ring-zinc-500 dark:hover:bg-zinc-100/10"
+          className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
         >
           Volver al módulo
         </TrackLink>
         <TrackLink
           href="/reference/glossary"
-          className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:focus-visible:ring-zinc-500 dark:hover:bg-zinc-100/10"
+          className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
         >
           Glossary
         </TrackLink>
         <TrackLink
           href="/reference/slang"
-          className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:focus-visible:ring-zinc-500 dark:hover:bg-zinc-100/10"
+          className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
         >
           Slang
         </TrackLink>
