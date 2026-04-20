@@ -53,7 +53,7 @@ export function AppShell({
                 <span className="block text-[18px] font-bold uppercase tracking-[0.08em] text-[#2D343E] dark:text-zinc-50">
                   FRONTEND
                 </span>
-                <span className="mt-0.5 block text-[12px] font-medium uppercase tracking-[0.28em] text-[#2D343E] dark:text-zinc-200">
+                <span className="mt-0.5 block text-[12px] font-medium uppercase tracking-[0.28em] text-[#2D343E]/85 dark:text-zinc-200">
                   ACADEMY
                 </span>
               </span>
