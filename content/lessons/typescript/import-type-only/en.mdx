@@ -1,0 +1,26 @@
+---
+title: "`import type` and the bundle edge"
+description: "Types that should never land in runtime."
+level: mid
+order: 13
+---
+
+# `import type`
+
+`import type { Foo } from "./foo"` imports **types only**: bundlers can erase them completely from emitted JS—handy to avoid circular value imports or heavy modules used only in annotations.
+
+```ts
+import type { User } from "./types";
+
+export function greet(u: User) {
+  return `Hello ${u.name}`;
+}
+```
+
+## Re-exports
+
+When you re-export a public API from an internal package, split **value exports** from **type exports** so consumers don’t drag compile-only modules into the client.
+
+## Link
+
+**Utility types** composes derived types; here the focus is **how** you import them without bloating the client.

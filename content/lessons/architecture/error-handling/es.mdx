@@ -17,3 +17,11 @@ En front y back vas a manejar errores como `unknown`.
 
 Una práctica común es normalizar cualquier `unknown` a un string seguro.
 
+## `Result` en lugar de throw
+
+En código de dominio, devolver **`{ ok: true, value } | { ok: false, error }`** fuerza al llamador a manejar el fallo en tipo. Igual vas a tener `try/catch` en los bordes (fetch), pero menos excepciones inesperadas en el medio del árbol.
+
+## Mensajes al usuario
+
+Separá **mensaje técnico** (logs, correlación id) de **mensaje humano** (traducible, sin stack). Nunca mostrar `String(unknown)` crudo si puede contener datos sensibles o ruido enorme.
+

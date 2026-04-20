@@ -1,0 +1,26 @@
+---
+title: "Logical properties (`inline` / `block`)"
+description: "RTL with fewer left/right pairs."
+level: mid
+order: 8
+---
+
+# Logical properties
+
+Instead of `margin-left` / `margin-right`, use **`margin-inline-start`** and **`margin-inline-end`**, which respect text direction (**LTR/RTL**) without duplicating rules.
+
+```css
+.panel {
+  margin-inline-start: 1rem;
+  padding-block: 0.75rem;
+}
+```
+
+## `block` vs `inline`
+
+- **Inline** follows the line axis (horizontal in horizontal writing modes).
+- **Block** follows the block axis (vertical in horizontal writing modes).
+
+## Support
+
+Modern browsers support this well; double-check legacy browser policy if your audience requires it.

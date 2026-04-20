@@ -64,3 +64,8 @@ export function isPositive(n: unknown): n is number {
 ```
 
 Al final de esta lección tenés un ejercicio **`ts-positive`**: implementá `isPositive` como predicado y validá contra casos de prueba en el servidor.
+
+## Puente a unions discriminadas
+
+Los predicados brillan con **datos heterogéneos**. El siguiente salto es modelar estados con un campo literal común (`kind` o `type`) y usar `switch` exhaustivos; lo verás en **Discriminated unions** con el patrón completo y `never` para cerrar ramas.
+

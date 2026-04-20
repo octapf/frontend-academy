@@ -1,0 +1,21 @@
+---
+title: "`useRef`: mutable values and DOM"
+description: "Stable references across renders."
+level: junior
+order: 14
+---
+
+# `useRef`
+
+`useRef` returns a `{ current }` object that stays **stable** across renders. Two common uses:
+
+1. **Mutable reference** without re-rendering (counter, timeout id, “mounted once” flag).
+2. **DOM node reference** (`ref={nodeRef}`) for layout measurement, imperative focus, or non-React libraries.
+
+## Don’t overuse the DOM
+
+If you can express UI with **state and props**, prefer that. DOM `ref`s are for focused cases: focus, scroll, canvas, measurement.
+
+## With `useEffect`
+
+Typical pattern: store a timer id in a ref and clear it in the effect cleanup to avoid leaks.

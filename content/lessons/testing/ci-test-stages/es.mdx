@@ -1,0 +1,22 @@
+---
+title: "Tests en CI: etapas y feedback rápido"
+description: "Lint, unit, integración y E2E en el orden correcto."
+level: mid
+order: 11
+---
+
+# Pipeline de tests
+
+En CI el orden importa: **fallá barato y rápido** primero (lint, types, unit), después integración, y **E2E** al final o en nightly si es caro.
+
+## Paralelismo
+
+Partí suites independientes en jobs paralelos con **cache** de dependencias. Evitá compartir estado mutable entre workers (filesystem global, puertos fijos).
+
+## Qué bloquea el merge
+
+Definí explícitamente qué jobs son **required**: suele ser lint + unit + build. E2E puede ser informativo al principio y volverse required cuando sea estable.
+
+## Conexión
+
+**Flaky tests** y **Async testing** ayudan a que la etapa lenta no sea una lotería.

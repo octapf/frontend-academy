@@ -1,0 +1,22 @@
+---
+title: "Releases and rollback"
+description: "Feature flags, canaries, and communication."
+level: mid
+order: 7
+---
+
+# Rollback without drama
+
+**Rollback** returns to a prior version when a release hurts metrics or introduces bugs. In modern frontend it is rarely “flip DNS by hand”: it is usually **re-deploying** a known artifact or **toggling** the change off.
+
+## Canary and percentage
+
+Shipping to a **subset** of users or regions shrinks the blast radius. Pair with observability and alerts.
+
+## Communication
+
+In the release channel document **what to watch**, **who is on call**, and **how long** you wait before deciding rollback. Long silence increases incident cost.
+
+## Link
+
+**Feature flags** and **Observability** are the usual levers to operate controlled releases.

@@ -1,0 +1,26 @@
+---
+title: "Propiedades lógicas (`inline` / `block`)"
+description: "RTL y menos pares margin-left/right."
+level: mid
+order: 8
+---
+
+# Propiedades lógicas
+
+En lugar de `margin-left` / `margin-right`, podés usar **`margin-inline-start`** y **`margin-inline-end`**, que respetan la dirección del texto (**LTR/RTL**) sin duplicar reglas.
+
+```css
+.panel {
+  margin-inline-start: 1rem;
+  padding-block: 0.75rem;
+}
+```
+
+## `block` vs `inline`
+
+- **Inline** sigue el flujo de línea (horizontal en escritura horizontal).
+- **Block** sigue el eje de bloque (vertical en escritura horizontal).
+
+## Soporte
+
+Hoy el soporte en navegadores modernos es amplio; verificá políticas de navegadores viejos si tu audiencia lo exige.

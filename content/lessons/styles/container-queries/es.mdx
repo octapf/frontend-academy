@@ -1,0 +1,31 @@
+---
+title: "Container queries (intro)"
+description: "Estilos según el ancho del contenedor, no solo del viewport."
+level: mid
+order: 9
+---
+
+# `@container`
+
+Las **container queries** permiten que un componente reaccione al tamaño de **su contenedor**, no del viewport completo. Útil para cards reutilizables en sidebars y grids densos.
+
+```css
+.card-wrap {
+  container-type: inline-size;
+}
+
+@container (min-width: 320px) {
+  .card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+  }
+}
+```
+
+## `container-type`
+
+`inline-size` es lo más común: observa el ancho disponible. Evitá `size` salvo que realmente necesites ambos ejes.
+
+## Con flex y grid
+
+Combiná con **Grid** y **Flex** ya vistos: el contenedor define el “viewport local” del componente.

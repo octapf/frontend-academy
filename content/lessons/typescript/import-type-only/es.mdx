@@ -1,0 +1,26 @@
+---
+title: "`import type` y el borde del bundle"
+description: "Tipos que no deben quedar en runtime."
+level: mid
+order: 13
+---
+
+# `import type`
+
+`import type { Foo } from "./foo"` garantiza que **solo tipos** se importan: el bundler puede eliminarlos por completo en el JS emitido, útil para evitar dependencias circulares de valor o imports pesados solo usados en anotaciones.
+
+```ts
+import type { User } from "./types";
+
+export function greet(u: User) {
+  return `Hola ${u.name}`;
+}
+```
+
+## `type` en parámetros re-export
+
+Si reexportás APIs públicas de un paquete interno, separá **value exports** de **type exports** para que consumidores no arrastren módulos que solo necesitan en compile-time.
+
+## Conexión
+
+Con **Utility types** combinás tipos derivados; acá el foco es **cómo** los importás sin inflar el cliente.

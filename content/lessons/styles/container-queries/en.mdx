@@ -1,0 +1,31 @@
+---
+title: "Container queries (intro)"
+description: "Style based on container width, not only the viewport."
+level: mid
+order: 9
+---
+
+# `@container`
+
+**Container queries** let a component react to its **container** size, not the full viewport. Great for reusable cards in sidebars and dense grids.
+
+```css
+.card-wrap {
+  container-type: inline-size;
+}
+
+@container (min-width: 320px) {
+  .card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+  }
+}
+```
+
+## `container-type`
+
+`inline-size` is the common case: watch available width. Avoid `size` unless you truly need both axes.
+
+## With flex and grid
+
+Combine with **Grid** and **Flex** from earlier lessons: the container defines the component’s “local viewport”.

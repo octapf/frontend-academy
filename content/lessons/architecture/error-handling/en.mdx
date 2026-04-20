@@ -17,3 +17,11 @@ In both frontend and backend you often handle errors as `unknown`.
 
 A common practice is to normalize any `unknown` into a safe string.
 
+## `Result` instead of throw
+
+In domain code, returning **`{ ok: true, value } | { ok: false, error }`** forces callers to handle failure in the type system. You will still use `try/catch` at boundaries (fetch), but fewer unexpected exceptions mid-tree.
+
+## User-facing messages
+
+Split **technical messages** (logs, correlation id) from **human copy** (translatable, no stack). Never show raw `String(unknown)` if it might contain sensitive data or huge noise.
+

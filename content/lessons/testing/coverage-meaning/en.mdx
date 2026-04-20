@@ -1,0 +1,22 @@
+---
+title: "Coverage: what it measures (and what it doesn’t)"
+description: "Lines, branches, and the misleading 100%."
+level: junior
+order: 10
+---
+
+# Test coverage
+
+**Coverage** tracks which code paths your suite executed: lines, branches, functions. It is a **signal**, not a product goal.
+
+## Branches matter
+
+Two lines may always execute, but an `if` with two paths can show **50% branch coverage** even when “line coverage” looks high. Watch branch coverage on critical flows (auth, payments, permissions).
+
+## Anti-pattern
+
+Raising coverage with tests that don’t **assert** behavior (they only invoke code) creates false confidence. Prefer fewer tests with stronger assertions.
+
+## Link
+
+**Why test** explains motivation; here you measure **suite quality**, not vanity.

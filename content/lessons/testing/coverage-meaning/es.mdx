@@ -1,0 +1,22 @@
+---
+title: "Cobertura: qué mide (y qué no)"
+description: "Líneas, ramas y el 100% engañoso."
+level: junior
+order: 10
+---
+
+# Cobertura de tests
+
+La **cobertura** cuenta qué partes del código ejecutó la suite: líneas, ramas, funciones. Es una **señal**, no un objetivo de producto.
+
+## Ramas importan
+
+Dos líneas pueden ejecutarse siempre, pero un `if` con dos caminos puede tener **50% de ramas** cubiertas aunque el archivo diga “alto % líneas”. Mirá branch coverage en flujos críticos (auth, pagos, permisos).
+
+## Anti-patrón
+
+Subir cobertura con tests que no **asertan** comportamiento (solo invocan código) genera confianza falsa. Preferí menos tests con aserciones fuertes.
+
+## Conexión
+
+En **Why test** está la motivación; ací medís **calidad del suite**, no vanidad.

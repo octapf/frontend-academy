@@ -1,0 +1,22 @@
+---
+title: "Tests in CI: stages and fast feedback"
+description: "Lint, unit, integration, and E2E in the right order."
+level: mid
+order: 11
+---
+
+# Test pipelines
+
+Order matters in CI: **fail cheap and fast** first (lint, types, unit), then integration, and **E2E** last—or nightly if it is expensive.
+
+## Parallelism
+
+Split independent suites into parallel jobs with **dependency caching**. Avoid shared mutable state between workers (global filesystem, fixed ports).
+
+## Merge blockers
+
+Be explicit about **required** jobs: usually lint + unit + build. E2E can start as informational and become required once stable.
+
+## Link
+
+**Flaky tests** and **Async testing** help the slow stage feel less like a lottery.

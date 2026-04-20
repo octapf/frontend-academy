@@ -1,0 +1,20 @@
+---
+title: "Portales y modales accesibles"
+description: "`createPortal`, foco y scroll lock."
+level: mid
+order: 13
+---
+
+# React DOM portals
+
+`createPortal(children, domNode)` renderiza hijos en un nodo **fuera** del árbol del padre, útil para **modales**, tooltips globales y overlays. El event bubbling sigue subiendo por el árbol de React, no por el DOM físico.
+
+## Accesibilidad
+
+- **Trap de foco** dentro del modal y devolución al disparador al cerrar.
+- **Rol y nombre**: `role="dialog"`, `aria-modal="true"`, `aria-labelledby`.
+- Bloqueá el scroll del `body` mientras el modal está abierto para evitar “doble scroll”.
+
+## Trade-off
+
+Demasiados portales dispersos complican el orden de pintura y el stacking. Centralizá overlays en un proveedor o layout raíz cuando puedas.

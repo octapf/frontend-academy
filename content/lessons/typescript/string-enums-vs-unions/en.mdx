@@ -1,0 +1,33 @@
+---
+title: "String literal unions vs `enum`"
+description: "When each style fits frontend work."
+level: junior
+order: 12
+---
+
+# String unions
+
+**String literal unions** (`"idle" | "loading" | "error"`) are often simpler than `enum`: they match JSON, have clear tree-shaking, and don’t emit an extra runtime object.
+
+```ts
+type Status = "idle" | "loading" | "error";
+
+function label(s: Status) {
+  switch (s) {
+    case "idle":
+      return "Ready";
+    case "loading":
+      return "Loading";
+    case "error":
+      return "Failed";
+  }
+}
+```
+
+## String `enum`
+
+Useful when you need a **namespace** or migrate legacy code. Note: `const enum` has bundler nuances—follow team guidance.
+
+## Link
+
+**Discriminated unions** takes the pattern further with discriminants and exhaustiveness.

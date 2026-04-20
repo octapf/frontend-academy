@@ -1,0 +1,33 @@
+---
+title: "Uniones literales vs `enum`"
+description: "Cuándo conviene cada estilo en frontend."
+level: junior
+order: 12
+---
+
+# Strings discriminados
+
+Las **uniones de string literals** (`"idle" | "loading" | "error"`) suelen ser más simples que `enum`: encajan con JSON, tree-shaking claro y no generan un objeto extra en runtime.
+
+```ts
+type Status = "idle" | "loading" | "error";
+
+function label(s: Status) {
+  switch (s) {
+    case "idle":
+      return "Listo";
+    case "loading":
+      return "Cargando";
+    case "error":
+      return "Falló";
+  }
+}
+```
+
+## `enum` string
+
+Útil cuando necesitás **namespace** o migrás código legacy. Ojo: `const enum` tiene matices de bundling; revisá la guía del equipo.
+
+## Conexión
+
+La lección **Discriminated unions** lleva el patrón un paso más allá con campos discriminantes y exhaustividad.

@@ -64,3 +64,8 @@ export function isPositive(n: unknown): n is number {
 ```
 
 At the end of this lesson you will find the **`ts-positive`** exercise: implement `isPositive` as a predicate and validate against server-side tests.
+
+## Bridge to discriminated unions
+
+Predicates shine with **heterogeneous data**. The next step is modeling state with a shared literal field (`kind` or `type`) and exhaustive `switch`es; see **Discriminated unions** for the full pattern and `never` to close branches.
+
