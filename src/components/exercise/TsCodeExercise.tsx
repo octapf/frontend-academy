@@ -54,6 +54,8 @@ export function TsCodeExercise({
       : serverCompleted;
 
   const { resolvedTheme } = useTheme();
+  /** Evita undefined en SSR/hidratación; alineado con `class` en `<html>`. */
+  const codeMirrorAppearance = resolvedTheme === "dark" ? "dark" : "light";
   const [code, setCode] = useState(exercise.starter);
   const storageKey = `fea.exercise.output.${exercise.id}.${lang}`;
   type OutputKind = "success" | "error" | "info";
@@ -144,12 +146,13 @@ export function TsCodeExercise({
     }
   }
 
+  /** Tema del editor solo vía extensiones (`theme="none"` en el componente). */
   const extensions = useMemo(
     () => [
       javascript({ typescript: true, jsx: false }),
-      resolvedTheme === "dark" ? oneDark : editorLightZinc,
+      codeMirrorAppearance === "dark" ? oneDark : editorLightZinc,
     ],
-    [resolvedTheme],
+    [codeMirrorAppearance],
   );
 
   type RunOk = { ok: true; passed: number; total: number };
@@ -212,6 +215,8 @@ export function TsCodeExercise({
 
       <div className="overflow-hidden rounded-xl border border-zinc-200 font-mono dark:border-zinc-700">
         <CodeMirror
+          key={codeMirrorAppearance}
+          theme="none"
           value={code}
           height="220px"
           extensions={extensions}
