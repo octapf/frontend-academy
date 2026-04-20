@@ -2,7 +2,6 @@
 
 import { Suspense } from "react";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
 
 import { LearnLanguageNav } from "@/components/app-shell/LearnLanguageNav";
 import { LearnLangUrlSync } from "@/components/learn/LearnLangUrlSync";
@@ -49,14 +48,14 @@ export function AppShell({
               className="flex items-center"
               aria-label="Frontend Academy"
             >
-              <Image
-                src="/logos/brand/02-wordmark-stacked-navy-cropped.png"
-                alt="Frontend Academy"
-                width={720}
-                height={169}
-                priority
-                className="h-12 w-auto select-none"
-              />
+              <span className="select-none leading-none">
+                <span className="block text-[18px] font-extrabold uppercase tracking-[0.10em] text-zinc-900 dark:text-zinc-50">
+                  Frontend
+                </span>
+                <span className="mt-0.5 block text-[12px] font-bold uppercase tracking-[0.28em] text-zinc-700 dark:text-zinc-300">
+                  Academy
+                </span>
+              </span>
             </TrackLink>
             <div className="hidden md:block">
               <TrackSelector />
