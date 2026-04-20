@@ -1,0 +1,30 @@
+---
+title: "Código lazy y Suspense"
+description: "Partir el bundle y cargar rutas o componentes bajo demanda."
+level: mid
+order: 12
+---
+
+# Lazy loading
+
+`React.lazy` + `import()` permite cargar un componente **cuando hace falta**, típicamente por ruta. Combinado con **`<Suspense fallback={...}>`** el usuario ve un placeholder mientras llega el chunk.
+
+```tsx
+const Reports = React.lazy(() => import("./Reports"));
+
+export function App() {
+  return (
+    <Suspense fallback={<p>Cargando…</p>}>
+      <Reports />
+    </Suspense>
+  );
+}
+```
+
+## Trade-offs
+
+Menos JS inicial, pero **más requests** y posible “layout shift” si el fallback no reserva altura. Medí con herramientas de red y Core Web Vitals.
+
+## Relación con performance
+
+En **Performance / memo** profundizás en re-renders; acá el foco es **código y red**: qué partes del árbol conviene posponer.

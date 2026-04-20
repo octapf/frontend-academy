@@ -1,0 +1,25 @@
+---
+title: "Resilient selectors in RTL"
+description: "Queries aligned with how people use the UI."
+level: junior
+order: 9
+---
+
+# Selectors that don’t break
+
+Testing Library prioritizes **ARIA roles**, **accessible names**, and **visible text**. That matches a11y goals and reduces breakage when CSS changes but behavior does not.
+
+## Suggested query order
+
+1. `getByRole('button', { name: /save/i })`
+2. `getByLabelText`
+3. `getByPlaceholderText` (last resort)
+4. Avoid `container.querySelector` except rare cases
+
+## Text vs implementation
+
+If copy changes often, use a **regex** or `data-testid` as a bridge, but don’t overuse it: too many `testid`s hide UX regressions.
+
+## Link
+
+**RTL mindset** explains the “test like a user” philosophy; this lesson is the **practical query cheat sheet**.

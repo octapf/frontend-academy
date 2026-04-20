@@ -1,0 +1,20 @@
+---
+title: "Stacking and `z-index`"
+description: "Stacking contexts: why your z-index never wins."
+level: mid
+order: 7
+---
+
+# Stacking contexts
+
+`z-index` only competes **within the same stacking context**. A `transform`, `filter`, `opacity < 1`, or `isolation: isolate` on an ancestor can create a new context and “trap” your layers.
+
+## Practical rules
+
+- Prefer **DOM order** and layout before fighting with infinite `z-index`.
+- Document global overlays (modals, toasts) with layer tokens (`--z-modal`).
+- If a child never covers a parent, inspect **which ancestor** created the context.
+
+## Link
+
+**Cascade & specificity** covers cascade; here the focus is **painting and layers**, not selector weight alone.

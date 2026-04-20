@@ -1,0 +1,27 @@
+---
+title: "CSS Grid: filas y columnas"
+description: "Layout 2D sin hacks de float."
+level: junior
+order: 6
+---
+
+# Grid básico
+
+**CSS Grid** divide el espacio en **tracks** (filas y columnas). Es excelente para dashboards, formularios complejos y layouts que mezclan áreas con nombres.
+
+```css
+.layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 16px;
+  min-height: 100vh;
+}
+```
+
+## `fr` y `minmax`
+
+`1fr` reparte el espacio libre. `minmax(200px, 1fr)` evita columnas demasiado angostas cuando falta espacio.
+
+## Con flex
+
+**Flexbox** sigue siendo ideal para **una dimensión** (toolbar, lista horizontal). Grid brilla cuando necesitás **dos dimensiones** al mismo tiempo.

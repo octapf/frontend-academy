@@ -1,0 +1,19 @@
+---
+title: "Error boundaries in React"
+description: "Catch render failures without taking down the whole app."
+level: mid
+order: 11
+---
+
+# Error boundaries
+
+An **error boundary** is a class component (or a library equivalent) that implements `componentDidCatch` / `getDerivedStateFromError` and wraps a subtree. If a child **throws** during render or in a lifecycle, React can show fallback UI instead of a blank screen.
+
+## What they cover (and what they don’t)
+
+- **Yes**: errors while rendering, in child lifecycle methods, and in constructors of child components.
+- **No**: async event handlers (use local `try/catch`), errors in `useEffect` (unless they rethrow during render), errors in non-React code.
+
+## UX
+
+Show a clear message, a “Retry” button that resets local state, and in production send the error to observability without leaking sensitive user data.

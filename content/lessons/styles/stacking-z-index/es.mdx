@@ -1,0 +1,20 @@
+---
+title: "Apilamiento y `z-index`"
+description: "Stacking contexts: por qué tu z-index no gana."
+level: mid
+order: 7
+---
+
+# Stacking contexts
+
+`z-index` solo compite **dentro del mismo stacking context**. Un `transform`, `filter`, `opacity < 1`, o `isolation: isolate` en un ancestro puede crear un contexto nuevo y “encapsular” tus capas.
+
+## Reglas prácticas
+
+- Preferí **orden en el DOM** y layout antes de pelear con `z-index` infinitos.
+- Documentá overlays globales (modales, toasts) con tokens de capa (`--z-modal`).
+- Si un hijo no tapa al padre, inspeccioná **qué ancestro** creó el contexto.
+
+## Conexión
+
+En **Cascade & specificity** repasás cascada; acá el foco es **pintura y capas**, no solo peso de selectores.

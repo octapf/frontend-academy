@@ -1,0 +1,26 @@
+---
+title: "`readonly` on props and arrays"
+description: "Shallow immutability TypeScript can track."
+level: junior
+order: 11
+---
+
+# `readonly` in TypeScript
+
+`readonly` on properties and tuples signals intent: **do not mutate** that reference from consumers. It does not freeze nested objects (not a deep freeze), but it prevents classic bugs like `.sort()` mutating the original array.
+
+```ts
+type Props = { ids: readonly string[] };
+
+function List({ ids }: Props) {
+  return ids.map((id) => <li key={id}>{id}</li>);
+}
+```
+
+## `ReadonlyArray<T>`
+
+Equivalent to `readonly T[]`. Useful for public library APIs and presentational components.
+
+## Link to utility types
+
+**Utility types** covers `Readonly<T>` and other helpers derived from existing shapes.

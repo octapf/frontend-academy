@@ -1,0 +1,27 @@
+---
+title: "Flaky tests: causes and fixes"
+description: "Time, shared I/O, and brittle assertions."
+level: mid
+order: 8
+---
+
+# Flaky tests
+
+A **flaky** test passes and fails without changing production code: often **non-deterministic order**, timers, real network, or data shared across suites.
+
+## Common frontend causes
+
+- `setTimeout` / `Date.now` without fake timers.
+- Network dependency or dirty global `localStorage` between tests.
+- Selectors that match multiple nodes depending on render order.
+- Suites running in parallel with shared mutable mocks.
+
+## Fixes
+
+- Isolate effects with **fake timers** and `waitFor` with sensible timeouts.
+- **Mock the boundary** (fetch) and reset state between tests (`afterEach`).
+- Prefer roles and accessible names instead of brittle CSS.
+
+## Link
+
+**Async testing** goes deeper on `await` and async flows; here the focus is **suite stability**.

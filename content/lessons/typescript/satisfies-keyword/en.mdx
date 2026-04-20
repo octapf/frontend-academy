@@ -1,0 +1,28 @@
+---
+title: "`satisfies`: narrow types without losing inference"
+description: "Validate a literal shape without widening the inferred type."
+level: mid
+order: 10
+---
+
+# The `satisfies` operator
+
+`satisfies` (TypeScript 4.9+) lets you **check** that a literal matches a type **without** widening the inferred type to a broad alias. Great for configs, constant maps, and tokens.
+
+```ts
+type Route = { path: string; auth: boolean };
+
+const routes = [
+  { path: "/", auth: false },
+  { path: "/app", auth: true },
+] as const satisfies readonly Route[];
+```
+
+## When to use it
+
+- Large objects declared next to code: you want exhaustiveness and fine-grained autocomplete.
+- Safer than `as Route` when the literal is already correct but you still want verification.
+
+## With `as const`
+
+Combining `as const` + `satisfies` keeps truly literal values **and** validates shape against a reference type.

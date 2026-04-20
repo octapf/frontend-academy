@@ -17,3 +17,13 @@ order: 6
 
 If you start a subscription or timer, return a cleanup function.
 
+## Incomplete dependency arrays (common trap)
+
+If you omit variables from the array, you can read **stale** values from the closure (old props, drifting counters). ESLint `react-hooks/exhaustive-deps` warns for a reason; the real fix is often to **lift state**, **memoize** (`useCallback`/`useMemo`), or **split effects** instead of silencing the rule.
+
+Objects and functions that are **new every render** (e.g. inline `{}`) will retrigger the effect if listed: stabilize references or pass primitives.
+
+## Aborting fetch
+
+For cancelable requests, use `AbortController` in the effect and **abort in cleanup** when dependencies change or the component unmounts.
+

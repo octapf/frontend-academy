@@ -17,3 +17,13 @@ order: 6
 
 Si creás una suscripción o timer, devolvé una función para limpiar.
 
+## Dependencias incompletas (trampa común)
+
+Si omitís variables del array, podés leer valores **stale** del closure (props viejas, contadores desfasados). ESLint `react-hooks/exhaustive-deps` existe para avisar; a veces la solución correcta es **subir estado**, **memoizar** (`useCallback`/`useMemo`) o **separar effects** en lugar de silenciar la regla.
+
+Objetos y funciones **nuevos en cada render** (p. ej. `{}` inline) disparan el effect si van en dependencias: estabilizá referencias o pasá primitivos.
+
+## Abort en fetch
+
+Para requests cancelables, usá `AbortController` en el effect y **abortá en cleanup** cuando cambian dependencias o el componente desmonta.
+

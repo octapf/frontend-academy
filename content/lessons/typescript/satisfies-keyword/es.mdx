@@ -1,0 +1,28 @@
+---
+title: "`satisfies`: tipos estrechos sin perder inferencia"
+description: "Validar forma literal sin ensanchar el tipo inferido."
+level: mid
+order: 10
+---
+
+# El operador `satisfies`
+
+`satisfies` (TypeScript 4.9+) te deja **comprobar** que un literal cumple un tipo, pero **sin** que TS ensanche el tipo inferido al alias ancho. Es ideal para configs, maps de constantes y tokens.
+
+```ts
+type Route = { path: string; auth: boolean };
+
+const routes = [
+  { path: "/", auth: false },
+  { path: "/app", auth: true },
+] as const satisfies readonly Route[];
+```
+
+## Cuándo usarlo
+
+- Objetos grandes declarados junto al código: querés exhaustividad y autocompletado fino.
+- Alternativa más segura que `as Route` cuando el literal ya es correcto pero querés que TS lo verifique.
+
+## Con `as const`
+
+Combinar `as const` + `satisfies` preserva literales literales **y** valida la forma contra un tipo de referencia.

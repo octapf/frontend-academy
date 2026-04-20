@@ -1,0 +1,20 @@
+---
+title: "Observabilidad ligera en frontend"
+description: "Logs, métricas y trazas sin ensuciar UX."
+level: mid
+order: 6
+---
+
+# Observabilidad en el cliente
+
+**Observabilidad** no es “más console.log”: es **señal accionable** cuando algo falla o se degrada: errores normalizados, métricas de Web Vitals, y correlación con el backend (trace id).
+
+## Buenas prácticas
+
+- **Un formato** de error en UI + envío a collector (sin PII).
+- **Sampleo** de eventos ruidosos en páginas muy visitadas.
+- **Versionado de release** en cada reporte para saber qué deploy rompió.
+
+## Conexión
+
+En **Boundary contracts** hablamos de errores predecibles en el borde API↔UI; acá el foco es **operar** el sistema en producción.

@@ -1,0 +1,19 @@
+---
+title: "Error boundaries en React"
+description: "Atrapar fallos de render sin tumbar toda la app."
+level: mid
+order: 11
+---
+
+# Error boundaries
+
+Un **error boundary** es un componente de clase (o el equivalente con librerías) que implementa `componentDidCatch` / `getDerivedStateFromError` y envuelve un subárbol. Si un hijo **lanza** durante el render o en un lifecycle, React puede mostrar UI de respaldo en lugar de una pantalla blanca.
+
+## Qué cubren (y qué no)
+
+- **Sí**: errores al renderizar, en métodos de lifecycle del hijo, y en constructores de componentes hijos.
+- **No**: event handlers async (usá `try/catch` local), errores en `useEffect` (salvo que re-lancen en render), errores en código fuera de React.
+
+## UX
+
+Mostrá un mensaje claro, botón “Reintentar” que resetea estado local, y en producción enviá el error a tu sistema de observabilidad sin filtrar datos sensibles del usuario.

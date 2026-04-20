@@ -1,0 +1,27 @@
+---
+title: "Tests flaky: causas y remedios"
+description: "Tiempo, I/O compartido y aserciones frágiles."
+level: mid
+order: 8
+---
+
+# Tests flaky
+
+Un test **flaky** pasa y falla sin cambiar el código productivo: suele ser **orden no determinístico**, timers, red real, o datos compartidos entre suites.
+
+## Causas típicas en frontend
+
+- `setTimeout`/`Date.now` sin fake timers.
+- Dependencia de red o `localStorage` global sucio entre tests.
+- Selectores que matchean varios nodos según orden de render.
+- Suites que corren en paralelo y comparten mocks mutables.
+
+## Remedios
+
+- Aislá efectos con **fake timers** y `waitFor` con timeouts razonables.
+- **Mockeá el borde** (fetch) y reseteá estado entre tests (`afterEach`).
+- Preferí roles y nombres accesibles en lugar de CSS frágil.
+
+## Conexión
+
+En **Async testing** profundizás en `await` y asincronía; acá el foco es **estabilidad** del suite entero.

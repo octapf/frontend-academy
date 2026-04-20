@@ -1,0 +1,20 @@
+---
+title: "Lightweight frontend observability"
+description: "Logs, metrics, and traces without harming UX."
+level: mid
+order: 6
+---
+
+# Client-side observability
+
+**Observability** is not “more console.log”: it is **actionable signal** when something fails or degrades: normalized errors, Web Vitals metrics, and correlation with the backend (trace id).
+
+## Good practices
+
+- **One** error shape in UI + send to a collector (no PII).
+- **Sample** noisy events on high-traffic pages.
+- **Release version** on every report so you know which deploy broke things.
+
+## Link
+
+**Boundary contracts** covers predictable errors at the API↔UI edge; here the focus is **operating** the system in production.

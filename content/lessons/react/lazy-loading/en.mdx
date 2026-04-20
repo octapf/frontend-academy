@@ -1,0 +1,30 @@
+---
+title: "Lazy code and Suspense"
+description: "Split the bundle and load routes or components on demand."
+level: mid
+order: 12
+---
+
+# Lazy loading
+
+`React.lazy` + `import()` loads a component **when needed**, often per route. With **`<Suspense fallback={...}>`** users see a placeholder while the chunk arrives.
+
+```tsx
+const Reports = React.lazy(() => import("./Reports"));
+
+export function App() {
+  return (
+    <Suspense fallback={<p>Loading…</p>}>
+      <Reports />
+    </Suspense>
+  );
+}
+```
+
+## Trade-offs
+
+Less initial JS, but **more requests** and possible layout shift if the fallback does not reserve height. Measure with the network panel and Core Web Vitals.
+
+## Link to performance
+
+**Performance / memo** focuses on re-renders; here the focus is **code and network**: which parts of the tree are worth deferring.

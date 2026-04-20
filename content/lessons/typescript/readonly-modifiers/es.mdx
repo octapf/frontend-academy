@@ -1,0 +1,26 @@
+---
+title: "`readonly` en props y arrays"
+description: "Inmutabilidad superficial que TS puede rastrear."
+level: junior
+order: 11
+---
+
+# `readonly` en TypeScript
+
+`readonly` en propiedades y tuplas comunica intención: **no mutar** esa referencia desde el consumidor. No congela objetos anidados (no es deep freeze), pero evita bugs clásicos de `.sort()` que muta el array original.
+
+```ts
+type Props = { ids: readonly string[] };
+
+function List({ ids }: Props) {
+  return ids.map((id) => <li key={id}>{id}</li>);
+}
+```
+
+## `ReadonlyArray<T>`
+
+Es equivalente a `readonly T[]`. Útil en APIs públicas de librerías y componentes presentacionales.
+
+## Conexión con utility types
+
+En **Utility types** verás `Readonly<T>` y otros helpers para derivar tipos a partir de estructuras existentes.

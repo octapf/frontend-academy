@@ -1,0 +1,25 @@
+---
+title: "Selectores resilientes en RTL"
+description: "Queries alineadas con cómo usa la UI la gente."
+level: junior
+order: 9
+---
+
+# Selectores que no se rompen
+
+Testing Library prioriza **roles ARIA**, **etiquetas accesibles** y **texto visible**. Eso se alinea con a11y y reduce roturas cuando cambia el CSS pero no el comportamiento.
+
+## Orden sugerido de queries
+
+1. `getByRole('button', { name: /guardar/i })`
+2. `getByLabelText`
+3. `getByPlaceholderText` (último recurso)
+4. Evitá `container.querySelector` salvo casos muy puntuales
+
+## Texto vs implementación
+
+Si el copy cambia seguido, podés usar **regex** o `data-testid` como puente, pero no abuses: demasiados `testid` ocultan regresiones de UX.
+
+## Conexión
+
+En **RTL mindset** está la filosofía “test like a user”; esta lección es la **cheat sheet práctica** de queries.
