@@ -55,7 +55,7 @@ export function AppShell({
                 width={220}
                 height={64}
                 priority
-                className="h-8 w-auto select-none"
+                className="h-12 w-auto select-none"
               />
             </TrackLink>
             <div className="hidden md:block">
