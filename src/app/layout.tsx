@@ -26,6 +26,11 @@ const metadataBase =
 
 export const metadata: Metadata = {
   metadataBase,
+  icons: {
+    icon: [{ url: "/logos/brand/03-icon-code-brackets.png", type: "image/png" }],
+    shortcut: "/logos/brand/03-icon-code-brackets.png",
+    apple: "/logos/brand/03-icon-code-brackets.png",
+  },
   title: {
     default: "Frontend Academy",
     template: "%s · Frontend Academy",
