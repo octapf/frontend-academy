@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useTrackStore } from "@/stores/useTrackStore";
 
 import { Button } from "@/components/ui/Button";
+import { cn } from "@/lib/cn";
 type MinTrack = "junior" | "mid" | "senior";
 type Pair = { es: string; en: string; meaning: string; minTrack: MinTrack };
 
@@ -58,12 +59,12 @@ export function SlangPracticeCard() {
                 key={p.es}
                 type="button"
                 onClick={() => setSelected(p.es)}
-                className={[
+                className={cn(
                   "rounded-lg border px-3 py-2 text-left text-sm transition-colors",
                   selected === p.es
                     ? "border-brand bg-brand text-zinc-900"
-                    : "border-zinc-200 bg-zinc-100 hover:bg-zinc-900/5 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10",
-                ].join(" ")}
+                    : "border-zinc-200 bg-zinc-100 hover:bg-zinc-900/5 dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
+                )}
               >
                 {p.es}
                 {matches[p.es] && <span className="ml-2 text-xs opacity-75">✓</span>}

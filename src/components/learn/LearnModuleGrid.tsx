@@ -16,16 +16,30 @@ export function LearnModuleGrid({
 }) {
   const { data: progress } = useProgressQuery();
   const langQs = learnLangSearchSuffix(lang);
+  const lessonKeys = progress?.lessonKeys ?? [];
+  const exIds = progress?.exerciseIds ?? [];
+  const passedSet = new Set(exIds);
+
+  const modulesSorted = [...LEARN_MODULES].sort((a, b) => {
+    const totalA = lessonCounts[a.slug] ?? 0;
+    const totalB = lessonCounts[b.slug] ?? 0;
+    const viewedA = lessonKeys.filter((k) => k.startsWith(`${a.slug}/`)).length;
+    const viewedB = lessonKeys.filter((k) => k.startsWith(`${b.slug}/`)).length;
+    const pctA = totalA > 0 ? viewedA / totalA : 0;
+    const pctB = totalB > 0 ? viewedB / totalB : 0;
+    // incompletos primero, luego por menor progreso
+    if (pctA !== pctB) return pctA - pctB;
+    return a.title.localeCompare(b.title);
+  });
 
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      {LEARN_MODULES.map((m) => {
+      {modulesSorted.map((m) => {
         const prefix = `${m.slug}/`;
         const totalLessons = lessonCounts[m.slug] ?? 0;
         const viewedHere =
-          progress?.lessonKeys.filter((k) => k.startsWith(prefix)).length ?? 0;
+          lessonKeys.filter((k) => k.startsWith(prefix)).length ?? 0;
         const moduleEx = exerciseIdsInModule(m.slug);
-        const passedSet = new Set(progress?.exerciseIds ?? []);
         const exDone = moduleEx.filter((id) => passedSet.has(id)).length;
         const exTotal = moduleEx.length;
 

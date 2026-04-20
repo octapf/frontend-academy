@@ -4,6 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/Button";
+import { Input } from "@/components/ui/Input";
 import { sanitizeNextParam } from "@/lib/auth/next-redirect";
 import { hrefWithTrack } from "@/lib/track/href";
 import { parseTrackParam } from "@/lib/track";
@@ -69,12 +70,11 @@ export function RegisterForm() {
         <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
           Usuario
         </label>
-        <input
+        <Input
           name="username"
           autoComplete="username"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/60 dark:border-zinc-600 dark:bg-zinc-950 dark:focus:ring-brand/50"
           required
         />
         <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
@@ -85,13 +85,12 @@ export function RegisterForm() {
         <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
           Contraseña
         </label>
-        <input
+        <Input
           name="password"
           type="password"
           autoComplete="new-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/60 dark:border-zinc-600 dark:bg-zinc-950 dark:focus:ring-brand/50"
           required
           minLength={8}
         />

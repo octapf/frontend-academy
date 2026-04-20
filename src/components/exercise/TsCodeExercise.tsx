@@ -14,6 +14,7 @@ import {
   progressQueryKey,
   useProgressQuery,
 } from "@/hooks/use-progress-query";
+import { cn } from "@/lib/cn";
 
 type Lang = "es" | "en";
 
@@ -246,14 +247,14 @@ export function TsCodeExercise({
 
       {output ? (
         <div
-          className={[
+          className={cn(
             "rounded-xl border p-4 text-sm",
             output.kind === "success"
               ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-950 dark:text-emerald-100"
               : output.kind === "error"
                 ? "border-rose-500/30 bg-rose-500/10 text-rose-950 dark:text-rose-100"
-                : "border-brand/25 bg-brand/10 text-zinc-900 dark:text-zinc-100",
-          ].join(" ")}
+                : "border-brand/25 bg-brand/10 text-zinc-900 dark:text-zinc-100"
+          )}
         >
           <div className="flex items-start justify-between gap-3">
             <div className="font-semibold">{output.title}</div>

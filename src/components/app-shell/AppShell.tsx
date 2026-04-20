@@ -12,6 +12,7 @@ import { TrackLink } from "@/components/track/TrackLink";
 import { TrackUrlSync } from "@/components/track/TrackUrlSync";
 import { withLearnLang } from "@/lib/i18n/learn-lang";
 import { montserrat } from "@/lib/fonts";
+import { cn } from "@/lib/cn";
 import { useLearnLangStore } from "@/stores/useLearnLangStore";
 import { useTrackStore } from "@/stores/useTrackStore";
 
@@ -129,12 +130,12 @@ function NavLink({
   return (
     <TrackLink
       href={resolvedHref}
-      className={[
+      className={cn(
         "block rounded-lg px-2.5 py-2 text-sm outline-none transition-colors focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:focus-visible:ring-brand/50 dark:focus-visible:ring-offset-zinc-950",
         active
           ? "bg-brand text-zinc-900"
-          : "text-zinc-700 hover:bg-zinc-900/5 dark:text-zinc-200 dark:hover:bg-zinc-100/10",
-      ].join(" ")}
+          : "text-zinc-700 hover:bg-zinc-900/5 dark:text-zinc-200 dark:hover:bg-zinc-100/10"
+      )}
       aria-current={active ? "page" : undefined}
     >
       {label}

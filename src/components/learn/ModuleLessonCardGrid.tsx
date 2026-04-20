@@ -28,9 +28,27 @@ export function ModuleLessonCardGrid({
   const exercisesDone = new Set(progress?.exerciseIds ?? []);
   const langQs = learnLangSearchSuffix(lang);
 
+  const ordered = [...lessons].sort((a, b) => {
+    const ka = lessonProgressKey(moduleSlug, a.slug);
+    const kb = lessonProgressKey(moduleSlug, b.slug);
+    const viewedA = viewed.has(ka);
+    const viewedB = viewed.has(kb);
+    const exA = exerciseIdForLesson(moduleSlug, a.slug);
+    const exB = exerciseIdForLesson(moduleSlug, b.slug);
+    const okA = exA !== undefined && exercisesDone.has(exA);
+    const okB = exB !== undefined && exercisesDone.has(exB);
+
+    // 0: not viewed, 1: viewed not ok, 2: ok
+    const rank = (v: boolean, ok: boolean) => (ok ? 2 : v ? 1 : 0);
+    const ra = rank(viewedA, okA);
+    const rb = rank(viewedB, okB);
+    if (ra !== rb) return ra - rb;
+    return a.slug.localeCompare(b.slug);
+  });
+
   return (
     <div className="grid gap-4 md:grid-cols-2">
-      {lessons.map((l) => {
+      {ordered.map((l) => {
         const key = lessonProgressKey(moduleSlug, l.slug);
         const done = viewed.has(key);
         const linkedExercise = exerciseIdForLesson(moduleSlug, l.slug);
