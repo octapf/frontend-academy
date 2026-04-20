@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/Button";
 import { TrackSelector } from "@/components/app-shell/TrackSelector";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { LearnLanguageNav } from "@/components/app-shell/LearnLanguageNav";
+import { PasswordChangeForm } from "@/components/auth/PasswordChangeForm";
 import { getSession } from "@/lib/auth/session";
 
 export default async function SettingsPage() {
@@ -47,6 +48,17 @@ export default async function SettingsPage() {
         </p>
         <div className="mt-3">
           <LearnLanguageNav />
+        </div>
+      </section>
+
+      <section className="rounded-xl border border-zinc-300 bg-zinc-100 p-5 dark:border-zinc-700 dark:bg-zinc-950">
+        <div className="text-sm font-medium">Contraseña</div>
+        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
+          Cambiá la contraseña de tu cuenta (sesión iniciada). No incluye recuperación por
+          email.
+        </p>
+        <div className="mt-3 max-w-md">
+          <PasswordChangeForm />
         </div>
       </section>
 

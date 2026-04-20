@@ -50,3 +50,18 @@ export async function createUserJson(
   await writeFile(USER_FILE, JSON.stringify(file, null, 2), "utf8");
   return user;
 }
+
+export async function updateUserPasswordHashJson(
+  username: string,
+  passwordHash: string
+): Promise<void> {
+  await ensureDataDir();
+  const file = await readFileSafe();
+  const idx = file.users.findIndex((u) => u.username === username);
+  if (idx < 0) {
+    throw new Error("USER_NOT_FOUND");
+  }
+  const prev = file.users[idx]!;
+  file.users[idx] = { ...prev, passwordHash };
+  await writeFile(USER_FILE, JSON.stringify(file, null, 2), "utf8");
+}

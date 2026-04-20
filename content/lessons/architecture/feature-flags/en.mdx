@@ -1,0 +1,20 @@
+---
+title: "Feature flags on the client"
+description: "Ship to production with bounded risk and fast rollback."
+level: mid
+order: 4
+---
+
+# Feature flags
+
+A **feature flag** is a value (often loaded from the server) that toggles a UI branch or a new flow. It helps **decouple deploy from release**: you ship code in the “off” state and turn it on when the team is ready.
+
+## Good habits
+
+- **Per-user or cohort flags** for controlled rollouts, not only global switches.
+- **Safe defaults**: if config fails to load, users should see the stable behavior.
+- **Cleanup**: when a flag is done, delete the dead branch in the same change that removes the flag.
+
+## Trade-off
+
+More flags mean more combinations and more bug surface. Document what each flag controls and who owns turning it off.

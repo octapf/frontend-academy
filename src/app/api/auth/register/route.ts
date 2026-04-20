@@ -10,6 +10,8 @@ import {
 import { signSessionToken } from "@/lib/auth/jwt";
 import { hashPassword } from "@/lib/auth/password";
 import { createUser, findUser } from "@/lib/auth/user-store";
+import { getRequestIp } from "@/lib/rate-limit/request-ip";
+import { rateLimitSliding } from "@/lib/rate-limit/memory-sliding";
 
 export const runtime = "nodejs";
 
@@ -42,6 +44,18 @@ export async function POST(req: Request) {
     }
 
     const { username, password } = parsed.data;
+
+    const ip = getRequestIp(req);
+    const regLimit = rateLimitSliding(`register:${ip}`, 12, 3_600_000);
+    if (!regLimit.ok) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: `Demasiados registros desde esta IP. Probá en ${regLimit.retryAfterSec}s.`,
+        },
+        { status: 429 }
+      );
+    }
 
     let existing;
     try {

@@ -6,6 +6,8 @@ import { getMongoDriverCode, publicMongoErrorHint } from "@/lib/auth/mongo-error
 import { signSessionToken } from "@/lib/auth/jwt";
 import { verifyPassword } from "@/lib/auth/password";
 import { findUser } from "@/lib/auth/user-store";
+import { getRequestIp } from "@/lib/rate-limit/request-ip";
+import { rateLimitSliding } from "@/lib/rate-limit/memory-sliding";
 
 export const runtime = "nodejs";
 
@@ -26,6 +28,18 @@ export async function POST(req: Request) {
     }
 
     const { username, password } = parsed.data;
+
+    const ip = getRequestIp(req);
+    const loginLimit = rateLimitSliding(`login:${ip}`, 40, 60_000);
+    if (!loginLimit.ok) {
+      return NextResponse.json(
+        {
+          ok: false,
+          error: `Demasiados intentos desde esta red. Probá en ${loginLimit.retryAfterSec}s.`,
+        },
+        { status: 429 }
+      );
+    }
 
     let user;
     try {

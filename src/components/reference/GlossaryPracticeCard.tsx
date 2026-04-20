@@ -7,6 +7,7 @@ import { useTrackStore } from "@/stores/useTrackStore";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 import { GLOSSARY_ENTRIES, type MinTrack } from "@/lib/reference/glossary";
+import { samplePracticePairs, shuffleInPlace } from "@/lib/reference/shuffleSample";
 
 function trackAllows(track: string, min: MinTrack) {
   if (track === "all") return true;
@@ -15,27 +16,58 @@ function trackAllows(track: string, min: MinTrack) {
   return track === "senior";
 }
 
+const BATCH_SIZE = 10;
+
 export function GlossaryPracticeCard() {
   const track = useTrackStore((s) => s.track);
-  const pairs = useMemo(
+  const [roundId, setRoundId] = useState(0);
+  const [selected, setSelected] = useState<string | null>(null);
+  const [matches, setMatches] = useState<Record<string, string>>({});
+  const [result, setResult] = useState<string | null>(null);
+
+  const pool = useMemo(
     () => GLOSSARY_ENTRIES.filter((p) => trackAllows(track, p.minTrack)),
     [track]
   );
 
-  const [selected, setSelected] = useState<string | null>(null);
-  const [matches, setMatches] = useState<Record<string, string>>({});
+  const practicePairs = useMemo(() => {
+    void roundId;
+    return samplePracticePairs(pool, BATCH_SIZE);
+  }, [pool, roundId]);
+
+  const shuffledDefinitions = useMemo(() => {
+    const defs = practicePairs.map((p) => p.definition);
+    return shuffleInPlace([...defs]);
+  }, [practicePairs]);
+
+  const resetBoard = () => {
+    setSelected(null);
+    setMatches({});
+    setResult(null);
+  };
+
+  const newRound = () => {
+    resetBoard();
+    setRoundId((n) => n + 1);
+  };
 
   return (
     <div className="rounded-xl border border-zinc-200 bg-zinc-100 p-5 dark:border-zinc-700 dark:bg-zinc-950">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
           <h2 className="text-lg font-semibold">Practice · Matching</h2>
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-            Ejercicio rápido de Conocimiento: unir término ↔ definición (mock).
+            Unir término ↔ definición. Cada ronda usa {BATCH_SIZE} pares del track
+            actual (orden mezclado).
           </p>
         </div>
-        <div className="text-sm text-zinc-600 dark:text-zinc-300">
-          Track: <span className="font-medium">{track}</span>
+        <div className="flex flex-wrap items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
+          <span>
+            Track: <span className="font-medium">{track}</span>
+          </span>
+          <span className="text-zinc-500 dark:text-zinc-400">
+            · {practicePairs.length} pares
+          </span>
         </div>
       </div>
 
@@ -45,11 +77,14 @@ export function GlossaryPracticeCard() {
             Términos (click)
           </div>
           <div className="mt-2 grid gap-2">
-            {pairs.map((p) => (
+            {practicePairs.map((p) => (
               <button
                 key={p.term}
                 type="button"
-                onClick={() => setSelected(p.term)}
+                onClick={() => {
+                  setSelected(p.term);
+                  setResult(null);
+                }}
                 className={cn(
                   "rounded-lg border px-3 py-2 text-left text-sm transition-colors",
                   selected === p.term
@@ -71,22 +106,23 @@ export function GlossaryPracticeCard() {
             Definiciones (click para asignar)
           </div>
           <div className="mt-2 grid gap-2">
-            {pairs.map((p) => {
+            {shuffledDefinitions.map((definition) => {
               const assignedTo = Object.entries(matches).find(
-                ([, def]) => def === p.definition
+                ([, def]) => def === definition
               )?.[0];
               return (
                 <button
-                  key={p.definition}
+                  key={definition}
                   type="button"
                   onClick={() => {
                     if (!selected) return;
-                    setMatches((m) => ({ ...m, [selected]: p.definition }));
+                    setMatches((m) => ({ ...m, [selected]: definition }));
                     setSelected(null);
+                    setResult(null);
                   }}
                   className="rounded-lg border border-dashed border-zinc-300 bg-zinc-200 px-3 py-2 text-left text-sm text-zinc-800 hover:bg-zinc-900/5 dark:border-zinc-600 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-100/10"
                 >
-                  <div>{p.definition}</div>
+                  <div>{definition}</div>
                   {assignedTo && (
                     <div className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
                       Asignada a: {assignedTo}
@@ -100,21 +136,19 @@ export function GlossaryPracticeCard() {
       </div>
 
       <div className="mt-4 flex flex-wrap gap-2">
-        <Button
-          onClick={() => {
-            setSelected(null);
-            setMatches({});
-          }}
-          variant="secondary"
-          size="sm"
-        >
-          Reset
+        <Button onClick={resetBoard} variant="secondary" size="sm">
+          Limpiar asignaciones
+        </Button>
+        <Button type="button" onClick={newRound} variant="secondary" size="sm">
+          Nuevo set
         </Button>
         <Button
           type="button"
           onClick={() => {
-            // placeholder: scoring real + tracking en backend
-            alert("Placeholder: scoring + tracking");
+            const correct = practicePairs.filter(
+              (p) => matches[p.term] === p.definition
+            ).length;
+            setResult(`Correctas: ${correct} / ${practicePairs.length}`);
           }}
           variant="primary"
           size="sm"
@@ -122,7 +156,9 @@ export function GlossaryPracticeCard() {
           Comprobar
         </Button>
       </div>
+      {result && (
+        <p className="mt-3 text-sm text-zinc-700 dark:text-zinc-200">{result}</p>
+      )}
     </div>
   );
 }
-

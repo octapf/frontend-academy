@@ -4,6 +4,7 @@ import { z } from "zod";
 import { getSession } from "@/lib/auth/session";
 import { getMongoDb } from "@/lib/auth/mongo-client";
 import { isMongoEnvConfigured } from "@/lib/auth/mongo-uri";
+import { rateLimitSliding } from "@/lib/rate-limit/memory-sliding";
 
 export const runtime = "nodejs";
 
@@ -55,6 +56,18 @@ export async function POST(req: Request) {
   if (!session) {
     return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
   }
+
+  const fbLimit = rateLimitSliding(`feedback:${session.username}`, 80, 3_600_000);
+  if (!fbLimit.ok) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: `Límite de feedback por hora. Probá en ${fbLimit.retryAfterSec}s.`,
+      },
+      { status: 429 }
+    );
+  }
+
   const createdAtIso = new Date().toISOString();
   const doc = {
     ...parsed.data,

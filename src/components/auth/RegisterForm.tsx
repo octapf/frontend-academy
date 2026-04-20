@@ -95,7 +95,7 @@ export function RegisterForm() {
           minLength={8}
         />
         <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-          Mínimo 8 caracteres. Sin recuperación de contraseña (MVP).
+          Mínimo 8 caracteres. Podés cambiarla después en Settings (sin email de recuperación).
         </p>
       </div>
       {error ? (

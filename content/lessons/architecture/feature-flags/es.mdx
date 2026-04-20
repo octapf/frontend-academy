@@ -1,0 +1,20 @@
+---
+title: "Feature flags en el cliente"
+description: "Liberar en producción con riesgo acotado y rollback rápido."
+level: mid
+order: 4
+---
+
+# Feature flags
+
+Un **feature flag** es una variable (suelen venir del servidor) que decide si una rama de UI o un flujo nuevo está activo. Sirve para **desacoplar deploy de release**: subís código apagado y lo encendés cuando el equipo está listo.
+
+## Buenas prácticas
+
+- **Flags por usuario o cohorte** para pruebas controladas, no solo globales.
+- **Defaults seguros**: si falla el fetch de configuración, el usuario ve el comportamiento estable.
+- **Limpieza**: cuando el flag deja de tener sentido, borrá la rama muerta en el mismo PR que apaga el flag.
+
+## Trade-off
+
+Más flags implican más combinaciones y más superficie para bugs. Documentá qué flag controla qué y quién es dueño de apagarlo.

@@ -79,3 +79,17 @@ export async function createUserMongo(
   }
   return { username, passwordHash, createdAt: now };
 }
+
+export async function updatePasswordHashMongo(
+  username: string,
+  passwordHash: string
+): Promise<void> {
+  const db = await getMongoDb();
+  const coll = db.collection(collectionName());
+  const uf = usernameField();
+  const pf = passwordField();
+  const r = await coll.updateOne({ [uf]: username }, { $set: { [pf]: passwordHash } });
+  if (r.matchedCount === 0) {
+    throw new Error("USER_NOT_FOUND");
+  }
+}

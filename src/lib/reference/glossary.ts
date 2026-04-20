@@ -17,16 +17,6 @@ export const GLOSSARY_ENTRIES: GlossaryEntry[] = [
     definition: "Peso de un selector CSS para resolver conflictos.",
     minTrack: "junior",
   },
-  {
-    term: "Hydration",
-    definition: "Adjuntar handlers al HTML renderizado en el server.",
-    minTrack: "mid",
-  },
-  {
-    term: "RSC",
-    definition: "React Server Component: se renderiza en server, no en cliente.",
-    minTrack: "senior",
-  },
   // JS / TS fundamentals
   { term: "Scope", definition: "Región donde un identificador (variable/función) es visible.", minTrack: "junior" },
   { term: "Lexical scope", definition: "Scope determinado por la posición del código (no por el call stack).", minTrack: "junior" },

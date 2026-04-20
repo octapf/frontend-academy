@@ -1,6 +1,14 @@
 import { isMongoEnvConfigured } from "@/lib/auth/mongo-uri";
-import { createUserJson, findUserJson } from "@/lib/auth/user-store-json";
-import { createUserMongo, findUserMongo } from "@/lib/auth/user-store-mongo";
+import {
+  createUserJson,
+  findUserJson,
+  updateUserPasswordHashJson,
+} from "@/lib/auth/user-store-json";
+import {
+  createUserMongo,
+  findUserMongo,
+  updatePasswordHashMongo,
+} from "@/lib/auth/user-store-mongo";
 import type { StoredUser } from "@/lib/auth/user-types";
 
 export type { StoredUser } from "@/lib/auth/user-types";
@@ -26,4 +34,15 @@ export async function createUser(
     return createUserMongo(username, passwordHash);
   }
   return createUserJson(username, passwordHash);
+}
+
+export async function updateUserPasswordHash(
+  username: string,
+  passwordHash: string
+): Promise<void> {
+  if (isMongoConfigured()) {
+    await updatePasswordHashMongo(username, passwordHash);
+    return;
+  }
+  await updateUserPasswordHashJson(username, passwordHash);
 }
