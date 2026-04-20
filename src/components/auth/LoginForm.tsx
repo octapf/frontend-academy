@@ -29,10 +29,21 @@ export function LoginForm() {
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ username, password }),
       });
-      const data = (await res.json()) as { ok?: boolean; error?: string; hint?: string };
+      let data: { ok?: boolean; error?: string; hint?: string; mongoCode?: number };
+      try {
+        data = (await res.json()) as typeof data;
+      } catch {
+        setError(
+          `El servidor respondió ${res.status} sin JSON. Revisá los logs del deploy en Vercel (Functions → /api/auth/login).`
+        );
+        return;
+      }
       if (!res.ok || !data.ok) {
         const base = data.error ?? "Error al ingresar";
-        setError(data.hint ? `${base} ${data.hint}` : base);
+        const code =
+          typeof data.mongoCode === "number" ? ` [Mongo código ${data.mongoCode}]` : "";
+        const extra = data.hint ? ` ${data.hint}` : "";
+        setError(`${base}${code}${extra}`.trim());
         return;
       }
       const raw = next ?? "/dashboard";
