@@ -33,7 +33,7 @@ export function AppShell({
   username,
 }: {
   children: React.ReactNode;
-  username: string;
+  username: string | null;
 }) {
   const pathname = usePathname();
   useTrackStore((s) => s.track);

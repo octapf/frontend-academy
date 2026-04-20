@@ -19,10 +19,11 @@ export function TrackSummaryCard() {
   const track = useTrackStore((s) => s.track);
 
   const { data, isPending, isError } = useProgressQuery();
+  const ready = !isPending && !isError && !!data;
 
-  const lessons = isPending || isError ? null : data.lessonsOpened;
-  const exercises = isPending || isError ? null : data.exercisesPassed;
-  const last = isPending || isError ? null : formatLastActivity(data.lastActivityIso);
+  const lessons = ready ? data.lessonsOpened : null;
+  const exercises = ready ? data.exercisesPassed : null;
+  const last = ready ? formatLastActivity(data.lastActivityIso) : null;
   const hasAnyActivity = Boolean(lessons || exercises);
 
   return (
@@ -36,7 +37,7 @@ export function TrackSummaryCard() {
           <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
             Progreso guardado en el servidor (archivo local en desarrollo).
           </p>
-          {!isPending && !isError && !hasAnyActivity ? (
+          {ready && !hasAnyActivity ? (
             <div className="mt-3 inline-flex items-center gap-2 rounded-lg border border-brand/25 bg-brand/10 px-3 py-2 text-sm text-zinc-800 dark:text-zinc-100">
               <span className="h-2 w-2 rounded-full bg-brand" aria-hidden="true" />
               Empezá por <span className="font-medium">Learn</span> y completá tu primer ejercicio.

@@ -8,6 +8,11 @@ const LESSON_KEY_BY_EXERCISE: Record<ExerciseId, string> = {
   "ts-positive": lessonProgressKey("typescript", "narrowing"),
   "ts-greeting": lessonProgressKey("typescript", "string-templates"),
   "ts-user-label": lessonProgressKey("typescript", "utility-types"),
+  "ts-pick-keys": lessonProgressKey("typescript", "generics-pick"),
+  "ts-shape-area": lessonProgressKey("typescript", "discriminated-unions"),
+  "ts-parse-query": lessonProgressKey("typescript", "url-search-params"),
+  "ts-group-by": lessonProgressKey("typescript", "array-reduce"),
+  "ts-safe-json-parse": lessonProgressKey("typescript", "json-parse"),
 };
 
 const EXERCISE_BY_LESSON_KEY = Object.fromEntries(

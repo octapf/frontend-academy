@@ -1,9 +1,16 @@
+import { redirect } from "next/navigation";
+
 import { Button } from "@/components/ui/Button";
 import { TrackSelector } from "@/components/app-shell/TrackSelector";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { LearnLanguageNav } from "@/components/app-shell/LearnLanguageNav";
+import { getSession } from "@/lib/auth/session";
 
-export default function SettingsPage() {
+export default async function SettingsPage() {
+  const session = await getSession();
+  if (!session) {
+    redirect("/login?next=/settings");
+  }
   return (
     <div className="space-y-6">
       <div className="space-y-1">

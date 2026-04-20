@@ -1,0 +1,19 @@
+---
+title: "Discriminated unions"
+description: "Model variants and enforce exhaustiveness."
+level: mid
+order: 5
+---
+
+# Discriminated unions
+
+A **discriminated union** is a union where each variant shares a literal field (for example `kind`).
+
+## Why it matters
+
+- Cleaner control flow with `switch`
+- Prevent impossible states
+- Enforce exhaustiveness (missing a case becomes a TypeScript error)
+
+In the exercise you’ll compute areas for shapes using `kind: "circle" | "rect"`.
+

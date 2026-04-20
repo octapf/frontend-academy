@@ -1,0 +1,23 @@
+---
+title: "Genéricos: Pick de keys"
+description: "Cómo modelar funciones reutilizables sin perder tipos."
+level: mid
+order: 4
+---
+
+# Genéricos: Pick de keys
+
+Cuando tenés una función que debería servir para muchos objetos, **los genéricos** permiten que TypeScript “arrastre” tipos a través de parámetros y retorno.
+
+## Problema
+
+Queremos una función que reciba un objeto y una lista de keys, y devuelva un objeto con **solo esas keys**.
+
+## La idea
+
+- \(T\) es el tipo del objeto.
+- \(K\) es un subconjunto de `keyof T`.
+- El retorno es `Pick<T, K>`.
+
+Esto te da autocompletado y evita que pidas keys inexistentes.
+

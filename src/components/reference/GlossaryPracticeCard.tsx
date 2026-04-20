@@ -6,31 +6,7 @@ import { useTrackStore } from "@/stores/useTrackStore";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-type MinTrack = "junior" | "mid" | "senior";
-type Pair = { term: string; definition: string; minTrack: MinTrack };
-
-const PAIRS: Pair[] = [
-  {
-    term: "Closure",
-    definition: "Función que recuerda variables de su scope de creación.",
-    minTrack: "junior",
-  },
-  {
-    term: "Specificity",
-    definition: "Peso de un selector CSS para resolver conflictos.",
-    minTrack: "junior",
-  },
-  {
-    term: "Hydration",
-    definition: "Adjuntar handlers al HTML renderizado en el server.",
-    minTrack: "mid",
-  },
-  {
-    term: "RSC",
-    definition: "React Server Component: se renderiza en server, no en cliente.",
-    minTrack: "senior",
-  },
-];
+import { GLOSSARY_ENTRIES, type MinTrack } from "@/lib/reference/glossary";
 
 function trackAllows(track: string, min: MinTrack) {
   if (track === "all") return true;
@@ -42,7 +18,7 @@ function trackAllows(track: string, min: MinTrack) {
 export function GlossaryPracticeCard() {
   const track = useTrackStore((s) => s.track);
   const pairs = useMemo(
-    () => PAIRS.filter((p) => trackAllows(track, p.minTrack)),
+    () => GLOSSARY_ENTRIES.filter((p) => trackAllows(track, p.minTrack)),
     [track]
   );
 

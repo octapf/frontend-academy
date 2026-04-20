@@ -1,0 +1,18 @@
+---
+title: "URLSearchParams"
+description: "Simple query string parsing in the browser."
+level: junior
+order: 6
+---
+
+# URLSearchParams
+
+To parse `a=1&b=hello`, the browser provides `URLSearchParams`.
+
+## Simple rules
+
+- If a key repeats, keep the **last** value.
+- `URLSearchParams` already decodes `%20`, etc.
+
+In the exercise you’ll implement `parseQuery(qs)` following those rules.
+

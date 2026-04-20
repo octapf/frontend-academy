@@ -1,0 +1,18 @@
+---
+title: "URLSearchParams"
+description: "Parseo simple de query strings en el browser."
+level: junior
+order: 6
+---
+
+# URLSearchParams
+
+Para parsear `a=1&b=hola`, el browser te da `URLSearchParams`.
+
+## Reglas simples
+
+- Si una key aparece varias veces, podés quedarte con la **última**.
+- `URLSearchParams` ya maneja decode de `%20`, etc.
+
+En el ejercicio vas a implementar `parseQuery(qs)` con esas reglas.
+

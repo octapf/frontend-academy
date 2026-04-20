@@ -8,17 +8,19 @@ import { isMongoEnvConfigured } from "@/lib/auth/mongo-uri";
 export const runtime = "nodejs";
 
 const schema = z.object({
-  message: z.string().min(3).max(2000),
-  contact: z.string().trim().max(200).optional(),
-  page: z.string().trim().max(200).optional(),
+  kind: z.literal("exercise"),
+  exerciseId: z.string().min(1).max(64),
+  vote: z.enum(["like", "dislike"]).optional(),
+  comment: z.string().trim().min(3).max(2000).optional(),
 });
 
 type FeedbackFile = {
   items: Array<{
-    message: string;
-    contact?: string;
-    page?: string;
-    username?: string;
+    kind: "exercise";
+    exerciseId: string;
+    vote?: "like" | "dislike";
+    comment?: string;
+    username: string;
     createdAtIso: string;
   }>;
 };
@@ -50,10 +52,13 @@ export async function POST(req: Request) {
   }
 
   const session = await getSession();
+  if (!session) {
+    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
+  }
   const createdAtIso = new Date().toISOString();
   const doc = {
     ...parsed.data,
-    username: session?.username,
+    username: session.username,
     createdAtIso,
   };
 

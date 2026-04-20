@@ -1,0 +1,23 @@
+---
+title: "Generics: picking keys"
+description: "How to model reusable functions without losing types."
+level: mid
+order: 4
+---
+
+# Generics: picking keys
+
+When a function should work for many shapes of objects, **generics** let TypeScript “carry” types through inputs and outputs.
+
+## Problem
+
+We want a function that receives an object and a list of keys, and returns an object with **only those keys**.
+
+## The idea
+
+- \(T\) is the object type.
+- \(K\) is a subset of `keyof T`.
+- The return type is `Pick<T, K>`.
+
+This gives you autocomplete and prevents selecting non-existent keys.
+

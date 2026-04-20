@@ -104,6 +104,46 @@ export function TsCodeExercise({
   const [showHints, setShowHints] = useState(false);
   const [hintCount, setHintCount] = useState(1);
 
+  const [voteLoading, setVoteLoading] = useState<"like" | "dislike" | null>(null);
+  const [voteSent, setVoteSent] = useState<"like" | "dislike" | null>(null);
+  const [showComment, setShowComment] = useState(false);
+  const [comment, setComment] = useState("");
+  const [commentLoading, setCommentLoading] = useState(false);
+  const [feedbackError, setFeedbackError] = useState<string | null>(null);
+  const [commentSent, setCommentSent] = useState(false);
+
+  async function sendFeedback(payload: {
+    vote?: "like" | "dislike";
+    comment?: string;
+  }) {
+    const res = await fetch("/api/feedback", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({
+        kind: "exercise",
+        exerciseId: exercise.id,
+        ...payload,
+      }),
+    });
+    const json: unknown = await res.json().catch(() => null);
+    const ok =
+      res.ok &&
+      !!json &&
+      typeof json === "object" &&
+      (json as Record<string, unknown>).ok === true;
+    if (!ok) {
+      const err =
+        !!json &&
+        typeof json === "object" &&
+        typeof (json as Record<string, unknown>).error === "string"
+          ? String((json as Record<string, unknown>).error)
+          : lang === "en"
+            ? "Could not send feedback."
+            : "No se pudo enviar el feedback.";
+      throw new Error(err);
+    }
+  }
+
   const extensions = useMemo(
     () => [
       javascript({ typescript: true, jsx: false }),
@@ -285,6 +325,137 @@ export function TsCodeExercise({
         >
           {lang === "en" ? "Run tests" : "Ejecutar tests"}
         </Button>
+      </div>
+
+      <div className="rounded-xl border border-zinc-300 bg-zinc-100 p-4 dark:border-zinc-700 dark:bg-zinc-950">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <div className="text-sm font-medium">
+            {lang === "en" ? "Feedback" : "Feedback"}
+          </div>
+          {voteSent ? (
+            <div className="text-xs text-zinc-500 dark:text-zinc-400">
+              {lang === "en" ? "Thanks." : "Gracias."}
+            </div>
+          ) : null}
+        </div>
+
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Button
+            type="button"
+            size="sm"
+            variant={voteSent === "like" ? "primary" : "secondary"}
+            disabled={!!voteLoading}
+            onClick={async () => {
+              setFeedbackError(null);
+              setCommentSent(false);
+              setVoteLoading("like");
+              try {
+                await sendFeedback({ vote: "like" });
+                setVoteSent("like");
+              } catch (e) {
+                setFeedbackError(e instanceof Error ? e.message : "Feedback error");
+              } finally {
+                setVoteLoading(null);
+              }
+            }}
+          >
+            {lang === "en" ? "Like" : "Me gustó"}
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant={voteSent === "dislike" ? "primary" : "secondary"}
+            disabled={!!voteLoading}
+            onClick={async () => {
+              setFeedbackError(null);
+              setCommentSent(false);
+              setVoteLoading("dislike");
+              try {
+                await sendFeedback({ vote: "dislike" });
+                setVoteSent("dislike");
+              } catch (e) {
+                setFeedbackError(e instanceof Error ? e.message : "Feedback error");
+              } finally {
+                setVoteLoading(null);
+              }
+            }}
+          >
+            {lang === "en" ? "Dislike" : "No me gustó"}
+          </Button>
+          <Button
+            type="button"
+            size="sm"
+            variant="ghost"
+            onClick={() => {
+              setFeedbackError(null);
+              setCommentSent(false);
+              setShowComment((v) => !v);
+            }}
+          >
+            {showComment
+              ? lang === "en"
+                ? "Hide comment"
+                : "Ocultar comentario"
+              : lang === "en"
+                ? "Leave a comment"
+                : "Dejar comentario"}
+          </Button>
+        </div>
+
+        {showComment ? (
+          <div className="mt-3 space-y-2">
+            <textarea
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              rows={4}
+              className={cn(
+                "w-full rounded-lg border border-zinc-200 bg-zinc-200 px-3 py-2 text-sm outline-none",
+                "focus:ring-2 focus:ring-brand/60 dark:border-zinc-600 dark:bg-zinc-950 dark:focus:ring-brand/50"
+              )}
+              placeholder={
+                lang === "en"
+                  ? "What was confusing? What would you improve?"
+                  : "¿Qué fue confuso? ¿Qué mejorarías?"
+              }
+            />
+            <div className="flex flex-wrap items-center gap-2">
+              <Button
+                type="button"
+                size="sm"
+                variant="primary"
+                disabled={commentLoading || comment.trim().length < 3}
+                onClick={async () => {
+                  setFeedbackError(null);
+                  setCommentSent(false);
+                  setCommentLoading(true);
+                  try {
+                    await sendFeedback({ comment: comment.trim() });
+                    setCommentSent(true);
+                    setComment("");
+                    setShowComment(false);
+                  } catch (e) {
+                    setFeedbackError(e instanceof Error ? e.message : "Feedback error");
+                  } finally {
+                    setCommentLoading(false);
+                  }
+                }}
+              >
+                {commentLoading ? (lang === "en" ? "Sending…" : "Enviando…") : lang === "en" ? "Send" : "Enviar"}
+              </Button>
+              {commentSent ? (
+                <span className="text-xs text-emerald-700 dark:text-emerald-200">
+                  {lang === "en" ? "Sent. Thanks." : "Enviado. Gracias."}
+                </span>
+              ) : null}
+            </div>
+          </div>
+        ) : null}
+
+        {feedbackError ? (
+          <p className="mt-3 text-sm text-red-600 dark:text-red-400" role="alert">
+            {feedbackError}
+          </p>
+        ) : null}
       </div>
 
       {output ? (

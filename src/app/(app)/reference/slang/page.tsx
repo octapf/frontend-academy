@@ -1,5 +1,5 @@
 import { LearnEntryLink } from "@/components/learn/LearnEntryLink";
-import { SlangPracticeCard } from "@/components/reference/SlangPracticeCard";
+import { SlangInfoCard } from "@/components/reference/SlangInfoCard";
 
 export default function SlangPage() {
   return (
@@ -7,12 +7,11 @@ export default function SlangPage() {
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Slang (ES/EN)</h1>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-          Jerga de equipos + práctica rápida (matching ES↔EN). Filtrado por
-          track.
+          Jerga de equipos. Filtrado por track.
         </p>
       </div>
 
-      <SlangPracticeCard />
+      <SlangInfoCard />
 
       <div>
         <LearnEntryLink

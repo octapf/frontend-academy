@@ -1,0 +1,19 @@
+---
+title: "JSON.parse without crashing"
+description: "Errors, try/catch, and safe return."
+level: junior
+order: 8
+---
+
+# JSON.parse without crashing
+
+`JSON.parse` throws when the input is not valid JSON.
+
+When your app consumes external data (localStorage, query strings, APIs), the usual pattern is:
+
+- parse
+- validate shape
+- and **fail safely**
+
+In the exercise you’ll implement `safeJsonParse` that returns `null` on failure.
+

@@ -4,8 +4,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 import { TrackLink } from "@/components/track/TrackLink";
+import { Button } from "@/components/ui/Button";
 
-export function UserMenu({ username }: { username: string }) {
+export function UserMenu({ username }: { username: string | null }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -18,6 +19,19 @@ export function UserMenu({ username }: { username: string }) {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (!username) {
+    return (
+      <div className="flex items-center gap-2">
+        <Button asChild variant="secondary" size="sm">
+          <TrackLink href="/login">Ingresar</TrackLink>
+        </Button>
+        <Button asChild variant="primary" size="sm">
+          <TrackLink href="/register">Crear cuenta</TrackLink>
+        </Button>
+      </div>
+    );
   }
 
   return (

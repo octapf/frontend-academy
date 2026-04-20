@@ -13,9 +13,10 @@ export const progressQueryKey = ["progress"] as const;
 export function useProgressQuery() {
   const q = useQuery({
     queryKey: progressQueryKey,
-    queryFn: async (): Promise<ProgressApiPayload> => {
+    queryFn: async (): Promise<ProgressApiPayload | null> => {
       const res = await fetch("/api/progress");
-      const json: unknown = await res.json();
+      if (res.status === 401) return null;
+      const json: unknown = await res.json().catch(() => null);
       if (!res.ok || !isProgressApiPayload(json)) {
         throw new Error("progress");
       }

@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 
 import { LessonProgressBadges } from "@/components/lesson/LessonProgressBadges";
 import { LessonProgressBeacon } from "@/components/lesson/LessonProgressBeacon";
+import { GlossaryPracticeCard } from "@/components/reference/GlossaryPracticeCard";
+import { SlangPracticeCard } from "@/components/reference/SlangPracticeCard";
 import { TrackLink } from "@/components/track/TrackLink";
 import { listLessonsForModule, loadLessonMdx } from "@/lib/content/get-lesson";
 import { learnLangSearchSuffix, parseLearnLang } from "@/lib/i18n/learn-lang";
@@ -79,6 +81,13 @@ export default async function LessonPage({
       <article className="prose prose-zinc max-w-none dark:prose-invert prose-headings:scroll-mt-20 prose-a:text-zinc-900 prose-a:underline prose-a:decoration-brand/50 prose-a:underline-offset-4 hover:prose-a:text-brand dark:prose-a:text-zinc-100">
         {lesson.content}
       </article>
+
+      {moduleSlug === "vocab" && lessonSlug === "glossary" ? (
+        <GlossaryPracticeCard />
+      ) : null}
+      {moduleSlug === "vocab" && lessonSlug === "slang" ? (
+        <SlangPracticeCard />
+      ) : null}
 
       {codeExercise ? (
         <div className="rounded-xl border border-zinc-300 bg-zinc-100 p-5 dark:border-zinc-700 dark:bg-zinc-950">

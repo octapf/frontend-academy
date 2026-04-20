@@ -6,16 +6,7 @@ import { useTrackStore } from "@/stores/useTrackStore";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
-type MinTrack = "junior" | "mid" | "senior";
-type Pair = { es: string; en: string; meaning: string; minTrack: MinTrack };
-
-const PAIRS: Pair[] = [
-  { es: "inestable (test)", en: "flaky", meaning: "Test que a veces falla.", minTrack: "junior" },
-  { es: "mezclar ramas", en: "merge", meaning: "Integrar una rama en otra.", minTrack: "junior" },
-  { es: "subir a prod", en: "ship", meaning: "Liberar código a producción.", minTrack: "mid" },
-  { es: "parche rápido", en: "hotfix", meaning: "Corrección urgente en prod.", minTrack: "mid" },
-  { es: "arreglo temporal", en: "workaround", meaning: "Solución no ideal.", minTrack: "senior" },
-];
+import { SLANG_ENTRIES, type MinTrack } from "@/lib/reference/slang";
 
 function trackAllows(track: string, min: MinTrack) {
   if (track === "all") return true;
@@ -27,7 +18,7 @@ function trackAllows(track: string, min: MinTrack) {
 export function SlangPracticeCard() {
   const track = useTrackStore((s) => s.track);
   const pairs = useMemo(
-    () => PAIRS.filter((p) => trackAllows(track, p.minTrack)),
+    () => SLANG_ENTRIES.filter((p) => trackAllows(track, p.minTrack)),
     [track]
   );
 

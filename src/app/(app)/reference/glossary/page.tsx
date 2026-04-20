@@ -1,5 +1,5 @@
 import { LearnEntryLink } from "@/components/learn/LearnEntryLink";
-import { GlossaryPracticeCard } from "@/components/reference/GlossaryPracticeCard";
+import { GlossaryInfoCard } from "@/components/reference/GlossaryInfoCard";
 
 export default function GlossaryPage() {
   return (
@@ -7,11 +7,11 @@ export default function GlossaryPage() {
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Glossary</h1>
         <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-          Términos + práctica rápida (matching). Filtrado por track.
+          Términos y definiciones. Filtrado por track.
         </p>
       </div>
 
-      <GlossaryPracticeCard />
+      <GlossaryInfoCard />
 
       <div>
         <LearnEntryLink

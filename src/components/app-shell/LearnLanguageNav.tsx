@@ -36,7 +36,8 @@ function LearnLanguageNavInner() {
     if (searchParams.get("lang") === "en") setLearnLang("en");
   }, [searchParams, setLearnLang]);
 
-  if (!pathname.startsWith("/learn")) return null;
+  const show = pathname.startsWith("/learn") || pathname.startsWith("/roadmap");
+  if (!show) return null;
 
   const current = parseLearnLang(searchParams.get("lang"));
 

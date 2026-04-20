@@ -1,0 +1,19 @@
+---
+title: "JSON.parse sin romper todo"
+description: "Errores, try/catch, y retorno seguro."
+level: junior
+order: 8
+---
+
+# JSON.parse sin romper todo
+
+`JSON.parse` tira excepción si el input no es JSON válido.
+
+Cuando tu app consume datos externos (localStorage, query strings, APIs), lo normal es:
+
+- parsear
+- validar forma
+- y **fallar de forma controlada**
+
+En el ejercicio vas a implementar `safeJsonParse` que devuelve `null` si falla.
+

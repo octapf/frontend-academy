@@ -8,7 +8,12 @@ import { getExercise } from "@/exercises/index";
 import { limitExerciseRun } from "@/lib/rate-limit/exercise-run-limit";
 import { recordExercisePass } from "@/lib/progress/progress-store";
 import { runTsGreeting } from "@/lib/exercises/run-ts-greeting";
+import { runTsGroupBy } from "@/lib/exercises/run-ts-group-by";
+import { runTsParseQuery } from "@/lib/exercises/run-ts-parse-query";
+import { runTsPickKeys } from "@/lib/exercises/run-ts-pick-keys";
 import { runTsPositive } from "@/lib/exercises/run-ts-positive";
+import { runTsSafeJsonParse } from "@/lib/exercises/run-ts-safe-json-parse";
+import { runTsShapeArea } from "@/lib/exercises/run-ts-shape-area";
 import { runTsSum } from "@/lib/exercises/run-ts-sum";
 import { runTsUserLabel } from "@/lib/exercises/run-ts-user-label";
 
@@ -21,11 +26,13 @@ const bodySchema = z.object({
 
 export async function POST(req: Request) {
   const session = await getSession();
-  if (!session) {
-    return NextResponse.json({ ok: false, error: "Unauthorized" }, { status: 401 });
-  }
 
-  const rl = await limitExerciseRun(`exercise-run:${session.username}`);
+  const ip =
+    req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ||
+    req.headers.get("x-real-ip")?.trim() ||
+    "unknown";
+  const rlKey = session ? `exercise-run:${session.username}` : `exercise-run:guest:${ip}`;
+  const rl = await limitExerciseRun(rlKey);
   if (!rl.ok) {
     return NextResponse.json(
       { ok: false, error: "Demasiadas ejecuciones. Probá en unos segundos." },
@@ -55,6 +62,11 @@ export async function POST(req: Request) {
     "ts-positive": runTsPositive,
     "ts-greeting": runTsGreeting,
     "ts-user-label": runTsUserLabel,
+    "ts-pick-keys": runTsPickKeys,
+    "ts-shape-area": runTsShapeArea,
+    "ts-parse-query": runTsParseQuery,
+    "ts-group-by": runTsGroupBy,
+    "ts-safe-json-parse": runTsSafeJsonParse,
   };
 
   const run = runners[exercise.id];
@@ -66,7 +78,7 @@ export async function POST(req: Request) {
   }
 
   const result = run(code) as { ok: boolean };
-  if (result.ok) {
+  if (result.ok && session) {
     await recordExercisePass(session.username, exercise.id);
   }
 

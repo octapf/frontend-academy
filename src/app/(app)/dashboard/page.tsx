@@ -6,10 +6,14 @@ import { LEARN_MODULES } from "@/lib/learn/modules";
 import { TrackLink } from "@/components/track/TrackLink";
 import { getSession } from "@/lib/auth/session";
 import { getProgressSummary } from "@/lib/progress/progress-store";
+import { redirect } from "next/navigation";
 
 export default async function DashboardPage() {
   const lessonCounts = await getLessonCountsByModule();
   const session = await getSession();
+  if (!session) {
+    redirect("/login?next=/dashboard");
+  }
   const summary = session ? await getProgressSummary(session.username) : null;
 
   let nextHref: string | null = null;

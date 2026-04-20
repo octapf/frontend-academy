@@ -22,6 +22,11 @@ export const LEARN_MODULES: LearnModuleMeta[] = [
     description: "Layout, responsive, cascade.",
   },
   {
+    slug: "vocab",
+    title: "Vocab (Glossary + Slang)",
+    description: "Términos y jerga con práctica rápida.",
+  },
+  {
     slug: "testing",
     title: "Testing",
     description: "Jest + RTL, strategy, mocks.",

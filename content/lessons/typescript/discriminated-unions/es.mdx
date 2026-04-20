@@ -1,0 +1,19 @@
+---
+title: "Discriminated unions"
+description: "Modelar variantes y forzar exhaustividad."
+level: mid
+order: 5
+---
+
+# Discriminated unions
+
+Un **discriminated union** es un union type donde cada variante comparte una propiedad literal (por ejemplo `kind`).
+
+## Por qué importa
+
+- Simplifica lógica con `switch`
+- Evita estados imposibles
+- Permite exhaustividad (si te falta un caso, TypeScript se queja)
+
+En el ejercicio vas a calcular áreas de figuras con `kind: "circle" | "rect"`.
+

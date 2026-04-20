@@ -55,6 +55,61 @@ export const LESSON_CODE_EXERCISES: LessonCodeExerciseMeta[] = [
     },
     cta: { es: "Ir al ejercicio", en: "Open exercise" },
   },
+  {
+    moduleSlug: "typescript",
+    lessonSlug: "generics-pick",
+    exerciseId: "ts-pick-keys",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Genéricos: quedate con keys específicas sin perder tipos.",
+      en: "Generics: keep selected keys without losing types.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "typescript",
+    lessonSlug: "discriminated-unions",
+    exerciseId: "ts-shape-area",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Discriminated unions: switch exhaustivo con tests.",
+      en: "Discriminated unions: exhaustive switch with tests.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "typescript",
+    lessonSlug: "url-search-params",
+    exerciseId: "ts-parse-query",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Parseo de query string con reglas simples.",
+      en: "Parse a query string with simple rules.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "typescript",
+    lessonSlug: "array-reduce",
+    exerciseId: "ts-group-by",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Agrupación por key usando reduce/loops.",
+      en: "Group by key using reduce/loops.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
+  {
+    moduleSlug: "typescript",
+    lessonSlug: "json-parse",
+    exerciseId: "ts-safe-json-parse",
+    title: { es: "Ejercicio de código", en: "Code exercise" },
+    description: {
+      es: "Manejo de errores: parseo seguro de JSON.",
+      en: "Error handling: safe JSON parsing.",
+    },
+    cta: { es: "Ir al ejercicio", en: "Open exercise" },
+  },
 ];
 
 export function lessonCodeExerciseFor(

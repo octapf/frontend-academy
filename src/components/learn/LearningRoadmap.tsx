@@ -1,10 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 
 import { TrackLink } from "@/components/track/TrackLink";
-import { Button } from "@/components/ui/Button";
-import { Input } from "@/components/ui/Input";
 import { useProgressQuery } from "@/hooks/use-progress-query";
 import { exerciseIdsInModule } from "@/lib/exercises/exercise-lesson-map";
 import { learnLangSearchSuffix } from "@/lib/i18n/learn-lang";
@@ -23,12 +21,6 @@ export function LearningRoadmap({
   const passedSet = useMemo(() => new Set(exIds), [exIds]);
   const langQs = learnLangSearchSuffix(lang);
 
-  const [message, setMessage] = useState("");
-  const [contact, setContact] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
   const next = (() => {
     for (const m of LEARN_MODULES) {
       // We don't have lesson list here; fall back to module-level continue.
@@ -40,42 +32,6 @@ export function LearningRoadmap({
     }
     return null;
   })();
-
-  async function onSubmitFeedback(e: React.FormEvent) {
-    e.preventDefault();
-    setError(null);
-    setSent(false);
-    setLoading(true);
-    try {
-      const res = await fetch("/api/feedback", {
-        method: "POST",
-        headers: { "content-type": "application/json" },
-        body: JSON.stringify({
-          message,
-          contact: contact.trim() ? contact.trim() : undefined,
-          page: "/roadmap",
-        }),
-      });
-      const json: unknown = await res.json().catch(() => null);
-      const ok =
-        !!json && typeof json === "object" && (json as Record<string, unknown>).ok === true;
-      if (!res.ok || !ok) {
-        const err =
-          !!json &&
-          typeof json === "object" &&
-          typeof (json as Record<string, unknown>).error === "string"
-            ? String((json as Record<string, unknown>).error)
-            : `Error enviando feedback (${res.status})`;
-        setError(err);
-        return;
-      }
-      setSent(true);
-      setMessage("");
-      setContact("");
-    } finally {
-      setLoading(false);
-    }
-  }
 
   return (
     <div className="space-y-6">
@@ -106,7 +62,7 @@ export function LearningRoadmap({
             : "Orden recomendado. Tu progreso se refleja por módulo."}
         </p>
 
-        <div className="mt-4 space-y-3">
+        <div className="mt-4 grid gap-3 md:grid-cols-2">
           {LEARN_MODULES.map((m, idx) => {
             const totalLessons = lessonCounts[m.slug] ?? 0;
             const viewedHere = lessonKeys.filter((k) => k.startsWith(`${m.slug}/`)).length;
@@ -161,61 +117,6 @@ export function LearningRoadmap({
             );
           })}
         </div>
-      </div>
-
-      <div className="rounded-xl border border-zinc-300 bg-zinc-100 p-5 dark:border-zinc-700 dark:bg-zinc-950">
-        <div className="text-sm font-medium">{lang === "en" ? "Feedback" : "Feedback"}</div>
-        <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-          {lang === "en"
-            ? "Report bugs, suggest lessons/exercises, or request new topics."
-            : "Reportá bugs, sugerí lecciones/ejercicios o pedí temas nuevos."}
-        </p>
-
-        <form onSubmit={onSubmitFeedback} className="mt-4 space-y-3">
-          <div>
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
-              {lang === "en" ? "Message" : "Mensaje"}
-            </label>
-            <textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              required
-              rows={5}
-              className="mt-1 w-full rounded-lg border border-zinc-200 bg-zinc-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/60 dark:border-zinc-600 dark:bg-zinc-950 dark:focus:ring-brand/50"
-              placeholder={
-                lang === "en"
-                  ? "E.g. This lesson needs an example, mobile layout breaks, etc."
-                  : "Ej: a esta lección le falta un ejemplo, en mobile se rompe X, etc."
-              }
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
-              {lang === "en" ? "Contact (optional)" : "Contacto (opcional)"}
-            </label>
-            <Input
-              value={contact}
-              onChange={(e) => setContact(e.target.value)}
-              placeholder={lang === "en" ? "Email / Discord / anything" : "Email / Discord / lo que uses"}
-            />
-          </div>
-
-          {error ? (
-            <p className="text-sm text-red-600 dark:text-red-400" role="alert">
-              {error}
-            </p>
-          ) : null}
-          {sent ? (
-            <p className="text-sm text-emerald-700 dark:text-emerald-200" role="status">
-              {lang === "en" ? "Sent. Thanks." : "Enviado. Gracias."}
-            </p>
-          ) : null}
-
-          <Button type="submit" variant="primary" disabled={loading}>
-            {loading ? (lang === "en" ? "Sending…" : "Enviando…") : lang === "en" ? "Send" : "Enviar"}
-          </Button>
-        </form>
       </div>
     </div>
   );

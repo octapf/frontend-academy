@@ -8,7 +8,12 @@ describe("exerciseIdsInModule", () => {
     expect(exerciseIdsInModule("react")).toEqual(["ts-sum"]);
     expect(exerciseIdsInModule("typescript").sort()).toEqual([
       "ts-greeting",
+      "ts-group-by",
+      "ts-parse-query",
+      "ts-pick-keys",
       "ts-positive",
+      "ts-safe-json-parse",
+      "ts-shape-area",
       "ts-user-label",
     ]);
     expect(exerciseIdsInModule("styles")).toEqual([]);
