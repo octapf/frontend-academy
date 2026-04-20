@@ -43,13 +43,13 @@ export function AppShell({
       </Suspense>
       <header className="sticky top-0 z-10 border-b border-zinc-300/80 bg-zinc-100/90 backdrop-blur dark:border-zinc-700/80 dark:bg-zinc-950/90">
         <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4">
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 md:w-[220px] md:justify-center">
             <TrackLink
               href="/dashboard"
               className="flex items-center"
               aria-label="Frontend Academy"
             >
-              <span className={`${montserrat.className} select-none leading-none`}>
+              <span className={`${montserrat.className} select-none text-center leading-none`}>
                 <span className="block text-[18px] font-bold uppercase tracking-[0.08em] text-[#2D343E] dark:text-zinc-50">
                   FRONTEND
                 </span>
