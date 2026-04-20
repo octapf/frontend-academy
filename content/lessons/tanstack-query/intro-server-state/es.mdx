@@ -1,0 +1,30 @@
+---
+title: "TanStack Query: estado del servidor en React"
+description: "Cache, claves, invalidación y cómo convive con estado local."
+level: mid
+order: 1
+---
+
+# TanStack Query: estado del servidor en React
+
+## Qué vas a entender
+
+Separar **estado de UI** (inputs, modales) de **estado remoto** (listas, detalle de entidad) con **claves de query**, **stale time** y **invalidación** explícita.
+
+## Detalle
+
+React Query modela **fetch → cache → re-fetch** con políticas declarativas: menos `useEffect` manual para datos, más control sobre **deduplicación** y **errores**. Convive con Redux/Zustand si cada uno tiene rol claro: servidor vs cliente. En entrevistas suele preguntarse **qué pasa si cambia el usuario** o **cómo testear** hooks de datos (MSW, handlers falsos).
+
+## Práctica recomendada
+
+- Escribí la **query key** para “lista de proyectos del usuario X” y pensá qué parte debe cambiar al logout.
+- Simulá un **error 500** y decidí qué muestra la UI (retry, toast, fallback).
+
+## Errores comunes
+
+- Keys **demasiado genéricas** que mezclan datos de distintos tenants o filtros.
+- Tratar el cache como **fuente de verdad** para datos que deben ser **optimistas** sin estrategia de rollback.
+
+## Recursos
+
+- [TanStack Query — docs](https://tanstack.com/query/latest)

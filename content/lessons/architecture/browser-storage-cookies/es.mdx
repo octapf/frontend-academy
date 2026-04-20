@@ -1,0 +1,31 @@
+---
+title: "Cookies, localStorage y sessionStorage"
+description: "Cuándo usar cada uno, límites y riesgos de seguridad en frontend."
+level: mid
+order: 18
+---
+
+# Cookies, localStorage y sessionStorage
+
+## Qué vas a entender
+
+**Cookies** viajan con requests HTTP (útiles para sesión server-side, atributos `HttpOnly`/`Secure`/`SameSite`). **localStorage** persiste por origen hasta que lo borrás. **sessionStorage** dura solo la pestaña.
+
+## Detalle
+
+Ninguno reemplaza al otro: las cookies permiten políticas del navegador que el storage no cumple; el storage evita tamaño y cabeceras en cada request pero **no es para secretos** (cualquier JS del origen puede leerlo). Temas vecinos: **CSRF** en cookies de sesión, **XSS** que roba storage, y **GDPR** si guardás identificadores.
+
+## Práctica recomendada
+
+- Para un token de sesión, razoná **cookie HttpOnly** vs **memoria** vs **storage** según amenaza.
+- Listá qué datos guarda tu app hoy y **quién** puede leerlos (JS, servidor, extensiones).
+
+## Errores comunes
+
+- Guardar **JWT** en localStorage “porque es fácil” sin evaluar superficie XSS.
+- Asumir que `sessionStorage` es “seguro” — solo aísla por pestaña, no autentica.
+
+## Recursos
+
+- [MDN — HTTP cookies](https://developer.mozilla.org/es/docs/Web/HTTP/Cookies)
+- [MDN — Web Storage API](https://developer.mozilla.org/es/docs/Web/API/Web_Storage_API)

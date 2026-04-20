@@ -1,0 +1,31 @@
+---
+title: "JavaScript for frontend (mental model)"
+description: "Event loop, async, and browser APIs you will hit in interviews."
+level: junior
+order: 1
+---
+
+# JavaScript for frontend (mental model)
+
+## What you’ll take away
+
+How the **language runtime**, the **event loop**, and **Web APIs** fit together when you build UI with React or Next.js.
+
+## Details
+
+Interviews often mix “what does this print?” with “why does `setState` batch?” — usually one **task queue**, **microtasks** (`Promise`), and **macrotasks** (`setTimeout`). You do not need to memorize diagrams; you do need to **know where to look** (DevTools Performance, Console, MDN).
+
+## Recommended practice
+
+- Open **DevTools → Sources**, walk a flow with a breakpoint: reading the call stack trains you to explain bugs out loud.
+- Write **three of your own** `async/await` vs `.then` examples and what happens if you forget `await` in a handler.
+
+## Common pitfalls
+
+- Treating **hoisting** as “everything moves up magically” without separating compile-time vs runtime phases.
+- Mishandling **`this`** in callbacks without deciding classic function vs arrow.
+
+## Resources
+
+- [MDN — JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+- [MDN — Web APIs](https://developer.mozilla.org/en-US/docs/Web/API)

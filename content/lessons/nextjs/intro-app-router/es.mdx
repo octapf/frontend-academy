@@ -1,0 +1,31 @@
+---
+title: "Next.js: App Router en una página"
+description: "Rutas por carpetas, layouts y dónde vive el servidor vs el cliente."
+level: mid
+order: 1
+---
+
+# Next.js: App Router en una página
+
+## Qué vas a entender
+
+Cómo `app/`, `page.tsx`, `layout.tsx` y **`'use client'`** ordenan responsabilidades en apps modernas.
+
+## Detalle
+
+En el **App Router** la URL sigue carpetas; por defecto los componentes son **Server Components** (menos JS al cliente, `fetch` cercano a datos). Cuando necesitás estado local o eventos DOM, aislad **`'use client'`** en piezas pequeñas. Temas vecinos: **metadata**, **Route Handlers**, **caché de `fetch`**, **middleware** y variables de entorno — cada uno responde a un riesgo distinto (SEO, secretos, redirecciones).
+
+## Práctica recomendada
+
+- Dibujá en papel **árbol app/** → **URLs** de tu proyecto o de un ejemplo oficial.
+- Identificá un componente que hoy sea cliente y preguntate si **podría ser servidor** moviendo datos arriba.
+
+## Errores comunes
+
+- Marcar `'use client'` en la raíz “por las dudas” y mandar todo el subárbol al bundle del navegador.
+- Mezclar **`page.tsx` y `route.ts`** en el mismo segmento esperando dos respuestas distintas para la misma URL.
+
+## Recursos
+
+- [Next.js — App Router](https://nextjs.org/docs/app)
+- [MDN — Fetch](https://developer.mozilla.org/es/docs/Web/API/Fetch_API)

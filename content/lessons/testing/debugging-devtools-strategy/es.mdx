@@ -1,0 +1,31 @@
+---
+title: "Estrategia de debugging (DevTools + tests)"
+description: "Reproducir, acotar y fijar el bug sin adivinar."
+level: mid
+order: 28
+---
+
+# Estrategia de debugging (DevTools + tests)
+
+## Qué vas a entender
+
+Un flujo **reproducible**: aislar entrada, verificar hipótesis con logs/puntos de parada y **cerrar con test** de regresión cuando aplique.
+
+## Detalle
+
+Debugging no es talento místico: es método. **Console** para invariantes rápidas, **Sources** para stack y estado, **Network** para contratos HTTP, **React DevTools** para props y renders. Los tests (RTL, E2E) sirven para **congelar** el fallo: primero rojo, luego verde. Complementa la lección de **screen debugging** si ya usás `screen.debug` en tests.
+
+## Práctica recomendada
+
+- Elegí un bug reciente y escribí **5 pasos** que repetirías para encontrarlo de nuevo.
+- Configurá **conditional breakpoints** en un handler async y observá el orden real.
+
+## Errores comunes
+
+- Cambiar tres cosas a la vez y no saber cuál arregló el síntoma.
+- Confiar solo en `console.log` en producción sin **correlación** (request id, usuario).
+
+## Recursos
+
+- [Chrome DevTools](https://developer.chrome.com/docs/devtools/)
+- [Testing Library — debugging](https://testing-library.com/docs/dom-testing-library/api-debugging)

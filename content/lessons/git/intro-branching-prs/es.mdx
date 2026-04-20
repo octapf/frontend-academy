@@ -1,0 +1,31 @@
+---
+title: "Git: ramas, commits y pull requests"
+description: "Flujo diario para revisar código y publicar con confianza."
+level: junior
+order: 1
+---
+
+# Git: ramas, commits y pull requests
+
+## Qué vas a entender
+
+Cómo **commits atómicos**, **ramas cortas** y **PRs con contexto** reducen fricción con el equipo y con CI.
+
+## Detalle
+
+Git es contrato social: mensajes que expliquen **por qué**, diffs legibles, rebase vs merge según convención del repo. En entrevistas a veces piden **resolver un conflicto**, **revertir un commit** o **explicar HEAD detached** — no hace falta ser mago de `reflog`, sí **saber deshacer sin miedo** con ramas de rescate.
+
+## Práctica recomendada
+
+- Hacé un **PR de un solo cambio** y pedí review a alguien: notá qué preguntas surgen.
+- Probá `git bisect` en un repo de práctica cuando sepas qué commit rompió tests.
+
+## Errores comunes
+
+- `--force` en ramas compartidas sin consenso.
+- Commits gigantes que mezclan formato, feature y fix de bug.
+
+## Recursos
+
+- [Pro Git (libro)](https://git-scm.com/book/es/v2)
+- [GitHub — flujo de PR](https://docs.github.com/es/pull-requests)

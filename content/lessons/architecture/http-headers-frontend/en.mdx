@@ -1,0 +1,31 @@
+---
+title: "HTTP headers that matter to the frontend"
+description: "Cache, security, CORS, and payloads: what to watch in Network."
+level: mid
+order: 19
+---
+
+# HTTP headers that matter to the frontend
+
+## What you’ll take away
+
+How **request** and **response** headers affect browser cache, **CORS**, **cookies**, and security policies (`Content-Security-Policy`, legacy `X-Frame-Options`, etc.).
+
+## Details
+
+In DevTools → Network each row is a contract: `Cache-Control` and `ETag` define revalidation; `Authorization` or cookies define identity; `Access-Control-Allow-Origin` decides whether the browser lets you read the response from another origin. Do not memorize everything: learn to **hypothesize** (“if I remove this header, what breaks?”).
+
+## Recommended practice
+
+- Open your own or a public API and note **five headers** whose changes alter behavior.
+- Check how your bundler or CDN injects **security headers** on HTML vs API responses.
+
+## Common pitfalls
+
+- Blaming CORS without checking whether the failure is **preflight** vs **opaque response**.
+- Cache busting with random query strings without real **invalidation** understanding.
+
+## Resources
+
+- [MDN — HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)
+- [MDN — CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)

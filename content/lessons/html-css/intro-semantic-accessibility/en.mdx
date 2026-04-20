@@ -1,0 +1,31 @@
+---
+title: "Semantic HTML and baseline accessibility"
+description: "Structure, landmarks, and the contract with CSS and JS."
+level: junior
+order: 1
+---
+
+# Semantic HTML and baseline accessibility
+
+## What you’ll take away
+
+Why **meaningful tags** (`main`, `nav`, `button` vs clickable `div`) improve SEO, keyboard support, and maintenance.
+
+## Details
+
+HTML is the **contract** with the browser and assistive tech: implicit roles, tab order, and alternative text. Good HTML reduces React work: fewer patched `aria-*` later. Interviews often surface the trade-off **“fast with `div`” vs “correct with semantics”**.
+
+## Recommended practice
+
+- Pick a screen from your app and map each block to a **landmark**.
+- Try **keyboard only** (Tab / Shift+Tab / Enter) on a form without the mouse.
+
+## Common pitfalls
+
+- `onClick` on a `div` without `role`, focus, or keyboard handling.
+- Empty `alt` when the image **does** convey content.
+
+## Resources
+
+- [MDN — HTML](https://developer.mozilla.org/en-US/docs/Web/HTML)
+- [MDN — Accessibility](https://developer.mozilla.org/en-US/docs/Web/Accessibility)

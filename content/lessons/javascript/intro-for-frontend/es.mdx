@@ -1,0 +1,31 @@
+---
+title: "JavaScript para frontend (mapa mental)"
+description: "Event loop, asincronía y APIs del navegador que vas a cruzar en entrevistas."
+level: junior
+order: 1
+---
+
+# JavaScript para frontend (mapa mental)
+
+## Qué vas a entender
+
+Cómo encajan **el motor del lenguaje**, el **event loop** y las **APIs web** cuando construís UI con React o Next.js.
+
+## Detalle
+
+Entrevistas suelen mezclar “¿qué imprime esto?” con “¿por qué el `setState` se agrupa?”: la respuesta suele pasar por **una sola cola de tareas**, **microtareas** (`Promise`) y **macrotareas** (`setTimeout`). No hace falta memorizar diagramas; sí **saber dónde buscar** (DevTools Performance, pestaña Console, documentación de MDN).
+
+## Práctica recomendada
+
+- Abrí **DevTools → Sources** y recorré un flujo con breakpoint: ver el call stack te entrena para explicar bugs en voz alta.
+- Escribí **tres ejemplos propios** de `async/await` vs `.then` y qué pasa si olvidás el `await` en un handler.
+
+## Errores comunes
+
+- Confundir **hoisting** con “todo se mueve arriba mágicamente” sin hablar de fases de compilación vs runtime.
+- Tratar **`this`** en callbacks sin fijar si usás función clásica o flecha.
+
+## Recursos
+
+- [MDN — JavaScript](https://developer.mozilla.org/es/docs/Web/JavaScript)
+- [MDN — Web APIs](https://developer.mozilla.org/es/docs/Web/API)

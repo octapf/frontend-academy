@@ -1,0 +1,31 @@
+---
+title: "Git: branches, commits, and pull requests"
+description: "Daily flow to review code and ship with confidence."
+level: junior
+order: 1
+---
+
+# Git: branches, commits, and pull requests
+
+## What you’ll take away
+
+How **atomic commits**, **short-lived branches**, and **PRs with context** reduce friction with the team and CI.
+
+## Details
+
+Git is a social contract: messages that explain **why**, readable diffs, rebase vs merge per repo convention. Interviews may ask you to **resolve a conflict**, **revert a commit**, or explain **detached HEAD** — you do not need `reflog` wizardry; you do need **safe undo** with rescue branches.
+
+## Recommended practice
+
+- Open a **single-purpose PR** and request review: note what questions reviewers ask.
+- Try `git bisect` on a practice repo once you know which commit broke tests.
+
+## Common pitfalls
+
+- `--force` on shared branches without agreement.
+- Huge commits mixing formatting, feature, and bugfix.
+
+## Resources
+
+- [Pro Git book](https://git-scm.com/book/en/v2)
+- [GitHub — PR flow](https://docs.github.com/en/pull-requests)

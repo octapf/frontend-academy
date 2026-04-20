@@ -1,0 +1,30 @@
+---
+title: "Zustand: small, explicit stores"
+description: "Minimal API, subscriptions, and living alongside React."
+level: mid
+order: 1
+---
+
+# Zustand: small, explicit stores
+
+## What you’ll take away
+
+A store as **state + actions** with little ceremony — good for **domain-local** state that does not warrant full Redux.
+
+## Details
+
+Zustand leans on **subscriptions** and reference checks: prefer **splitting stores** by context (session user, global UI, local feature toggles) instead of one monolith. It pairs well with **React 18+** and remote data if you combine async actions with TanStack Query for the “server” slice.
+
+## Recommended practice
+
+- Write the **public surface** of a store (read-only fields vs mutators and how).
+- Compare with **Context + useReducer** for the same use case: what you gain vs lose.
+
+## Common pitfalls
+
+- Mutating state **without** the store helpers and losing renders or consistency.
+- Duplicating in Zustand what is already **server source of truth** with no sync strategy.
+
+## Resources
+
+- [Zustand docs](https://docs.pmnd.rs/zustand/getting-started/introduction)

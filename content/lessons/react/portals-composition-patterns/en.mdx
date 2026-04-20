@@ -1,0 +1,31 @@
+---
+title: "Portals, composition, and HOCs (when and when not)"
+description: "React patterns for modals, slots, and reuse without losing clarity."
+level: mid
+order: 45
+---
+
+# Portals, composition, and HOCs (when and when not)
+
+## What you’ll take away
+
+**`createPortal`** mounts UI outside the parent DOM tree (modals, tooltips) while keeping React context. **Composition** (`children`, slots) often replaces **HOCs** when you only need shared UI or local state.
+
+## Details
+
+HOCs (`withX(Component)`) were common before hooks; many cases now move to **hooks + composition**. Portals solve **z-index** and parent **overflow**, not semantics: you still need focus, `aria-modal`, and screen reader behavior. Pair with validation: **Zod** at the boundary (submit) fits controlled forms without mixing view and parser on every keystroke unless needed.
+
+## Recommended practice
+
+- Build a minimal modal with a **portal** and test focus on open/close.
+- Mentally rewrite a HOC you know as **hook + component**.
+
+## Common pitfalls
+
+- Portals without **focus trap** or restoring focus on close.
+- Nested HOCs that make `ComponentType` typing unreadable and errors harder to trace.
+
+## Resources
+
+- [React — createPortal](https://react.dev/reference/react-dom/createPortal)
+- [React — composition](https://react.dev/learn/passing-data-deeply-with-context)

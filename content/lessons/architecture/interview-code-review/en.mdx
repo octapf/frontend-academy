@@ -1,0 +1,30 @@
+---
+title: "Interview code review (what reviewers look for)"
+description: "Naming, errors, accessibility, and tests: a mental checklist."
+level: mid
+order: 20
+---
+
+# Interview code review (what reviewers look for)
+
+## What you’ll take away
+
+How to **talk through** a diff: intent, trade-offs, risks, and next steps — not just “good” or “bad”.
+
+## Details
+
+Many interviews use an intentionally incomplete snippet: they want **clear questions**, **edge case** awareness (null, empty lists, races), baseline **accessibility** (keyboard, labels), and **observability** (loggable errors). Tie this to team habits: PR size, minimum tests, feature flags.
+
+## Recommended practice
+
+- Ask a teammate for **10 minutes of review** on your PR and note what they asked.
+- Pick an older component and list **three improvements** ranked by risk vs effort.
+
+## Common pitfalls
+
+- Huge refactors in the same pass without separating **risk** from **style**.
+- Dismissing product context (“this never happens”) without **quantifying** the assumption.
+
+## Resources
+
+- [Google — eng-practices (code review)](https://google.github.io/eng-practices/review/)

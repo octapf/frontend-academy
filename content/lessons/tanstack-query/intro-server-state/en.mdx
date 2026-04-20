@@ -1,0 +1,30 @@
+---
+title: "TanStack Query: server state in React"
+description: "Cache, keys, invalidation, and how it lives next to local state."
+level: mid
+order: 1
+---
+
+# TanStack Query: server state in React
+
+## What you’ll take away
+
+Split **UI state** (inputs, modals) from **remote state** (lists, entity detail) using **query keys**, **stale time**, and explicit **invalidation**.
+
+## Details
+
+TanStack Query models **fetch → cache → re-fetch** with declarative policies: fewer manual `useEffect`s for data, more control over **deduplication** and **errors**. It can coexist with Redux/Zustand if roles are clear: server vs client. Interviews often ask **what happens when the user changes** or **how you test** data hooks (MSW, fake handlers).
+
+## Recommended practice
+
+- Write the **query key** for “project list for user X” and decide what must change on logout.
+- Simulate a **500 error** and decide what the UI shows (retry, toast, fallback).
+
+## Common pitfalls
+
+- **Overly generic** keys that mix data across tenants or filters.
+- Treating cache as **source of truth** for data that should be **optimistic** with no rollback plan.
+
+## Resources
+
+- [TanStack Query docs](https://tanstack.com/query/latest)

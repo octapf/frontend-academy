@@ -1,0 +1,31 @@
+---
+title: "Debugging strategy (DevTools + tests)"
+description: "Reproduce, narrow down, and fix without guessing."
+level: mid
+order: 28
+---
+
+# Debugging strategy (DevTools + tests)
+
+## What you’ll take away
+
+A **reproducible** flow: isolate inputs, verify hypotheses with logs/breakpoints, and **lock in with a regression test** when it fits.
+
+## Details
+
+Debugging is not magic: it is method. **Console** for quick invariants, **Sources** for stack and state, **Network** for HTTP contracts, **React DevTools** for props and renders. Tests (RTL, E2E) help **freeze** the failure: red first, then green. Pairs well with **screen debugging** if you already use `screen.debug` in tests.
+
+## Recommended practice
+
+- Pick a recent bug and write **five steps** you would repeat to find it again.
+- Set **conditional breakpoints** in an async handler and watch the real order.
+
+## Common pitfalls
+
+- Changing three things at once and not knowing which one fixed the symptom.
+- Relying on `console.log` in prod without **correlation** (request id, user).
+
+## Resources
+
+- [Chrome DevTools](https://developer.chrome.com/docs/devtools/)
+- [Testing Library — debugging](https://testing-library.com/docs/dom-testing-library/api-debugging)

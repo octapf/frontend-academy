@@ -1,0 +1,30 @@
+---
+title: "Zustand: stores pequeños y explícitos"
+description: "API mínima, suscripciones y convivencia con React."
+level: mid
+order: 1
+---
+
+# Zustand: stores pequeños y explícitos
+
+## Qué vas a entender
+
+Un store como **función que devuelve estado y acciones**, sin proveedores obligatorios ni mucha ceremonia — ideal para estado **local al dominio** que no justifica Redux completo.
+
+## Detalle
+
+Zustand se apoya en **suscripciones** y comparaciones por referencia: conviene **partir stores** por contexto (usuario de sesión, UI global, feature flag local) en vez de un monolito. Se integra bien con **React 18+** y con datos remotos si combinás acciones async con TanStack Query para la parte “servidor”.
+
+## Práctica recomendada
+
+- Escribí la **firma pública** de un store (qué campos son lectura y cuáles mutan y cómo).
+- Compará con **Context + useReducer** para el mismo caso de uso: ¿qué ganás y qué perdés?
+
+## Errores comunes
+
+- Mutar estado **sin** las utilidades del store y perder renders o consistencia.
+- Duplicar en Zustand lo que ya es **fuente de verdad** en el servidor sin estrategia de sync.
+
+## Recursos
+
+- [Zustand — documentación](https://docs.pmnd.rs/zustand/getting-started/introduction)

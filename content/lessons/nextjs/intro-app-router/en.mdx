@@ -1,0 +1,31 @@
+---
+title: "Next.js: App Router on one page"
+description: "Folder routes, layouts, and where server vs client lives."
+level: mid
+order: 1
+---
+
+# Next.js: App Router on one page
+
+## What you’ll take away
+
+How `app/`, `page.tsx`, `layout.tsx`, and **`'use client'`** split responsibilities in modern apps.
+
+## Details
+
+In the **App Router** URLs follow folders; components are **Server Components** by default (less client JS, `fetch` near data). When you need local state or DOM events, isolate **`'use client'`** in small leaves. Neighbors: **metadata**, **Route Handlers**, **`fetch` caching**, **middleware**, and env vars — each tackles a different risk (SEO, secrets, redirects).
+
+## Recommended practice
+
+- Sketch **app/** tree → **URLs** for your project or an official example.
+- Pick a client component and ask whether it **could be server** by lifting data.
+
+## Common pitfalls
+
+- Putting `'use client'` at the root “just in case” and shipping the whole subtree in the browser bundle.
+- Expecting both **`page.tsx` and `route.ts`** in the same segment to serve two different things for one URL.
+
+## Resources
+
+- [Next.js — App Router](https://nextjs.org/docs/app)
+- [MDN — Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)

@@ -1,0 +1,31 @@
+---
+title: "Redux Toolkit: idea y cuándo usarlo"
+description: "Store único, acciones y reducers con menos boilerplate."
+level: mid
+order: 1
+---
+
+# Redux Toolkit: idea y cuándo usarlo
+
+## Qué vas a entender
+
+**Un solo árbol de estado** actualizado por **acciones** predecibles: útil cuando muchas pantallas comparten reglas de negocio o necesitás trazabilidad (time-travel, logs).
+
+## Detalle
+
+Redux Toolkit (`configureStore`, `createSlice`) reduce código repetido frente a Redux “a mano”. No es obligatorio en todo proyecto: compite con **Context + reducers**, **Zustand** o **estado en servidor** (TanStack Query). En entrevistas importa **justificar el coste** (boilerplate, curva) vs **beneficio** (consistencia en equipos grandes, middlewares).
+
+## Práctica recomendada
+
+- Listá **tres fuentes de verdad** en tu app (UI, servidor, URL) y decidí qué queda en Redux vs en cache de red.
+- Mirá un `slice` real y seguí el flujo **UI → dispatch → reducer → selector**.
+
+## Errores comunes
+
+- Meter **todo** en el store (incluido estado efímero de formularios que no comparte nadie).
+- Selectores que devuelven **objetos nuevos** en cada render y rompen memoización downstream.
+
+## Recursos
+
+- [Redux Toolkit — documentación](https://redux-toolkit.js.org/)
+- [Redux — FAQ](https://redux.js.org/faq)

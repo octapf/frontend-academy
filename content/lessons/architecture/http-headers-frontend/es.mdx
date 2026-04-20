@@ -1,0 +1,31 @@
+---
+title: "Headers HTTP que importan al frontend"
+description: "Caché, seguridad, CORS y contenido: qué mirar en Network."
+level: mid
+order: 19
+---
+
+# Headers HTTP que importan al frontend
+
+## Qué vas a entender
+
+Cómo **request** y **response headers** afectan caché del navegador, **CORS**, **cookies** y políticas de seguridad (`Content-Security-Policy`, `X-Frame-Options` legacy, etc.).
+
+## Detalle
+
+En DevTools → Network, cada fila es un contrato: `Cache-Control` y `ETag` definen revalidación; `Authorization` o cookies definen identidad; `Access-Control-Allow-Origin` decide si el browser deja leer la respuesta desde otro origen. No memorices la lista completa: aprendé a **formular hipótesis** (“si borro este header, ¿qué rompe?”).
+
+## Práctica recomendada
+
+- Abrí una API propia o pública y anotá **5 headers** que cambien comportamiento si los modificás.
+- Revisá cómo tu bundler o CDN inyecta **security headers** en HTML vs en API.
+
+## Errores comunes
+
+- Culpar a CORS sin mirar si el fallo es **preflight** o **respuesta opaca**.
+- Cache busting con querystrings aleatorios sin entender **invalidación real**.
+
+## Recursos
+
+- [MDN — HTTP headers](https://developer.mozilla.org/es/docs/Web/HTTP/Headers)
+- [MDN — CORS](https://developer.mozilla.org/es/docs/Web/HTTP/CORS)

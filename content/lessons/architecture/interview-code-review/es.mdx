@@ -1,0 +1,30 @@
+---
+title: "Code review en entrevista (qué suelen mirar)"
+description: "Nombres, errores, accesibilidad y pruebas: checklist mental."
+level: mid
+order: 20
+---
+
+# Code review en entrevista (qué suelen mirar)
+
+## Qué vas a entender
+
+Cómo **narrar** un diff: intención, trade-offs, riesgos y próximos pasos — no solo “está bien” o “está mal”.
+
+## Detalle
+
+Muchas entrevistas pasan un snippet incompleto a propósito: buscan **preguntas clarificadoras**, detección de **edge cases** (null, listas vacías, race conditions), **accesibilidad** mínima (teclado, labels) y **observabilidad** (errores logueables). Conectá con buenas prácticas de equipo: tamaño de PR, tests mínimos, feature flags.
+
+## Práctica recomendada
+
+- Pedile a un compañero **10 minutos de review** sobre un PR tuyo y anotá qué preguntas hizo.
+- Tomá un componente viejo y listá **tres mejoras** priorizadas por riesgo vs esfuerzo.
+
+## Errores comunes
+
+- Refactor masivo en la misma conversación sin separar **riesgo** de **estilo**.
+- Ignorar el contexto del producto (“esto nunca pasa”) sin **cuantificar** la suposición.
+
+## Recursos
+
+- [Google — eng-practices (code review)](https://google.github.io/eng-practices/review/)

@@ -1,0 +1,31 @@
+---
+title: "HTML semántico y accesibilidad base"
+description: "Estructura, landmarks y contrato con CSS y JS."
+level: junior
+order: 1
+---
+
+# HTML semántico y accesibilidad base
+
+## Qué vas a entender
+
+Por qué **etiquetas con significado** (`main`, `nav`, `button` vs `div` clickeable) mejoran SEO, teclado y mantenimiento.
+
+## Detalle
+
+El HTML es el **contrato** con el navegador y con tecnologías asistivas: roles implícitos, orden de tabulación y textos alternativos. Buen HTML reduce trabajo en React: menos `aria-*` parcheado después. En entrevistas suele aparecer el trade-off **“rápido con `div`” vs “correcto con semántica”**.
+
+## Práctica recomendada
+
+- Tomá una pantalla de tu app y listá **qué landmark** corresponde a cada bloque.
+- Probá **solo teclado** (Tab / Shift+Tab / Enter) en un formulario sin mouse.
+
+## Errores comunes
+
+- `onClick` en `div` sin `role`, foco ni teclado.
+- Imágenes con `alt` vacío cuando la imagen **sí** comunica contenido.
+
+## Recursos
+
+- [MDN — HTML](https://developer.mozilla.org/es/docs/Web/HTML)
+- [MDN — Accesibilidad](https://developer.mozilla.org/es/docs/Web/Accessibility)
