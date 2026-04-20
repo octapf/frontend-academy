@@ -11,6 +11,7 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { TrackLink } from "@/components/track/TrackLink";
 import { TrackUrlSync } from "@/components/track/TrackUrlSync";
 import { withLearnLang } from "@/lib/i18n/learn-lang";
+import { montserrat } from "@/lib/fonts";
 import { useLearnLangStore } from "@/stores/useLearnLangStore";
 import { useTrackStore } from "@/stores/useTrackStore";
 
@@ -48,12 +49,12 @@ export function AppShell({
               className="flex items-center"
               aria-label="Frontend Academy"
             >
-              <span className="select-none leading-none">
-                <span className="block text-[18px] font-extrabold uppercase tracking-[0.10em] text-zinc-900 dark:text-zinc-50">
-                  Frontend
+              <span className={`${montserrat.className} select-none leading-none`}>
+                <span className="block text-[18px] font-bold uppercase tracking-[0.08em] text-[#2D343E] dark:text-zinc-50">
+                  FRONTEND
                 </span>
-                <span className="mt-0.5 block text-[12px] font-bold uppercase tracking-[0.28em] text-zinc-700 dark:text-zinc-300">
-                  Academy
+                <span className="mt-0.5 block text-[12px] font-medium uppercase tracking-[0.28em] text-[#2D343E] dark:text-zinc-200">
+                  ACADEMY
                 </span>
               </span>
             </TrackLink>

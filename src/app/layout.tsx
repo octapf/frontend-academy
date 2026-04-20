@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { montserrat } from "@/lib/fonts";
 
 /** Pesos alineados a usos típicos: cuerpo 400, énfasis 500, títulos 700, texto suave 300. */
 const roboto = Roboto({
@@ -63,7 +64,7 @@ export default function RootLayout({
     <html
       lang="es"
       suppressHydrationWarning
-      className={`${roboto.variable} ${robotoMono.variable} h-full antialiased`}
+      className={`${roboto.variable} ${robotoMono.variable} ${montserrat.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background font-sans text-foreground">
         <Providers>{children}</Providers>
