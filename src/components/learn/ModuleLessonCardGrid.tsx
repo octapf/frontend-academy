@@ -36,6 +36,7 @@ export function ModuleLessonCardGrid({
         const linkedExercise = exerciseIdForLesson(moduleSlug, l.slug);
         const exerciseOk =
           linkedExercise !== undefined && exercisesDone.has(linkedExercise);
+        const inProgress = done && !exerciseOk;
         const title = lang === "en" ? l.titleEn : l.titleEs;
         const subtitle = lang === "en" ? l.titleEs : l.titleEn;
 
@@ -53,13 +54,18 @@ export function ModuleLessonCardGrid({
             </div>
             <div className="mt-4 flex flex-wrap items-center gap-2">
               {done ? (
-                <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-200">
+                <span className="rounded-md bg-brand/15 px-2 py-0.5 text-xs font-medium text-zinc-800 dark:text-zinc-100">
                   Vista
                 </span>
               ) : null}
               {exerciseOk ? (
-                <span className="rounded-md bg-sky-500/15 px-2 py-0.5 text-xs font-medium text-sky-900 dark:text-sky-100">
+                <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-200">
                   Ej. OK
+                </span>
+              ) : null}
+              {inProgress ? (
+                <span className="rounded-md bg-zinc-900/5 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:bg-zinc-100/10 dark:text-zinc-200">
+                  En progreso
                 </span>
               ) : null}
               <span className="text-xs text-zinc-500 dark:text-zinc-400">

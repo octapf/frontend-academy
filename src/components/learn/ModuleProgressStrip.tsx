@@ -27,9 +27,23 @@ export function ModuleProgressStrip({
   const passedSet = new Set(data.exerciseIds);
   const exercisesDone = moduleExercises.filter((id) => passedSet.has(id)).length;
   const exercisesTotal = moduleExercises.length;
+  const pct =
+    totalLessons > 0 ? Math.round((viewedHere / Math.max(1, totalLessons)) * 100) : 0;
 
   return (
     <div className="space-y-1 text-sm text-zinc-600 dark:text-zinc-300">
+      <div className="flex items-center justify-between gap-3">
+        <div className="h-2 w-full overflow-hidden rounded-full bg-zinc-300/70 dark:bg-zinc-800">
+          <div
+            className="h-full rounded-full bg-brand"
+            style={{ width: `${pct}%` }}
+            aria-hidden="true"
+          />
+        </div>
+        <div className="w-12 text-right text-xs font-medium text-zinc-700 dark:text-zinc-200">
+          {pct}%
+        </div>
+      </div>
       <p>
         En este módulo abriste{" "}
         <span className="font-medium text-zinc-900 dark:text-zinc-100">

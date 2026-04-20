@@ -54,7 +54,15 @@ export function TsCodeExercise({
 
   const { resolvedTheme } = useTheme();
   const [code, setCode] = useState(exercise.starter);
-  const [output, setOutput] = useState<string | null>(null);
+  const storageKey = `fea.exercise.output.${exercise.id}.${lang}`;
+  const [output, setOutput] = useState<string | null>(() => {
+    if (typeof window === "undefined") return null;
+    try {
+      return window.localStorage.getItem(storageKey);
+    } catch {
+      return null;
+    }
+  });
   const [loading, setLoading] = useState(false);
 
   const title = lang === "en" ? exercise.title.en : exercise.title.es;
@@ -68,6 +76,9 @@ export function TsCodeExercise({
     ],
     [resolvedTheme],
   );
+
+  type RunOk = { ok: true; passed: number; total: number };
+  type RunErr = { ok: false; error: string; diagnostics?: string[] };
 
   return (
     <div className="space-y-4">
@@ -110,37 +121,93 @@ export function TsCodeExercise({
             setLoading(true);
             setOutput(null);
             try {
+              window.localStorage.removeItem(storageKey);
+            } catch {
+              /* ignore */
+            }
+            try {
               const res = await fetch("/api/exercises/run", {
                 method: "POST",
                 headers: { "content-type": "application/json" },
                 body: JSON.stringify({ exerciseId: exercise.id, code }),
               });
               if (res.status === 401) {
-                setOutput(
+                const msg =
                   lang === "en"
                     ? "Session expired. Sign in again."
-                    : "Sesión vencida. Volvé a iniciar sesión."
-                );
+                    : "Sesión vencida. Volvé a iniciar sesión.";
+                setOutput(msg);
+                try {
+                  window.localStorage.setItem(storageKey, msg);
+                } catch {
+                  /* ignore */
+                }
                 return;
               }
-              const data = (await res.json()) as
-                | { ok: true; passed: number; total: number }
-                | { ok: false; error: string; diagnostics?: string[] };
+              let data: RunOk | RunErr | null = null;
+              try {
+                data = (await res.json()) as RunOk | RunErr;
+              } catch {
+                const msg =
+                  lang === "en"
+                    ? `Server returned ${res.status} without JSON. Check Vercel logs (/api/exercises/run).`
+                    : `El servidor respondió ${res.status} sin JSON. Revisá logs en Vercel (/api/exercises/run).`;
+                setOutput(msg);
+                try {
+                  window.localStorage.setItem(storageKey, msg);
+                } catch {
+                  /* ignore */
+                }
+                return;
+              }
+              if (!data) {
+                const msg =
+                  lang === "en"
+                    ? "Unexpected empty response from server."
+                    : "Respuesta vacía inesperada del servidor.";
+                setOutput(msg);
+                try {
+                  window.localStorage.setItem(storageKey, msg);
+                } catch {
+                  /* ignore */
+                }
+                return;
+              }
               if (data.ok) {
-                setOutput(
+                const msg =
                   lang === "en"
                     ? `Passed ${data.passed}/${data.total}`
                     : `Pasó ${data.passed}/${data.total}`
-                );
+                setOutput(msg);
+                try {
+                  window.localStorage.setItem(storageKey, msg);
+                } catch {
+                  /* ignore */
+                }
                 void queryClient.invalidateQueries({ queryKey: progressQueryKey });
               } else {
                 const extra = data.diagnostics?.length
                   ? `\n${data.diagnostics.join("\n")}`
                   : "";
-                setOutput(`${data.error}${extra}`);
+                const msg = `${data.error}${extra}`;
+                setOutput(msg);
+                try {
+                  window.localStorage.setItem(storageKey, msg);
+                } catch {
+                  /* ignore */
+                }
               }
             } catch {
-              setOutput(lang === "en" ? "Request failed" : "Falló la petición");
+              const msg =
+                lang === "en"
+                  ? "Request failed (network or server error)."
+                  : "Falló la petición (red o error del servidor).";
+              setOutput(msg);
+              try {
+                window.localStorage.setItem(storageKey, msg);
+              } catch {
+                /* ignore */
+              }
             } finally {
               setLoading(false);
             }

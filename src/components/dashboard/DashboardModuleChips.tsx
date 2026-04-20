@@ -45,6 +45,10 @@ export function DashboardModuleChips({
                 : `${viewed}/${total} lecc.`
               : "sin lecciones";
 
+          const pct =
+            total > 0 ? Math.round((viewed / Math.max(1, total)) * 100) : 0;
+          const showProgress = total > 0 && viewed > 0;
+
           return (
             <TrackLink
               key={m.slug}
@@ -55,6 +59,15 @@ export function DashboardModuleChips({
                 {m.title}
               </span>
               <span className="text-zinc-500 dark:text-zinc-400">{sub}</span>
+              {showProgress ? (
+                <span className="ml-1 inline-flex items-center gap-1 rounded-md bg-brand/15 px-1.5 py-0.5 text-[10px] font-medium text-zinc-800 dark:text-zinc-100">
+                  <span
+                    className="h-1.5 w-1.5 rounded-full bg-brand"
+                    aria-hidden="true"
+                  />
+                  {pct}%
+                </span>
+              ) : null}
             </TrackLink>
           );
         })}

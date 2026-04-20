@@ -20,14 +20,10 @@ export function TrackSummaryCard() {
 
   const { data, isPending, isError } = useProgressQuery();
 
-  const lessons =
-    isPending || isError ? "—" : String(data.lessonsOpened);
-  const exercises =
-    isPending || isError ? "—" : String(data.exercisesPassed);
-  const last =
-    isPending || isError
-      ? "—"
-      : formatLastActivity(data.lastActivityIso);
+  const lessons = isPending || isError ? null : data.lessonsOpened;
+  const exercises = isPending || isError ? null : data.exercisesPassed;
+  const last = isPending || isError ? null : formatLastActivity(data.lastActivityIso);
+  const hasAnyActivity = Boolean(lessons || exercises);
 
   return (
     <div className="rounded-xl border border-zinc-200 bg-zinc-100 p-5 dark:border-zinc-700 dark:bg-zinc-950">
@@ -40,22 +36,38 @@ export function TrackSummaryCard() {
           <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">
             Progreso guardado en el servidor (archivo local en desarrollo).
           </p>
+          {!isPending && !isError && !hasAnyActivity ? (
+            <div className="mt-3 inline-flex items-center gap-2 rounded-lg border border-brand/25 bg-brand/10 px-3 py-2 text-sm text-zinc-800 dark:text-zinc-100">
+              <span className="h-2 w-2 rounded-full bg-brand" aria-hidden="true" />
+              Empezá por <span className="font-medium">Learn</span> y completá tu primer ejercicio.
+            </div>
+          ) : null}
         </div>
         <div className="grid w-full max-w-md grid-cols-1 gap-3 text-right sm:grid-cols-3">
-          <Stat label="Lecciones vistas" value={lessons} />
-          <Stat label="Ejercicios OK" value={exercises} />
-          <Stat label="Última actividad" value={last} />
+          <Stat label="Lecciones vistas" value={lessons} loading={isPending || isError} />
+          <Stat label="Ejercicios OK" value={exercises} loading={isPending || isError} />
+          <Stat label="Última actividad" value={last} loading={isPending || isError} />
         </div>
       </div>
     </div>
   );
 }
 
-function Stat({ label, value }: { label: string; value: string }) {
+function Stat({
+  label,
+  value,
+  loading,
+}: {
+  label: string;
+  value: number | string | null;
+  loading: boolean;
+}) {
   return (
     <div className="rounded-lg bg-zinc-200 px-3 py-2 dark:bg-zinc-900">
       <div className="text-xs text-zinc-500 dark:text-zinc-400">{label}</div>
-      <div className="text-sm font-semibold">{value}</div>
+      <div className="text-sm font-semibold">
+        {loading ? <span className="opacity-60">—</span> : String(value ?? "—")}
+      </div>
     </div>
   );
 }

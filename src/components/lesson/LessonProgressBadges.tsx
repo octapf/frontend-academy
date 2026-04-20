@@ -26,12 +26,12 @@ export function LessonProgressBadges({
   return (
     <div className="flex flex-wrap gap-2">
       {viewed ? (
-        <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-200">
+        <span className="rounded-md bg-brand/15 px-2 py-0.5 text-xs font-medium text-zinc-800 dark:text-zinc-100">
           Vista
         </span>
       ) : null}
       {exerciseOk ? (
-        <span className="rounded-md bg-sky-500/15 px-2 py-0.5 text-xs font-medium text-sky-900 dark:text-sky-100">
+        <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-200">
           Ej. OK
         </span>
       ) : null}
