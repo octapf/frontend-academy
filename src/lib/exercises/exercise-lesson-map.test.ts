@@ -8,12 +8,19 @@ describe("exerciseIdsInModule", () => {
     expect(exerciseIdsInModule("react").sort()).toEqual([
       "ts-assert-never",
       "ts-clamp",
+      "ts-classnames",
+      "ts-error-message",
+      "ts-group-by",
+      "ts-invariant",
       "ts-parse-number",
+      "ts-parse-pixel",
+      "ts-positive",
       "ts-shallow-equal",
       "ts-sum",
       "ts-unique",
     ]);
     expect(exerciseIdsInModule("typescript").sort()).toEqual([
+      "ts-assert-never",
       "ts-greeting",
       "ts-group-by",
       "ts-parse-query",
@@ -25,18 +32,27 @@ describe("exerciseIdsInModule", () => {
       "ts-user-label",
     ]);
     expect(exerciseIdsInModule("styles").sort()).toEqual([
+      "ts-clamp",
       "ts-classnames",
       "ts-parse-pixel",
       "ts-to-title-case",
     ]);
     expect(exerciseIdsInModule("testing").sort()).toEqual([
       "ts-backoff",
+      "ts-classnames",
+      "ts-group-by",
       "ts-invariant",
+      "ts-parse-pixel",
+      "ts-shape-area",
+      "ts-unique",
     ]);
     expect(exerciseIdsInModule("architecture").sort()).toEqual([
+      "ts-backoff",
       "ts-error-message",
       "ts-resolve-flag",
+      "ts-safe-json-parse",
     ]);
+    expect(exerciseIdsInModule("vocab").sort()).toEqual(["ts-greeting"]);
   });
 });
 
@@ -45,10 +61,16 @@ describe("exerciseIdForLesson", () => {
     expect(exerciseIdForLesson("react", "hooks-basics")).toBe("ts-sum");
     expect(exerciseIdForLesson("typescript", "narrowing")).toBe("ts-positive");
     expect(exerciseIdForLesson("typescript", "string-templates")).toBe(
-      "ts-greeting"
+      "ts-greeting",
     );
     expect(exerciseIdForLesson("typescript", "utility-types")).toBe(
-      "ts-user-label"
+      "ts-user-label",
+    );
+    expect(exerciseIdForLesson("typescript", "exhaustiveness-checking")).toBe(
+      "ts-assert-never",
+    );
+    expect(exerciseIdForLesson("vocab", "estimation-terms-en-es")).toBe(
+      "ts-greeting",
     );
   });
 

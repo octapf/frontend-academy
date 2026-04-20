@@ -1,51 +1,29 @@
 import type { ExerciseId } from "@/exercises/types";
 
+import { LESSON_CODE_EXERCISES } from "@/lib/learn/lesson-code-exercises";
 import { lessonProgressKey } from "@/lib/progress/keys";
 
-/** Lección que aloja cada ejercicio de código (para UI de progreso). */
-const LESSON_KEY_BY_EXERCISE: Record<ExerciseId, string> = {
-  "ts-sum": lessonProgressKey("react", "hooks-basics"),
-  "ts-positive": lessonProgressKey("typescript", "narrowing"),
-  "ts-greeting": lessonProgressKey("typescript", "string-templates"),
-  "ts-user-label": lessonProgressKey("typescript", "utility-types"),
-  "ts-pick-keys": lessonProgressKey("typescript", "generics-pick"),
-  "ts-shape-area": lessonProgressKey("typescript", "discriminated-unions"),
-  "ts-parse-query": lessonProgressKey("typescript", "url-search-params"),
-  "ts-group-by": lessonProgressKey("typescript", "array-reduce"),
-  "ts-safe-json-parse": lessonProgressKey("typescript", "json-parse"),
-  "ts-clamp": lessonProgressKey("react", "state-and-props"),
-  "ts-unique": lessonProgressKey("react", "lists-and-keys"),
-  "ts-classnames": lessonProgressKey("styles", "utility-classes"),
-  "ts-to-title-case": lessonProgressKey("styles", "typography-basics"),
-  "ts-invariant": lessonProgressKey("testing", "arrange-act-assert"),
-  "ts-backoff": lessonProgressKey("testing", "retry-backoff"),
-  "ts-error-message": lessonProgressKey("architecture", "error-handling"),
-  "ts-shallow-equal": lessonProgressKey("react", "performance-memo"),
-  "ts-assert-never": lessonProgressKey("react", "context-basics"),
-  "ts-parse-number": lessonProgressKey("react", "forms-and-validation"),
-  "ts-resolve-flag": lessonProgressKey("architecture", "feature-flags"),
-  "ts-parse-pixel": lessonProgressKey("styles", "box-model"),
-  "ts-strict-int": lessonProgressKey("typescript", "intro-types"),
-};
-
-const EXERCISE_BY_LESSON_KEY = Object.fromEntries(
-  (Object.entries(LESSON_KEY_BY_EXERCISE) as [ExerciseId, string][]).map(
-    ([id, key]) => [key, id]
-  )
-) as Record<string, ExerciseId>;
+const EXERCISE_BY_LESSON_KEY: Record<string, ExerciseId> = (() => {
+  const m: Record<string, ExerciseId> = {};
+  for (const e of LESSON_CODE_EXERCISES) {
+    m[lessonProgressKey(e.moduleSlug, e.lessonSlug)] = e.exerciseId as ExerciseId;
+  }
+  return m;
+})();
 
 /** Si la lección tiene ejercicio de código asociado, devuelve su id. */
 export function exerciseIdForLesson(
   moduleSlug: string,
-  lessonSlug: string
+  lessonSlug: string,
 ): ExerciseId | undefined {
   return EXERCISE_BY_LESSON_KEY[lessonProgressKey(moduleSlug, lessonSlug)];
 }
 
-/** Ejercicios cuya lección anfitriona pertenece a este módulo. */
+/** Ejercicios que aparecen en al menos una lección de este módulo. */
 export function exerciseIdsInModule(moduleSlug: string): ExerciseId[] {
-  const prefix = `${moduleSlug}/`;
-  return (Object.entries(LESSON_KEY_BY_EXERCISE) as [ExerciseId, string][])
-    .filter(([, lessonKey]) => lessonKey.startsWith(prefix))
-    .map(([id]) => id);
+  const set = new Set<ExerciseId>();
+  for (const e of LESSON_CODE_EXERCISES) {
+    if (e.moduleSlug === moduleSlug) set.add(e.exerciseId as ExerciseId);
+  }
+  return [...set].sort();
 }

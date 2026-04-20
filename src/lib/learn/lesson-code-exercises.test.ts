@@ -19,4 +19,9 @@ describe("lessonCodeExerciseFor", () => {
     );
     expect(new Set(keys).size).toBe(keys.length);
   });
+
+  it("links batch2 TypeScript exhaustiveness lesson", () => {
+    const ex = lessonCodeExerciseFor("typescript", "exhaustiveness-checking");
+    expect(ex?.exerciseId).toBe("ts-assert-never");
+  });
 });
