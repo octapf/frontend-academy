@@ -1,0 +1,30 @@
+---
+title: "`next.config` and environment variables"
+description: "Secrets vs `NEXT_PUBLIC_` and image settings."
+level: junior
+order: 12
+---
+
+# `next.config` and environment variables
+
+## What you’ll take away
+
+Only `NEXT_PUBLIC_` variables reach the browser; others stay on the server/build.
+
+## Details
+
+`images.remotePatterns`, redirects, and experimental flags live in `next.config`; restart dev after edits.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Publishing private keys with the public prefix for convenience.
+
+## Resources
+
+- [Next.js — Docs](https://nextjs.org/docs)
+- [MDN Web Docs](https://developer.mozilla.org/en-US/)

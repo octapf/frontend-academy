@@ -1,0 +1,30 @@
+---
+title: "Event loop: macrotasks and microtasks"
+description: "Why `setTimeout` and `Promise.then` do not race on the same queue."
+level: junior
+order: 2
+---
+
+# Event loop: macrotasks and microtasks
+
+## What you’ll take away
+
+The main thread runs your JS, then drains microtasks before the next paint; that explains many “weird order” bugs.
+
+## Details
+
+Interview puzzles often mix logs and microtasks: you can reason with a timeline instead of memorizing tables.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Mixing `await` with `setTimeout(0)` and assuming a fixed order without checking intermediate microtasks.
+
+## Resources
+
+- [MDN — Event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop)
+- [MDN — queueMicrotask](https://developer.mozilla.org/en-US/docs/Web/API/queueMicrotask)

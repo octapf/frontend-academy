@@ -1,0 +1,30 @@
+---
+title: "Static vs dynamic: `cookies`, `headers`, and segment config"
+description: "Signals that stop a route from being prerendered."
+level: mid
+order: 6
+---
+
+# Static vs dynamic: `cookies`, `headers`, and segment config
+
+## What you’ll take away
+
+Reading `cookies()` or `headers()` usually makes the segment dynamic because it varies per request.
+
+## Details
+
+`export const dynamic = 'force-static'` or `revalidate` are explicit levers when static inference is not enough.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Copying snippets without adapting team conventions (names, layers, tests, accessibility).
+
+## Resources
+
+- [Next.js — Docs](https://nextjs.org/docs)
+- [MDN Web Docs](https://developer.mozilla.org/en-US/)

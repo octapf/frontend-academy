@@ -1,0 +1,29 @@
+---
+title: "Suscripciones y comparación shallow"
+description: "Re-renders solo cuando cambia lo que consume el componente."
+level: mid
+order: 2
+---
+
+# Suscripciones y comparación shallow
+
+## Qué vas a entender
+
+`useStore(selector)` dispara render cuando el resultado del selector cambia por referencia.
+
+## Detalle
+
+Para objetos parciales usá `shallow` o selectores que devuelvan primitivos estables.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Selector que devuelve objeto literal nuevo en cada llamada y fuerza render infinito.
+
+## Recursos
+
+- [Zustand — Guides](https://docs.pmnd.rs/zustand/guides/practice-with-no-store-actions)

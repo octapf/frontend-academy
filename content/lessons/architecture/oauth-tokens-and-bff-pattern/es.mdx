@@ -1,0 +1,29 @@
+---
+title: "OAuth, tokens y patrón BFF en frontend"
+description: "Dónde guardar sesión y cómo evitar filtrar secretos."
+level: mid
+order: 22
+---
+
+# OAuth, tokens y patrón BFF en frontend
+
+## Qué vas a entender
+
+Los tokens de acceso no deberían vivir en storage accesible a XSS si podés usar cookies HttpOnly vía BFF.
+
+## Detalle
+
+Un BFF (Route Handler o API interna) traduce cookies de sesión a llamadas a APIs upstream con credenciales server-side.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Exponer client_secret o refresh tokens en el bundle por configuración mal copiada.
+
+## Recursos
+
+- [OAuth 2.0 for browser-based apps (IETF BCP)](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps)

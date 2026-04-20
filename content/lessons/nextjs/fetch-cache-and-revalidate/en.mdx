@@ -1,0 +1,30 @@
+---
+title: "`fetch`, cache, and revalidation"
+description: "`no-store`, `revalidate`, and when to force dynamic rendering."
+level: mid
+order: 5
+---
+
+# `fetch`, cache, and revalidation
+
+## What you’ll take away
+
+On the server, `fetch` understands Next options: `cache: 'no-store'` for per-request or per-user data.
+
+## Details
+
+`next: { revalidate: N }` models ISR: time-based freshness; combine with tags when your version supports it.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Copying snippets without adapting team conventions (names, layers, tests, accessibility).
+
+## Resources
+
+- [Next.js — Docs](https://nextjs.org/docs)
+- [MDN Web Docs](https://developer.mozilla.org/en-US/)

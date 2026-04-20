@@ -1,0 +1,30 @@
+---
+title: "Promises and async/await in UI"
+description: "Errors, cancellation, and loading states without leaks."
+level: junior
+order: 3
+---
+
+# Promises and async/await in UI
+
+## What you’ll take away
+
+`async` always returns a Promise; forgetting `try/catch` or `.catch` leaves silent rejections in event handlers.
+
+## Details
+
+For in-flight requests, consider **AbortController** or ignoring stale responses with a request id.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Chaining `.then` without returning the inner Promise and losing error propagation.
+
+## Resources
+
+- [MDN Web Docs](https://developer.mozilla.org/en-US/)
+- Official docs for the stack you use.

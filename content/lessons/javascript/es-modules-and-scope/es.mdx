@@ -1,0 +1,29 @@
+---
+title: "Módulos ES: import, export y scope de archivo"
+description: "Cómo el bundler y el runtime resuelven dependencias circulares y tree-shaking."
+level: junior
+order: 4
+---
+
+# Módulos ES: import, export y scope de archivo
+
+## Qué vas a entender
+
+`import` vive en el scope superior del módulo: no podés condicionarlo como un `require` clásico sin extraer a otro módulo.
+
+## Detalle
+
+Los imports estáticos ayudan al análisis estático; los dinámicos `import()` habilitan code splitting explícito.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Copiar el snippet sin adaptar convenciones del equipo (nombres, capas, tests, accesibilidad).
+
+## Recursos
+
+- [MDN — JavaScript modules](https://developer.mozilla.org/es/docs/Web/JavaScript/Guide/Modules)

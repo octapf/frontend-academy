@@ -1,0 +1,30 @@
+---
+title: "CSP and an anti-XSS mindset"
+description: "Defense layers when rendering third-party or user HTML."
+level: mid
+order: 21
+---
+
+# CSP and an anti-XSS mindset
+
+## What you’ll take away
+
+Content-Security-Policy limits damage if script is injected: start strict and loosen with allowlists.
+
+## Details
+
+Sanitize rich HTML on the server or with proven libs; never `dangerouslySetInnerHTML` without policy.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Copying snippets without adapting team conventions (names, layers, tests, accessibility).
+
+## Resources
+
+- [MDN — CSP](https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP)
+- [OWASP — XSS](https://owasp.org/www-community/attacks/xss/)

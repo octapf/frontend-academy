@@ -1,0 +1,30 @@
+---
+title: "Zod at the boundary: parse the unknown"
+description: "APIs, `fetch`, and `JSON.parse` do not guarantee types at runtime."
+level: mid
+order: 38
+---
+
+# Zod at the boundary: parse the unknown
+
+## What you’ll take away
+
+Define schemas for external payloads and fail fast with clear messages for logs and UI.
+
+## Details
+
+Derive TS types from the schema (`z.infer`) for a single source of truth.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Parsing on every render without memoizing the schema or caching the result.
+
+## Resources
+
+- [Zod](https://zod.dev/)
+- [TypeScript handbook — narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)

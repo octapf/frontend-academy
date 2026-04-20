@@ -1,0 +1,29 @@
+---
+title: "Selectores y normalización de entidades"
+description: "Evitar duplicar datos y renders innecesarios."
+level: mid
+order: 3
+---
+
+# Selectores y normalización de entidades
+
+## Qué vas a entender
+
+Normalizá por id (`entities`, `ids`) para lecturas O(1) y merges predecibles.
+
+## Detalle
+
+Memoizá selectores con `reselect` cuando derivás listas filtradas o totales sobre colecciones grandes.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Guardar el mismo usuario en tres ramas distintas del árbol sin fuente única.
+
+## Recursos
+
+- [Redux Toolkit — createEntityAdapter](https://redux-toolkit.js.org/api/createEntityAdapter)

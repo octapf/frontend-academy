@@ -1,0 +1,30 @@
+---
+title: "Promises y async/await en UI"
+description: "Errores, cancelación y estados de carga sin fugas."
+level: junior
+order: 3
+---
+
+# Promises y async/await en UI
+
+## Qué vas a entender
+
+`async` siempre devuelve una Promise; olvidar `try/catch` o `.catch` deja rechazos silenciosos en handlers de eventos.
+
+## Detalle
+
+Para requests en vuelo, pensá en **AbortController** o en ignorar respuestas viejas comparando un id de request.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Encadenar `.then` sin retornar la Promise interna y perder el flujo de errores.
+
+## Recursos
+
+- [MDN Web Docs](https://developer.mozilla.org/es/)
+- Documentación oficial del stack que estés usando.

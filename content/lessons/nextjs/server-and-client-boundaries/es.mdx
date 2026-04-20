@@ -1,0 +1,30 @@
+---
+title: "Límite servidor/cliente (`'use client'`)"
+description: "Dónde poner interactividad sin inflar el bundle."
+level: mid
+order: 4
+---
+
+# Límite servidor/cliente (`'use client'`)
+
+## Qué vas a entender
+
+Por defecto los componentes bajo `app/` son Server Components: podés leer env secretos y hacer `fetch` cercano a datos.
+
+## Detalle
+
+Marcá `'use client'` en hojas pequeñas (inputs, drag, animaciones) e importalas desde el servidor.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Marcar `'use client'` en el layout raíz y convertir todo el árbol en bundle de cliente.
+
+## Recursos
+
+- [Next.js — Docs](https://nextjs.org/docs)
+- [MDN Web Docs](https://developer.mozilla.org/es/)

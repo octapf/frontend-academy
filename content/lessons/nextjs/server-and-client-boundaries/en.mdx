@@ -1,0 +1,30 @@
+---
+title: "Server/client boundary (`'use client'`)"
+description: "Where to place interactivity without bloating the client bundle."
+level: mid
+order: 4
+---
+
+# Server/client boundary (`'use client'`)
+
+## What you’ll take away
+
+By default `app/` components are Server Components: you can read server secrets and colocate `fetch` with data.
+
+## Details
+
+Put `'use client'` on small leaves (inputs, drag, animations) and import them from server parents.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Adding `'use client'` at the root layout and turning the whole tree into client JS.
+
+## Resources
+
+- [Next.js — Docs](https://nextjs.org/docs)
+- [MDN Web Docs](https://developer.mozilla.org/en-US/)

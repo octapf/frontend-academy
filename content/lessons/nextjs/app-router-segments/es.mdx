@@ -1,0 +1,30 @@
+---
+title: "App Router: segmentos y rutas dinámicas"
+description: "Cómo `app/` se traduce en URLs y `params` en el servidor."
+level: mid
+order: 2
+---
+
+# App Router: segmentos y rutas dinámicas
+
+## Qué vas a entender
+
+Cada carpeta bajo `app/` es un segmento; `page.tsx` responde con UI y convive con `layout.tsx` en el mismo árbol.
+
+## Detalle
+
+Los segmentos `[slug]` exponen `params`; en versiones recientes pueden llegar como `Promise` y requieren `await`.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Duplicar la misma ruta mezclando `pages/` y `app/` sin migración clara.
+
+## Recursos
+
+- [Next.js — Docs](https://nextjs.org/docs)
+- [MDN Web Docs](https://developer.mozilla.org/es/)

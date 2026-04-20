@@ -1,0 +1,30 @@
+---
+title: "Estático vs dinámico: `cookies`, `headers` y segment config"
+description: "Qué señales hacen que una ruta deje de prerenderizarse."
+level: mid
+order: 6
+---
+
+# Estático vs dinámico: `cookies`, `headers` y segment config
+
+## Qué vas a entender
+
+Leer `cookies()` o `headers()` suele marcar el segmento como dinámico porque varía por request.
+
+## Detalle
+
+`export const dynamic = 'force-static'` o `revalidate` son palancas explícitas cuando el análisis no alcanza.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Copiar el snippet sin adaptar convenciones del equipo (nombres, capas, tests, accesibilidad).
+
+## Recursos
+
+- [Next.js — Docs](https://nextjs.org/docs)
+- [MDN Web Docs](https://developer.mozilla.org/es/)

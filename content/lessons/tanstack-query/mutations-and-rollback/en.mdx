@@ -1,0 +1,29 @@
+---
+title: "Mutations, optimistic UI, and rollback"
+description: "Improve UX without lying to users when failures happen."
+level: mid
+order: 3
+---
+
+# Mutations, optimistic UI, and rollback
+
+## What you’ll take away
+
+`onMutate` can apply optimistic updates and stash a snapshot for `onError` rollback.
+
+## Details
+
+Pair with toasts and retry states; document behavior if the user navigates mid-mutation.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Optimism without race handling: stale responses overwrite newer state.
+
+## Resources
+
+- [TanStack Query — Mutations](https://tanstack.com/query/latest/docs/framework/react/guides/mutations)

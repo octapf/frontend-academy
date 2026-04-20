@@ -1,0 +1,29 @@
+---
+title: "Selectors and normalized entities"
+description: "Avoid duplicated data and unnecessary renders."
+level: mid
+order: 3
+---
+
+# Selectors and normalized entities
+
+## What you’ll take away
+
+Normalize by id (`entities`, `ids`) for predictable merges and O(1) reads.
+
+## Details
+
+Memoize selectors with `reselect` when deriving filtered lists or totals over large collections.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Storing the same user in three branches without a single source of truth.
+
+## Resources
+
+- [Redux Toolkit — createEntityAdapter](https://redux-toolkit.js.org/api/createEntityAdapter)

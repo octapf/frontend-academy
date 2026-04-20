@@ -1,0 +1,30 @@
+---
+title: "Event loop: macrotareas y microtareas"
+description: "Por qué `setTimeout` y `Promise.then` no compiten en la misma cola."
+level: junior
+order: 2
+---
+
+# Event loop: macrotareas y microtareas
+
+## Qué vas a entender
+
+El hilo principal ejecuta tu JS y luego vacía microtareas antes del siguiente render o pintura; entender eso explica muchos bugs de “orden raro”.
+
+## Detalle
+
+En entrevistas suele aparecer el patrón log → microtarea → log: sin memorizar, podés razonar con una línea de tiempo.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Mezclar `await` con `setTimeout(0)` y esperar un orden fijo sin mirar si hubo microtareas intermedias.
+
+## Recursos
+
+- [MDN — Event loop](https://developer.mozilla.org/es/docs/Web/JavaScript/Event_loop)
+- [MDN — queueMicrotask](https://developer.mozilla.org/es/docs/Web/API/queueMicrotask)

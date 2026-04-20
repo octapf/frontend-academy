@@ -1,0 +1,29 @@
+---
+title: "Query keys, `staleTime` e invalidación"
+description: "Contrato explícito entre UI y datos remotos."
+level: mid
+order: 2
+---
+
+# Query keys, `staleTime` e invalidación
+
+## Qué vas a entender
+
+Las keys deben incluir todo lo que define el resultado: usuario, filtros, locale.
+
+## Detalle
+
+`staleTime` evita refetch agresivo; `invalidateQueries` alinea mutaciones con lecturas.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Copiar el snippet sin adaptar convenciones del equipo (nombres, capas, tests, accesibilidad).
+
+## Recursos
+
+- [TanStack Query — Query keys](https://tanstack.com/query/latest/docs/framework/react/guides/query-keys)

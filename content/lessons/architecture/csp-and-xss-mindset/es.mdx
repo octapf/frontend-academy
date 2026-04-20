@@ -1,0 +1,30 @@
+---
+title: "CSP y mentalidad anti-XSS"
+description: "Capas de defensa cuando renderizás HTML de terceros o usuarios."
+level: mid
+order: 21
+---
+
+# CSP y mentalidad anti-XSS
+
+## Qué vas a entender
+
+Content-Security-Policy reduce daño si alguien inyecta script: empezá restrictivo y aflojá con allowlist.
+
+## Detalle
+
+Sanitizá HTML rico en servidor o con librerías probadas; nunca `dangerouslySetInnerHTML` sin política clara.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Copiar el snippet sin adaptar convenciones del equipo (nombres, capas, tests, accesibilidad).
+
+## Recursos
+
+- [MDN — CSP](https://developer.mozilla.org/es/docs/Web/HTTP/CSP)
+- [OWASP — XSS](https://owasp.org/www-community/attacks/xss/)

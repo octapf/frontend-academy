@@ -1,0 +1,30 @@
+---
+title: "Error Boundary vs errores async (Query)"
+description: "Qué atrapa React y qué debés manejar vos en data fetching."
+level: mid
+order: 47
+---
+
+# Error Boundary vs errores async (Query)
+
+## Qué vas a entender
+
+Los Error Boundaries no capturan event handlers ni promesas no observadas: los errores de `useQuery` se modelan con estado `error`.
+
+## Detalle
+
+Componé: boundary para render tree, `onError`/`throwOnError` según librería para datos remotos.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Esperar que un boundary salve un `fetch` mal manejado dentro de un effect sin `await`/`catch`.
+
+## Recursos
+
+- [React — error boundaries](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary)
+- [TanStack Query — errors](https://tanstack.com/query/latest/docs/framework/react/guides/query-retries)

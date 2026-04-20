@@ -1,0 +1,30 @@
+---
+title: "App Router: segments and dynamic routes"
+description: "How `app/` maps to URLs and `params` on the server."
+level: mid
+order: 2
+---
+
+# App Router: segments and dynamic routes
+
+## What you’ll take away
+
+Each folder under `app/` is a segment; `page.tsx` returns UI and coexists with `layout.tsx` in the same tree.
+
+## Details
+
+`[slug]` segments expose `params`; on recent Next versions they may be a `Promise` and need `await`.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Duplicating routes by mixing `pages/` and `app/` without a clear migration path.
+
+## Resources
+
+- [Next.js — Docs](https://nextjs.org/docs)
+- [MDN Web Docs](https://developer.mozilla.org/en-US/)

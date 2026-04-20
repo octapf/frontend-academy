@@ -1,0 +1,30 @@
+---
+title: "Zod en el borde: parsear lo desconocido"
+description: "APIs, `fetch` y `JSON.parse` no garantizan tipos en runtime."
+level: mid
+order: 38
+---
+
+# Zod en el borde: parsear lo desconocido
+
+## Qué vas a entender
+
+Definí schemas para payloads externos y fallá temprano con mensajes claros para logs y UI.
+
+## Detalle
+
+Derivá tipos TypeScript desde el schema (`z.infer`) para una sola fuente de verdad.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Parsear en cada render sin memoizar el schema o sin cachear el resultado.
+
+## Recursos
+
+- [Zod](https://zod.dev/)
+- [TypeScript handbook — narrowing](https://www.typescriptlang.org/docs/handbook/2/narrowing.html)

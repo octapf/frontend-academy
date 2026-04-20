@@ -1,0 +1,29 @@
+---
+title: "OAuth, tokens, and the BFF pattern from the frontend"
+description: "Where to keep session state and how to avoid leaking secrets."
+level: mid
+order: 22
+---
+
+# OAuth, tokens, and the BFF pattern from the frontend
+
+## What you’ll take away
+
+Access tokens should not live in XSS-readable storage when you can use HttpOnly cookies via a BFF.
+
+## Details
+
+A BFF (Route Handler or internal API) turns session cookies into upstream calls with server-side credentials.
+
+## Recommended practice
+
+- Write down **one real case** from your repo where this topic showed up (or should have).
+- When relevant, use **DevTools** (network, console, performance, layout) to connect the idea to what you can observe.
+
+## Common pitfalls
+
+- Shipping `client_secret` or refresh tokens in the bundle via mis-copied config.
+
+## Resources
+
+- [OAuth 2.0 for browser-based apps (IETF BCP)](https://datatracker.ietf.org/doc/html/draft-ietf-oauth-browser-based-apps)

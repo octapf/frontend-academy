@@ -1,0 +1,30 @@
+---
+title: "Route Handlers: GET/POST y `NextResponse`"
+description: "APIs en `app/api/.../route.ts` sin Express aparte."
+level: mid
+order: 10
+---
+
+# Route Handlers: GET/POST y `NextResponse`
+
+## Qué vas a entender
+
+Exportá funciones nombradas por verbo HTTP; recibís `Request` estándar y devolvés `NextResponse.json`.
+
+## Detalle
+
+Son ideales para BFF, webhooks y secretos de servidor que no deben filtrarse al bundle.
+
+## Práctica recomendada
+
+- Anotá **un caso real** de tu repo donde este tema apareció (o debería haber aparecido).
+- Si aplica, usá **DevTools** (red, consola, performance, layout) para conectar el concepto con lo observable.
+
+## Errores comunes
+
+- Poner `page.tsx` y `route.ts` en el mismo segmento esperando dos respuestas para una URL.
+
+## Recursos
+
+- [Next.js — Docs](https://nextjs.org/docs)
+- [MDN Web Docs](https://developer.mozilla.org/es/)
