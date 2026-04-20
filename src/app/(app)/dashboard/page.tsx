@@ -37,9 +37,11 @@ export default async function DashboardPage() {
       </div>
 
       {nextHref && nextLabel ? (
-        <div className="rounded-xl border border-brand/25 bg-brand/10 p-5">
-          <div className="text-sm font-medium text-zinc-900">Siguiente lección</div>
-          <div className="mt-1 text-lg font-semibold tracking-tight text-zinc-900">
+        <div className="rounded-xl border border-brand/25 bg-brand/10 p-5 dark:border-brand/30 dark:bg-brand/15">
+          <div className="text-sm font-medium text-zinc-900 dark:text-zinc-100">
+            Siguiente lección
+          </div>
+          <div className="mt-1 text-lg font-semibold tracking-tight text-zinc-900 dark:text-zinc-50">
             {nextLabel}
           </div>
           <div className="mt-3">
