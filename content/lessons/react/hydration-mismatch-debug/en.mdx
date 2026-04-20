@@ -1,0 +1,17 @@
+---
+title: "Debugging hydration mismatches"
+description: "Server HTML ≠ client."
+level: "mid"
+order: 22
+---
+
+# Debugging hydration mismatches
+
+Typical causes: `Date.now()`, `Math.random()`, different locale, conditional markup on `window`.
+
+Move non-deterministic sources to post-mount client rendering or unify server/client output.
+
+## Recursos
+
+- MDN Web Docs
+- Documentación oficial del tema cuando aplique

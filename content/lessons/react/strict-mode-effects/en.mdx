@@ -1,0 +1,17 @@
+---
+title: "Strict Mode and double effects"
+description: "Why your effect runs twice in development."
+level: "junior"
+order: 20
+---
+
+# Strict Mode and double effects
+
+In development React may mount/unmount/remount to find **incomplete cleanup**.
+
+If your effect is not idempotent, fast navigations in prod will also break it.
+
+## Recursos
+
+- MDN Web Docs
+- Documentación oficial del tema cuando aplique
