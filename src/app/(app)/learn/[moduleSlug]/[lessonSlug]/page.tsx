@@ -7,6 +7,7 @@ import { SlangPracticeCard } from "@/components/reference/SlangPracticeCard";
 import { TrackLink } from "@/components/track/TrackLink";
 import { listLessonsForModule, loadLessonMdx } from "@/lib/content/get-lesson";
 import { learnLangSearchSuffix, parseLearnLang } from "@/lib/i18n/learn-lang";
+import { t } from "@/lib/i18n/ui";
 import { LEARN_MODULES } from "@/lib/learn/modules";
 import { lessonCodeExerciseFor } from "@/lib/learn/lesson-code-exercises";
 
@@ -51,7 +52,7 @@ export default async function LessonPage({
           href={`/learn${langQs}`}
           className="underline decoration-brand/50 underline-offset-4 hover:text-brand"
         >
-          Learn
+          {t(lang, { es: "Aprender", en: "Learn" })}
         </TrackLink>
         <span className="text-zinc-400 dark:text-zinc-500">/</span>
         <TrackLink
@@ -109,14 +110,14 @@ export default async function LessonPage({
           href={`/learn/${moduleSlug}${langQs}`}
           className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
         >
-          Volver al módulo
+          {t(lang, { es: "Volver al módulo", en: "Back to module" })}
         </TrackLink>
         {prev ? (
           <TrackLink
             href={`/learn/${moduleSlug}/${prev.slug}${langQs}`}
             className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
           >
-            ← Anterior
+            {t(lang, { es: "← Anterior", en: "← Prev" })}
           </TrackLink>
         ) : null}
         {next ? (
@@ -124,20 +125,20 @@ export default async function LessonPage({
             href={`/learn/${moduleSlug}/${next.slug}${langQs}`}
             className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
           >
-            Siguiente →
+            {t(lang, { es: "Siguiente →", en: "Next →" })}
           </TrackLink>
         ) : null}
         <TrackLink
-          href="/reference/glossary"
+          href={`/reference/glossary${langQs}`}
           className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
         >
-          Glossary
+          {t(lang, { es: "Glosario", en: "Glossary" })}
         </TrackLink>
         <TrackLink
-          href="/reference/slang"
+          href={`/reference/slang${langQs}`}
           className="rounded-lg border border-zinc-300 bg-zinc-100 px-3 py-2 text-sm outline-none hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:hover:bg-zinc-100/10"
         >
-          Slang
+          {t(lang, { es: "Jerga", en: "Slang" })}
         </TrackLink>
       </div>
     </div>

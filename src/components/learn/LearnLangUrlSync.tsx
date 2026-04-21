@@ -25,7 +25,13 @@ export function LearnLangUrlSync() {
   useEffect(() => {
     const run = () => {
       if (!useLearnLangStore.persist.hasHydrated()) return;
-      if (!pathname.startsWith("/learn")) return;
+      if (
+        pathname.startsWith("/login") ||
+        pathname.startsWith("/register") ||
+        pathname.startsWith("/api")
+      ) {
+        return;
+      }
 
       if (pushingRef.current) {
         pushingRef.current = false;

@@ -11,21 +11,22 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { TrackLink } from "@/components/track/TrackLink";
 import { TrackUrlSync } from "@/components/track/TrackUrlSync";
 import { withLearnLang } from "@/lib/i18n/learn-lang";
+import { t } from "@/lib/i18n/ui";
 import { montserrat } from "@/lib/fonts";
 import { cn } from "@/lib/cn";
 import { useLearnLangStore } from "@/stores/useLearnLangStore";
 import { useTrackStore } from "@/stores/useTrackStore";
 
 const NAV_MAIN = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/learn", label: "Learn" },
+  { href: "/dashboard", label: { es: "Panel", en: "Dashboard" } },
+  { href: "/learn", label: { es: "Aprender", en: "Learn" } },
 ];
 
 const NAV_REF = [
-  { href: "/reference/glossary", label: "Glossary" },
-  { href: "/reference/slang", label: "Slang" },
-  { href: "/roadmap", label: "Roadmap" },
-  { href: "/settings", label: "Settings" },
+  { href: "/reference/glossary", label: { es: "Glosario", en: "Glossary" } },
+  { href: "/reference/slang", label: { es: "Jerga", en: "Slang" } },
+  { href: "/roadmap", label: { es: "Roadmap", en: "Roadmap" } },
+  { href: "/settings", label: { es: "Ajustes", en: "Settings" } },
 ];
 
 export function AppShell({
@@ -90,7 +91,6 @@ export function AppShell({
                     ? pathname.startsWith("/learn")
                     : pathname === item.href
                 }
-                learnPrefixed={item.href === "/learn"}
               />
             ))}
 
@@ -118,15 +118,13 @@ function NavLink({
   href,
   label,
   active,
-  learnPrefixed = false,
 }: {
   href: string;
-  label: string;
+  label: { es: string; en: string };
   active: boolean;
-  learnPrefixed?: boolean;
 }) {
   const learnLang = useLearnLangStore((s) => s.lang);
-  const resolvedHref = learnPrefixed ? withLearnLang(href, learnLang) : href;
+  const resolvedHref = withLearnLang(href, learnLang);
 
   return (
     <TrackLink
@@ -139,7 +137,7 @@ function NavLink({
       )}
       aria-current={active ? "page" : undefined}
     >
-      {label}
+      {t(learnLang, label)}
     </TrackLink>
   );
 }

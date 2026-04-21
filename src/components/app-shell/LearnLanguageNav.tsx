@@ -33,11 +33,8 @@ function LearnLanguageNavInner() {
   const setLearnLang = useLearnLangStore((s) => s.setLearnLang);
 
   useEffect(() => {
-    if (searchParams.get("lang") === "en") setLearnLang("en");
+    setLearnLang(searchParams.get("lang") === "en" ? "en" : "es");
   }, [searchParams, setLearnLang]);
-
-  const show = pathname.startsWith("/learn") || pathname.startsWith("/roadmap");
-  if (!show) return null;
 
   const current = parseLearnLang(searchParams.get("lang"));
 
@@ -45,7 +42,7 @@ function LearnLanguageNavInner() {
     <div
       className="inline-flex rounded-lg border border-zinc-300 bg-zinc-100 p-1 text-xs font-medium dark:border-zinc-700 dark:bg-zinc-950"
       role="group"
-      aria-label="Idioma del contenido Learn"
+      aria-label="Idioma / Language"
     >
       <Link
         href={hrefForLang(pathname, searchParams, track, "es")}

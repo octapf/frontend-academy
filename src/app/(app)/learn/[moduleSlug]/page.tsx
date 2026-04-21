@@ -6,6 +6,7 @@ import {
   learnLangSearchSuffix,
   parseLearnLang,
 } from "@/lib/i18n/learn-lang";
+import { t } from "@/lib/i18n/ui";
 import { LEARN_MODULES } from "@/lib/learn/modules";
 
 type Params = { moduleSlug: string };
@@ -35,14 +36,20 @@ export default async function ModulePage({
           </p>
         ) : (
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-            Lecciones y ejercicios del módulo.
+            {t(lang, {
+              es: "Lecciones y ejercicios del módulo.",
+              en: "Lessons and exercises in this module.",
+            })}
           </p>
         )}
       </div>
 
       {lessons.length === 0 ? (
         <p className="text-sm text-zinc-600 dark:text-zinc-300">
-          Todavía no hay lecciones en este módulo.
+          {t(lang, {
+            es: "Todavía no hay lecciones en este módulo.",
+            en: "There are no lessons in this module yet.",
+          })}
         </p>
       ) : (
         <>
@@ -65,7 +72,7 @@ export default async function ModulePage({
           href={`/learn${langQs}`}
           className="text-sm text-zinc-600 underline-offset-4 hover:underline dark:text-zinc-300"
         >
-          ← Volver a Learn
+          {t(lang, { es: "← Volver a Aprender", en: "← Back to Learn" })}
         </TrackLink>
       </div>
     </div>
