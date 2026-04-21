@@ -9,6 +9,7 @@ import {
   learnLangSearchSuffix,
   parseLearnLang,
 } from "@/lib/i18n/learn-lang";
+import { t } from "@/lib/i18n/ui";
 import { getProgressSummary } from "@/lib/progress/progress-store";
 
 type Params = {
@@ -53,7 +54,7 @@ export default async function ExercisePage({
             href={`/learn${langQs}`}
             className="hover:text-zinc-900 hover:underline dark:hover:text-zinc-100"
           >
-            Learn
+            {t(lang, { es: "Aprender", en: "Learn" })}
           </TrackLink>
           <span aria-hidden>/</span>
           <TrackLink
@@ -76,10 +77,10 @@ export default async function ExercisePage({
           href={`/learn/${moduleSlug}/${lessonSlug}${langQs}`}
           className="mt-2 inline-block text-sm text-zinc-600 underline-offset-4 hover:underline dark:text-zinc-300"
         >
-          {lang === "en" ? "Back to lesson" : "Volver a la lección"}
+          {t(lang, { es: "Volver a la lección", en: "Back to lesson" })}
         </TrackLink>
         <h1 className="mt-3 text-2xl font-semibold tracking-tight">
-          {lang === "en" ? "Code exercise" : "Ejercicio de código"}
+          {t(lang, { es: "Ejercicio de código", en: "Code exercise" })}
         </h1>
       </div>
 

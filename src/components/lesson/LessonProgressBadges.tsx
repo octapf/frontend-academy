@@ -2,7 +2,9 @@
 
 import { exerciseIdForLesson } from "@/lib/exercises/exercise-lesson-map";
 import { useProgressQuery } from "@/hooks/use-progress-query";
+import { t } from "@/lib/i18n/ui";
 import { lessonProgressKey } from "@/lib/progress/keys";
+import { useLearnLangStore } from "@/stores/useLearnLangStore";
 
 export function LessonProgressBadges({
   moduleSlug,
@@ -12,6 +14,7 @@ export function LessonProgressBadges({
   lessonSlug: string;
 }) {
   const { data: progress, isPending, isError } = useProgressQuery();
+  const lang = useLearnLangStore((s) => s.lang);
 
   if (isPending || isError || !progress) return null;
 
@@ -27,12 +30,12 @@ export function LessonProgressBadges({
     <div className="flex flex-wrap gap-2">
       {viewed ? (
         <span className="rounded-md bg-brand/15 px-2 py-0.5 text-xs font-medium text-zinc-800 dark:text-zinc-100">
-          Vista
+          {t(lang, { es: "Vista", en: "Viewed" })}
         </span>
       ) : null}
       {exerciseOk ? (
         <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-200">
-          Ej. OK
+          {t(lang, { es: "Ej. OK", en: "Ex OK" })}
         </span>
       ) : null}
     </div>

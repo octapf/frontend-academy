@@ -6,8 +6,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { sanitizeNextParam } from "@/lib/auth/next-redirect";
+import { t } from "@/lib/i18n/ui";
 import { hrefWithTrack } from "@/lib/track/href";
 import { parseTrackParam } from "@/lib/track";
+import { useLearnLangStore } from "@/stores/useLearnLangStore";
 import { useTrackStore } from "@/stores/useTrackStore";
 
 export function LoginForm() {
@@ -15,6 +17,7 @@ export function LoginForm() {
   const searchParams = useSearchParams();
   const next = sanitizeNextParam(searchParams.get("next"));
   const trackFromUrl = parseTrackParam(searchParams.get("track"));
+  const lang = useLearnLangStore((s) => s.lang);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -36,12 +39,17 @@ export function LoginForm() {
         data = (await res.json()) as typeof data;
       } catch {
         setError(
-          `El servidor respondió ${res.status} sin JSON. Revisá los logs del deploy en Vercel (Functions → /api/auth/login).`
+          t(lang, {
+            es: `El servidor respondió ${res.status} sin JSON. Revisá los logs del deploy en Vercel (Functions → /api/auth/login).`,
+            en: `Server returned ${res.status} without JSON. Check deploy logs in Vercel (Functions → /api/auth/login).`,
+          })
         );
         return;
       }
       if (!res.ok || !data.ok) {
-        const base = data.error ?? "Error al ingresar";
+        const base =
+          data.error ??
+          t(lang, { es: "Error al ingresar", en: "Login failed" });
         const code =
           typeof data.mongoCode === "number" ? ` [Mongo código ${data.mongoCode}]` : "";
         const extra = data.hint ? ` ${data.hint}` : "";
@@ -61,7 +69,7 @@ export function LoginForm() {
     <form onSubmit={onSubmit} className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
-          Usuario
+          {t(lang, { es: "Usuario", en: "Username" })}
         </label>
         <Input
           name="username"
@@ -73,7 +81,7 @@ export function LoginForm() {
       </div>
       <div>
         <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
-          Contraseña
+          {t(lang, { es: "Contraseña", en: "Password" })}
         </label>
         <Input
           name="password"
@@ -90,7 +98,9 @@ export function LoginForm() {
         </p>
       ) : null}
       <Button type="submit" disabled={loading} variant="primary" className="w-full">
-        {loading ? "Ingresando…" : "Ingresar"}
+        {loading
+          ? t(lang, { es: "Ingresando…", en: "Logging in…" })
+          : t(lang, { es: "Ingresar", en: "Login" })}
       </Button>
     </form>
   );

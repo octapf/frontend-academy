@@ -6,8 +6,10 @@ import { useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { sanitizeNextParam } from "@/lib/auth/next-redirect";
+import { t } from "@/lib/i18n/ui";
 import { hrefWithTrack } from "@/lib/track/href";
 import { parseTrackParam } from "@/lib/track";
+import { useLearnLangStore } from "@/stores/useLearnLangStore";
 import { useTrackStore } from "@/stores/useTrackStore";
 
 export function RegisterForm() {
@@ -15,6 +17,7 @@ export function RegisterForm() {
   const searchParams = useSearchParams();
   const next = sanitizeNextParam(searchParams.get("next"));
   const trackFromUrl = parseTrackParam(searchParams.get("track"));
+  const lang = useLearnLangStore((s) => s.lang);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -41,14 +44,20 @@ export function RegisterForm() {
         data = (await res.json()) as typeof data;
       } catch {
         setError(
-          `El servidor respondió ${res.status} sin JSON. Revisá los logs del deploy en Vercel (Functions → /api/auth/register).`
+          t(lang, {
+            es: `El servidor respondió ${res.status} sin JSON. Revisá los logs del deploy en Vercel (Functions → /api/auth/register).`,
+            en: `Server returned ${res.status} without JSON. Check deploy logs in Vercel (Functions → /api/auth/register).`,
+          })
         );
         return;
       }
       if (!res.ok || !data.ok) {
         const flat = data.issues ? Object.values(data.issues).flat() : [];
         const first = flat.find((m) => typeof m === "string" && m.length > 0);
-        const base = first ?? data.error ?? "Error al registrar";
+        const base =
+          first ??
+          data.error ??
+          t(lang, { es: "Error al registrar", en: "Registration failed" });
         const code =
           typeof data.mongoCode === "number" ? ` [Mongo código ${data.mongoCode}]` : "";
         const extra = data.hint ? ` ${data.hint}` : "";
@@ -68,7 +77,7 @@ export function RegisterForm() {
     <form onSubmit={onSubmit} className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
-          Usuario
+          {t(lang, { es: "Usuario", en: "Username" })}
         </label>
         <Input
           name="username"
@@ -78,12 +87,15 @@ export function RegisterForm() {
           required
         />
         <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-          3–32 caracteres: letras, números, _ o -
+          {t(lang, {
+            es: "3–32 caracteres: letras, números, _ o -",
+            en: "3–32 characters: letters, numbers, _ or -",
+          })}
         </p>
       </div>
       <div>
         <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
-          Contraseña
+          {t(lang, { es: "Contraseña", en: "Password" })}
         </label>
         <Input
           name="password"
@@ -95,7 +107,10 @@ export function RegisterForm() {
           minLength={8}
         />
         <p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-          Mínimo 8 caracteres. Podés cambiarla después en Settings (sin email de recuperación).
+          {t(lang, {
+            es: "Mínimo 8 caracteres. Podés cambiarla después en Ajustes (sin email de recuperación).",
+            en: "At least 8 characters. You can change it later in Settings (no recovery email yet).",
+          })}
         </p>
       </div>
       {error ? (
@@ -104,7 +119,9 @@ export function RegisterForm() {
         </p>
       ) : null}
       <Button type="submit" disabled={loading} variant="primary" className="w-full">
-        {loading ? "Creando…" : "Crear cuenta"}
+        {loading
+          ? t(lang, { es: "Creando…", en: "Creating…" })
+          : t(lang, { es: "Crear cuenta", en: "Create account" })}
       </Button>
     </form>
   );

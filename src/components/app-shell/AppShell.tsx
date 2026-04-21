@@ -37,6 +37,7 @@ export function AppShell({
   username: string | null;
 }) {
   const pathname = usePathname();
+  const learnLang = useLearnLangStore((s) => s.lang);
   useTrackStore((s) => s.track);
 
   return (
@@ -79,7 +80,7 @@ export function AppShell({
         <aside className="rounded-xl border border-zinc-200 bg-zinc-100 p-3 dark:border-zinc-700 dark:bg-zinc-950">
           <nav className="space-y-1">
             <div className="px-2 pb-1 text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-              Main
+              {t(learnLang, { es: "Principal", en: "Main" })}
             </div>
             {NAV_MAIN.map((item) => (
               <NavLink
@@ -95,7 +96,7 @@ export function AppShell({
             ))}
 
             <div className="mt-4 px-2 pb-1 text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-              Reference
+              {t(learnLang, { es: "Referencia", en: "Reference" })}
             </div>
             {NAV_REF.map((item) => (
               <NavLink

@@ -5,6 +5,7 @@ import { useProgressQuery } from "@/hooks/use-progress-query";
 import type { LessonLang } from "@/lib/content/get-lesson";
 import { exerciseIdForLesson } from "@/lib/exercises/exercise-lesson-map";
 import { learnLangSearchSuffix } from "@/lib/i18n/learn-lang";
+import { t } from "@/lib/i18n/ui";
 import { lessonProgressKey } from "@/lib/progress/keys";
 import { useMemo, useState } from "react";
 
@@ -86,20 +87,23 @@ export function ModuleLessonCardGrid({
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex-1">
           <label className="sr-only" htmlFor="lesson-search">
-            Buscar
+            {t(lang, { es: "Buscar", en: "Search" })}
           </label>
           <input
             id="lesson-search"
             value={q}
             onChange={(e) => setQ(e.target.value)}
-            placeholder="Buscar por título, slug o nivel…"
+            placeholder={t(lang, {
+              es: "Buscar por título, slug o nivel…",
+              en: "Search by title, slug, or level…",
+            })}
             className="w-full rounded-lg border border-zinc-200 bg-zinc-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/60 dark:border-zinc-600 dark:bg-zinc-950 dark:focus:ring-brand/50"
           />
         </div>
 
         <div className="flex items-center gap-2">
           <label className="sr-only" htmlFor="lesson-status">
-            Estado
+            {t(lang, { es: "Estado", en: "Status" })}
           </label>
           <select
             id="lesson-status"
@@ -109,17 +113,20 @@ export function ModuleLessonCardGrid({
             }
             className="rounded-lg border border-zinc-200 bg-zinc-200 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/60 dark:border-zinc-600 dark:bg-zinc-950 dark:focus:ring-brand/50"
           >
-            <option value="all">Todas</option>
-            <option value="unseen">No vistas</option>
-            <option value="in_progress">En progreso</option>
-            <option value="done">Completas</option>
+            <option value="all">{t(lang, { es: "Todas", en: "All" })}</option>
+            <option value="unseen">{t(lang, { es: "No vistas", en: "Unseen" })}</option>
+            <option value="in_progress">{t(lang, { es: "En progreso", en: "In progress" })}</option>
+            <option value="done">{t(lang, { es: "Completas", en: "Done" })}</option>
           </select>
         </div>
       </div>
 
       {ordered.length === 0 ? (
         <div className="rounded-xl border border-zinc-300 bg-zinc-100 p-5 text-sm text-zinc-600 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-300">
-          No hay resultados con esos filtros.
+          {t(lang, {
+            es: "No hay resultados con esos filtros.",
+            en: "No results for those filters.",
+          })}
         </div>
       ) : null}
 
@@ -149,17 +156,17 @@ export function ModuleLessonCardGrid({
             <div className="mt-4 flex flex-wrap items-center gap-2">
               {done ? (
                 <span className="rounded-md bg-brand/15 px-2 py-0.5 text-xs font-medium text-zinc-800 dark:text-zinc-100">
-                  Vista
+                  {t(lang, { es: "Vista", en: "Viewed" })}
                 </span>
               ) : null}
               {exerciseOk ? (
                 <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 text-xs font-medium text-emerald-800 dark:text-emerald-200">
-                  Ej. OK
+                  {t(lang, { es: "Ej. OK", en: "Ex OK" })}
                 </span>
               ) : null}
               {inProgress ? (
                 <span className="rounded-md bg-zinc-900/5 px-2 py-0.5 text-xs font-medium text-zinc-700 dark:bg-zinc-100/10 dark:text-zinc-200">
-                  En progreso
+                  {t(lang, { es: "En progreso", en: "In progress" })}
                 </span>
               ) : null}
               <span className="text-xs text-zinc-500 dark:text-zinc-400">

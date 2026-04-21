@@ -4,8 +4,11 @@ import { useState } from "react";
 
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { t } from "@/lib/i18n/ui";
+import { useLearnLangStore } from "@/stores/useLearnLangStore";
 
 export function PasswordChangeForm() {
+  const lang = useLearnLangStore((s) => s.lang);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
@@ -18,11 +21,11 @@ export function PasswordChangeForm() {
     setError(null);
     setOk(null);
     if (newPassword !== newPassword2) {
-      setError("Las contraseñas nuevas no coinciden.");
+      setError(t(lang, { es: "Las contraseñas nuevas no coinciden.", en: "New passwords do not match." }));
       return;
     }
     if (newPassword.length < 8) {
-      setError("La nueva contraseña debe tener al menos 8 caracteres.");
+      setError(t(lang, { es: "La nueva contraseña debe tener al menos 8 caracteres.", en: "New password must be at least 8 characters." }));
       return;
     }
     setLoading(true);
@@ -37,12 +40,17 @@ export function PasswordChangeForm() {
         data = (await res.json()) as typeof data;
       } catch {
         setError(
-          `El servidor respondió ${res.status} sin JSON. Revisá los logs del deploy (Functions → /api/auth/change-password).`
+          t(lang, {
+            es: `El servidor respondió ${res.status} sin JSON. Revisá los logs del deploy (Functions → /api/auth/change-password).`,
+            en: `Server returned ${res.status} without JSON. Check deploy logs (Functions → /api/auth/change-password).`,
+          })
         );
         return;
       }
       if (!res.ok || !data.ok) {
-        const base = data.error ?? "No se pudo cambiar la contraseña";
+        const base =
+          data.error ??
+          t(lang, { es: "No se pudo cambiar la contraseña", en: "Could not change password" });
         const code =
           typeof data.mongoCode === "number" ? ` [Mongo código ${data.mongoCode}]` : "";
         const extra = data.hint ? ` ${data.hint}` : "";
@@ -52,7 +60,7 @@ export function PasswordChangeForm() {
       setCurrentPassword("");
       setNewPassword("");
       setNewPassword2("");
-      setOk("Contraseña actualizada.");
+      setOk(t(lang, { es: "Contraseña actualizada.", en: "Password updated." }));
     } finally {
       setLoading(false);
     }
@@ -62,7 +70,7 @@ export function PasswordChangeForm() {
     <form onSubmit={onSubmit} className="space-y-4">
       <div>
         <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
-          Contraseña actual
+          {t(lang, { es: "Contraseña actual", en: "Current password" })}
         </label>
         <Input
           name="currentPassword"
@@ -75,7 +83,7 @@ export function PasswordChangeForm() {
       </div>
       <div>
         <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
-          Nueva contraseña
+          {t(lang, { es: "Nueva contraseña", en: "New password" })}
         </label>
         <Input
           name="newPassword"
@@ -89,7 +97,7 @@ export function PasswordChangeForm() {
       </div>
       <div>
         <label className="block text-sm font-medium text-zinc-700 dark:text-zinc-200">
-          Repetir nueva contraseña
+          {t(lang, { es: "Repetir nueva contraseña", en: "Repeat new password" })}
         </label>
         <Input
           name="newPassword2"
@@ -112,7 +120,9 @@ export function PasswordChangeForm() {
         </p>
       )}
       <Button type="submit" variant="primary" size="sm" disabled={loading}>
-        {loading ? "Guardando…" : "Actualizar contraseña"}
+        {loading
+          ? t(lang, { es: "Guardando…", en: "Saving…" })
+          : t(lang, { es: "Actualizar contraseña", en: "Update password" })}
       </Button>
     </form>
   );

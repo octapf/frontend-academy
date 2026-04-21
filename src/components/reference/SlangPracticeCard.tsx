@@ -6,8 +6,10 @@ import { useTrackStore } from "@/stores/useTrackStore";
 
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
+import { t } from "@/lib/i18n/ui";
 import { SLANG_ENTRIES, type MinTrack } from "@/lib/reference/slang";
 import { sampleDistinctBy, shuffleInPlace } from "@/lib/reference/shuffleSample";
+import { useLearnLangStore } from "@/stores/useLearnLangStore";
 
 function trackAllows(track: string, min: MinTrack) {
   if (track === "all") return true;
@@ -22,6 +24,7 @@ type SlangPair = (typeof SLANG_ENTRIES)[number];
 
 export function SlangPracticeCard() {
   const track = useTrackStore((s) => s.track);
+  const lang = useLearnLangStore((s) => s.lang);
   const [roundId, setRoundId] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
   const [matches, setMatches] = useState<Record<string, string>>({});
@@ -57,18 +60,26 @@ export function SlangPracticeCard() {
     <div className="rounded-xl border border-zinc-200 bg-zinc-100 p-5 dark:border-zinc-700 dark:bg-zinc-950">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
         <div>
-          <h2 className="text-lg font-semibold">Practice · Matching ES↔EN</h2>
+          <h2 className="text-lg font-semibold">
+            {t(lang, { es: "Práctica · Matching ES↔EN", en: "Practice · Matching ES↔EN" })}
+          </h2>
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-            Unir ES con EN. Cada ronda: {BATCH_SIZE} pares del track (columna EN
-            mezclada).
+            {t(lang, {
+              es: `Unir ES con EN. Cada ronda: ${BATCH_SIZE} pares del track (columna EN mezclada).`,
+              en: `Match ES to EN. Each round: ${BATCH_SIZE} pairs from the track (EN column shuffled).`,
+            })}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-2 text-sm text-zinc-600 dark:text-zinc-300">
           <span>
-            Track: <span className="font-medium">{track}</span>
+            {t(lang, { es: "Track", en: "Track" })}:{" "}
+            <span className="font-medium">{track}</span>
           </span>
           <span className="text-zinc-500 dark:text-zinc-400">
-            · {practicePairs.length} pares
+            {t(lang, {
+              es: `· ${practicePairs.length} pares`,
+              en: `· ${practicePairs.length} pairs`,
+            })}
           </span>
         </div>
       </div>
@@ -76,7 +87,7 @@ export function SlangPracticeCard() {
       <div className="mt-4 grid gap-4 md:grid-cols-2">
         <div>
           <div className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-            ES (click)
+            {t(lang, { es: "ES (click)", en: "ES (click)" })}
           </div>
           <div className="mt-2 grid gap-2">
             {practicePairs.map((p) => (
@@ -103,7 +114,7 @@ export function SlangPracticeCard() {
 
         <div>
           <div className="text-xs font-medium uppercase tracking-wide text-zinc-500 dark:text-zinc-400">
-            EN (click para asignar)
+            {t(lang, { es: "EN (click para asignar)", en: "EN (click to assign)" })}
           </div>
           <div className="mt-2 grid gap-2">
             {shuffledRight.map((p) => {
@@ -129,7 +140,7 @@ export function SlangPracticeCard() {
                   </div>
                   {assignedTo && (
                     <div className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
-                      Asignada a: {assignedTo}
+                      {t(lang, { es: "Asignada a", en: "Assigned to" })}: {assignedTo}
                     </div>
                   )}
                 </button>
@@ -141,21 +152,26 @@ export function SlangPracticeCard() {
 
       <div className="mt-4 flex flex-wrap gap-2">
         <Button onClick={resetBoard} variant="secondary" size="sm">
-          Limpiar asignaciones
+          {t(lang, { es: "Limpiar asignaciones", en: "Clear matches" })}
         </Button>
         <Button type="button" onClick={newRound} variant="secondary" size="sm">
-          Nuevo set
+          {t(lang, { es: "Nuevo set", en: "New set" })}
         </Button>
         <Button
           type="button"
           onClick={() => {
             const correct = practicePairs.filter((p) => matches[p.es] === p.en).length;
-            setResult(`Correctas: ${correct} / ${practicePairs.length}`);
+            setResult(
+              t(lang, {
+                es: `Correctas: ${correct} / ${practicePairs.length}`,
+                en: `Correct: ${correct} / ${practicePairs.length}`,
+              })
+            );
           }}
           variant="primary"
           size="sm"
         >
-          Comprobar
+          {t(lang, { es: "Comprobar", en: "Check" })}
         </Button>
       </div>
       {result && (

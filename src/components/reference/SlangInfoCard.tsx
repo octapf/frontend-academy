@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 
 import { useTrackStore } from "@/stores/useTrackStore";
 import { SLANG_ENTRIES, type MinTrack } from "@/lib/reference/slang";
+import { t } from "@/lib/i18n/ui";
+import { useLearnLangStore } from "@/stores/useLearnLangStore";
 
 import { ReferenceBrowseControls } from "@/components/reference/ReferenceBrowseControls";
 
@@ -18,6 +20,7 @@ const PAGE_SIZE = 40;
 
 export function SlangInfoCard() {
   const track = useTrackStore((s) => s.track);
+  const lang = useLearnLangStore((s) => s.lang);
   const [query, setQuery] = useState("");
   const browseKey = `${track}::${query}`;
   const [pageByBrowseKey, setPageByBrowseKey] = useState<Record<string, number>>({});
@@ -54,20 +57,24 @@ export function SlangInfoCard() {
     <div className="rounded-xl border border-zinc-200 bg-zinc-100 p-5 dark:border-zinc-700 dark:bg-zinc-950">
       <div className="flex items-start justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold">Jerga (ES/EN)</h2>
+          <h2 className="text-lg font-semibold">{t(lang, { es: "Jerga (ES/EN)", en: "Slang (ES/EN)" })}</h2>
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-            Referencia rápida. La práctica vive en Learn.
+            {t(lang, {
+              es: "Referencia rápida. La práctica vive en Learn.",
+              en: "Quick reference. Practice lives in Learn.",
+            })}
           </p>
         </div>
         <div className="text-sm text-zinc-600 dark:text-zinc-300">
-          Track: <span className="font-medium">{track}</span>
+          {t(lang, { es: "Track", en: "Track" })}:{" "}
+          <span className="font-medium">{track}</span>
         </div>
       </div>
 
       <ReferenceBrowseControls
         query={query}
         onQueryChange={setQuery}
-        placeholder="Buscar ES, EN o significado…"
+        placeholder={t(lang, { es: "Buscar ES, EN o significado…", en: "Search ES, EN, or meaning…" })}
         page={safePage}
         pageSize={PAGE_SIZE}
         totalFiltered={filtered.length}
