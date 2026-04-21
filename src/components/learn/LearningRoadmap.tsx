@@ -6,6 +6,7 @@ import { TrackLink } from "@/components/track/TrackLink";
 import { useProgressQuery } from "@/hooks/use-progress-query";
 import { exerciseIdsInModule } from "@/lib/exercises/exercise-lesson-map";
 import { learnLangSearchSuffix } from "@/lib/i18n/learn-lang";
+import { t } from "@/lib/i18n/ui";
 import { LEARN_MODULES } from "@/lib/learn/modules";
 
 export function LearningRoadmap({
@@ -28,7 +29,11 @@ export function LearningRoadmap({
       const total = lessonCounts[m.slug] ?? 0;
       const viewed = lessonKeys.filter((k) => k.startsWith(`${m.slug}/`)).length;
       if (total === 0) continue;
-      if (viewed < total) return { href: `/learn/${m.slug}${langQs}`, label: m.title };
+      if (viewed < total)
+        return {
+          href: `/learn/${m.slug}${langQs}`,
+          label: lang === "en" ? m.title.en : m.title.es,
+        };
     }
     return null;
   })();
@@ -83,10 +88,10 @@ export function LearningRoadmap({
                       {lang === "en" ? "Step" : "Paso"} {idx + 1}
                     </div>
                     <div className="mt-0.5 text-lg font-semibold text-zinc-900 dark:text-zinc-50">
-                      {m.title}
+                      {lang === "en" ? m.title.en : m.title.es}
                     </div>
                     <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-                      {m.description}
+                      {lang === "en" ? m.description.en : m.description.es}
                     </div>
                   </div>
 
@@ -100,7 +105,12 @@ export function LearningRoadmap({
                         : lang === "en"
                           ? "No lessons yet"
                           : "Sin lecciones"}
-                      {exTotal > 0 ? ` · ${exDone}/${exTotal} ${lang === "en" ? "exercises" : "ej."}` : ""}
+                      {exTotal > 0
+                        ? ` · ${exDone}/${exTotal} ${t(lang, {
+                            es: "ej.",
+                            en: "exercises",
+                          })}`
+                        : ""}
                     </div>
                   </div>
                 </div>

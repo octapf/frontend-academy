@@ -2,6 +2,8 @@
 
 import { exerciseIdsInModule } from "@/lib/exercises/exercise-lesson-map";
 import { useProgressQuery } from "@/hooks/use-progress-query";
+import { t } from "@/lib/i18n/ui";
+import { useLearnLangStore } from "@/stores/useLearnLangStore";
 
 export function ModuleProgressStrip({
   moduleSlug,
@@ -11,13 +13,14 @@ export function ModuleProgressStrip({
   totalLessons: number;
 }) {
   const prefix = `${moduleSlug}/`;
+  const lang = useLearnLangStore((s) => s.lang);
 
   const { data, isPending, isError } = useProgressQuery();
 
   if (isPending || isError || !data) {
     return (
       <p className="text-sm text-zinc-500 dark:text-zinc-400">
-        Cargando progreso del módulo…
+        {t(lang, { es: "Cargando progreso del módulo…", en: "Loading module progress…" })}
       </p>
     );
   }
@@ -45,19 +48,19 @@ export function ModuleProgressStrip({
         </div>
       </div>
       <p>
-        En este módulo abriste{" "}
+        {t(lang, { es: "En este módulo abriste", en: "In this module you opened" })}{" "}
         <span className="font-medium text-zinc-900 dark:text-zinc-100">
           {viewedHere}/{totalLessons}
         </span>{" "}
-        lecciones.
+        {t(lang, { es: "lecciones.", en: "lessons." })}
       </p>
       {exercisesTotal > 0 ? (
         <p>
-          Ejercicios de código en este módulo:{" "}
+          {t(lang, { es: "Ejercicios de código en este módulo", en: "Code exercises in this module" })}:{" "}
           <span className="font-medium text-zinc-900 dark:text-zinc-100">
             {exercisesDone}/{exercisesTotal}
           </span>{" "}
-          completados.
+          {t(lang, { es: "completados.", en: "completed." })}
         </p>
       ) : null}
     </div>

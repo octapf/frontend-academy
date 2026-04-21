@@ -1,7 +1,7 @@
 export type LearnModuleMeta = {
   slug: string;
-  title: string;
-  description: string;
+  title: { es: string; en: string };
+  description: { es: string; en: string };
 };
 
 /**
@@ -11,72 +11,108 @@ export type LearnModuleMeta = {
 export const LEARN_MODULES: LearnModuleMeta[] = [
   {
     slug: "javascript",
-    title: "JavaScript",
-    description: "Fundamentos del lenguaje, asincronía y modelo mental para el navegador.",
+    title: { es: "JavaScript", en: "JavaScript" },
+    description: {
+      es: "Fundamentos del lenguaje, asincronía y modelo mental para el navegador.",
+      en: "Language fundamentals, async, and a browser mental model.",
+    },
   },
   {
     slug: "typescript",
-    title: "TypeScript",
-    description: "Tipos, narrowing, DX.",
+    title: { es: "TypeScript", en: "TypeScript" },
+    description: { es: "Tipos, narrowing, DX.", en: "Types, narrowing, and DX." },
   },
   {
     slug: "html-css",
-    title: "HTML & CSS",
-    description: "Semántica, accesibilidad base y layout sin depender solo de un framework.",
+    title: { es: "HTML y CSS", en: "HTML & CSS" },
+    description: {
+      es: "Semántica, accesibilidad base y layout sin depender solo de un framework.",
+      en: "Semantics, baseline accessibility, and layout without relying on a single framework.",
+    },
   },
   {
     slug: "styles",
-    title: "Styles (CSS)",
-    description: "Layout, responsive, cascade, Tailwind y sistemas de diseño.",
+    title: { es: "Estilos (CSS)", en: "Styles (CSS)" },
+    description: {
+      es: "Layout, responsive, cascade, Tailwind y sistemas de diseño.",
+      en: "Layout, responsive design, cascade, Tailwind, and design systems.",
+    },
   },
   {
     slug: "react",
-    title: "React",
-    description: "Componentes, hooks, rendering.",
+    title: { es: "React", en: "React" },
+    description: { es: "Componentes, hooks, rendering.", en: "Components, hooks, rendering." },
   },
   {
     slug: "nextjs",
-    title: "Next.js",
-    description: "App Router, servidor/cliente, datos, rutas y despliegue.",
+    title: { es: "Next.js", en: "Next.js" },
+    description: {
+      es: "App Router, servidor/cliente, datos, rutas y despliegue.",
+      en: "App Router, server/client, data, routing, and deployment.",
+    },
   },
   {
     slug: "redux",
-    title: "Redux (Toolkit)",
-    description: "Estado global predecible, store y flujo de datos.",
+    title: { es: "Redux (Toolkit)", en: "Redux (Toolkit)" },
+    description: {
+      es: "Estado global predecible, store y flujo de datos.",
+      en: "Predictable global state, store, and data flow.",
+    },
   },
   {
     slug: "zustand",
-    title: "Zustand",
-    description: "Stores ligeros y minimalistas en React.",
+    title: { es: "Zustand", en: "Zustand" },
+    description: {
+      es: "Stores ligeros y minimalistas en React.",
+      en: "Lightweight, minimal stores for React.",
+    },
   },
   {
     slug: "tanstack-query",
-    title: "TanStack Query",
-    description: "Cache, sincronización y estado de servidor en React.",
+    title: { es: "TanStack Query", en: "TanStack Query" },
+    description: {
+      es: "Cache, sincronización y estado de servidor en React.",
+      en: "Caching, synchronization, and server state in React.",
+    },
   },
   {
     slug: "testing",
-    title: "Testing",
-    description: "Jest + RTL, strategy, mocks.",
+    title: { es: "Testing", en: "Testing" },
+    description: {
+      es: "Jest + RTL, estrategia, mocks.",
+      en: "Jest + RTL, strategy, and mocks.",
+    },
   },
   {
     slug: "architecture",
-    title: "Architecture",
-    description: "Trade-offs, patrones, seguridad web y calidad de entrega.",
+    title: { es: "Arquitectura", en: "Architecture" },
+    description: {
+      es: "Trade-offs, patrones, seguridad web y calidad de entrega.",
+      en: "Trade-offs, patterns, web security, and delivery quality.",
+    },
   },
   {
     slug: "git",
-    title: "Git",
-    description: "Control de versiones y flujo de trabajo diario.",
+    title: { es: "Git", en: "Git" },
+    description: {
+      es: "Control de versiones y flujo de trabajo diario.",
+      en: "Version control and day-to-day workflow.",
+    },
   },
   {
     slug: "agile",
-    title: "Agile & delivery",
-    description: "Tableros, ceremonias y colaboración con el equipo.",
+    title: { es: "Agile y entrega", en: "Agile & delivery" },
+    description: {
+      es: "Tableros, ceremonias y colaboración con el equipo.",
+      en: "Boards, ceremonies, and team collaboration.",
+    },
   },
   {
     slug: "vocab",
-    title: "Vocab (Glossary + Slang)",
-    description: "Términos y jerga con práctica rápida.",
+    title: { es: "Vocab (glosario + jerga)", en: "Vocab (Glossary + Slang)" },
+    description: {
+      es: "Términos y jerga con práctica rápida.",
+      en: "Quick practice on terms and slang.",
+    },
   },
 ];

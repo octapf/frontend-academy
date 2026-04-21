@@ -36,7 +36,11 @@ export default async function LessonPage({
   }
 
   const moduleMeta = LEARN_MODULES.find((m) => m.slug === moduleSlug);
-  const moduleTitle = moduleMeta?.title ?? moduleSlug;
+  const moduleTitle = moduleMeta
+    ? lang === "en"
+      ? moduleMeta.title.en
+      : moduleMeta.title.es
+    : moduleSlug;
   const allLessons = await listLessonsForModule(moduleSlug);
   const idx = allLessons.findIndex((l) => l.slug === lessonSlug);
   const prev = idx > 0 ? allLessons[idx - 1] : null;

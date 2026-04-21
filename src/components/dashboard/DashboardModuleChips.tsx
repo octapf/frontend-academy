@@ -4,6 +4,7 @@ import { TrackLink } from "@/components/track/TrackLink";
 import { useProgressQuery } from "@/hooks/use-progress-query";
 import { exerciseIdsInModule } from "@/lib/exercises/exercise-lesson-map";
 import { withLearnLang } from "@/lib/i18n/learn-lang";
+import { t } from "@/lib/i18n/ui";
 import { LEARN_MODULES } from "@/lib/learn/modules";
 import { useLearnLangStore } from "@/stores/useLearnLangStore";
 
@@ -24,7 +25,7 @@ export function DashboardModuleChips({
   return (
     <div className="rounded-xl border border-zinc-300 bg-zinc-100 p-4 dark:border-zinc-700 dark:bg-zinc-950">
       <div className="text-sm font-medium text-zinc-600 dark:text-zinc-300">
-        Por módulo
+        {t(learnLang, { es: "Por módulo", en: "By module" })}
       </div>
       <div className="mt-3 flex flex-wrap gap-2">
         {LEARN_MODULES.map((m) => {
@@ -41,9 +42,9 @@ export function DashboardModuleChips({
           const sub =
             total > 0
               ? exTotal > 0
-                ? `${viewed}/${total} · ${exDone}/${exTotal} ej.`
-                : `${viewed}/${total} lecc.`
-              : "sin lecciones";
+                ? `${viewed}/${total} · ${exDone}/${exTotal} ${t(learnLang, { es: "ej.", en: "ex." })}`
+                : `${viewed}/${total} ${t(learnLang, { es: "lecc.", en: "lessons" })}`
+              : t(learnLang, { es: "sin lecciones", en: "no lessons" });
 
           const pct =
             total > 0 ? Math.round((viewed / Math.max(1, total)) * 100) : 0;
@@ -56,7 +57,7 @@ export function DashboardModuleChips({
               className="inline-flex items-center gap-1.5 rounded-lg border border-zinc-300 bg-zinc-200 px-2.5 py-1.5 text-xs outline-none transition-colors hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-zinc-100 dark:border-zinc-700 dark:bg-zinc-950 dark:focus-visible:ring-brand/50 dark:focus-visible:ring-offset-zinc-950 dark:hover:bg-zinc-100/10"
             >
               <span className="font-medium text-zinc-900 dark:text-zinc-100">
-                {m.title}
+                {learnLang === "en" ? m.title.en : m.title.es}
               </span>
               <span className="text-zinc-500 dark:text-zinc-400">{sub}</span>
               {showProgress ? (

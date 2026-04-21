@@ -6,6 +6,7 @@ import type { LessonLang } from "@/lib/content/get-lesson";
 import { exerciseIdsInModule } from "@/lib/exercises/exercise-lesson-map";
 import { learnLangSearchSuffix } from "@/lib/i18n/learn-lang";
 import { LEARN_MODULES } from "@/lib/learn/modules";
+import { t } from "@/lib/i18n/ui";
 
 export function LearnModuleGrid({
   lessonCounts,
@@ -29,7 +30,9 @@ export function LearnModuleGrid({
     const pctB = totalB > 0 ? viewedB / totalB : 0;
     // incompletos primero, luego por menor progreso
     if (pctA !== pctB) return pctA - pctB;
-    return a.title.localeCompare(b.title);
+    return (lang === "en" ? a.title.en : a.title.es).localeCompare(
+      lang === "en" ? b.title.en : b.title.es
+    );
   });
 
   return (
@@ -49,22 +52,24 @@ export function LearnModuleGrid({
             href={`/learn/${m.slug}${langQs}`}
             className="rounded-xl border border-zinc-300 bg-zinc-100 p-5 outline-none transition-colors hover:bg-zinc-900/5 focus-visible:ring-2 focus-visible:ring-brand/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background dark:border-zinc-700 dark:bg-zinc-950 dark:focus-visible:ring-brand/50 dark:hover:bg-zinc-100/10"
           >
-            <div className="text-lg font-semibold">{m.title}</div>
+            <div className="text-lg font-semibold">
+              {lang === "en" ? m.title.en : m.title.es}
+            </div>
             <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-              {m.description}
+              {lang === "en" ? m.description.en : m.description.es}
             </div>
             {totalLessons > 0 ? (
               <div className="mt-3 space-y-0.5 text-xs text-zinc-500 dark:text-zinc-400">
                 <div>
-                  Lecciones:{" "}
+                  {t(lang, { es: "Lecciones", en: "Lessons" })}:{" "}
                   <span className="font-medium text-zinc-800 dark:text-zinc-200">
                     {viewedHere}/{totalLessons}
                   </span>{" "}
-                  vistas
+                  {t(lang, { es: "vistas", en: "viewed" })}
                 </div>
                 {exTotal > 0 ? (
                   <div>
-                    Ejercicios código:{" "}
+                    {t(lang, { es: "Ejercicios código", en: "Code exercises" })}:{" "}
                     <span className="font-medium text-zinc-800 dark:text-zinc-200">
                       {exDone}/{exTotal}
                     </span>
@@ -73,7 +78,7 @@ export function LearnModuleGrid({
               </div>
             ) : (
               <div className="mt-3 text-xs text-zinc-500 dark:text-zinc-400">
-                Sin lecciones todavía
+                {t(lang, { es: "Sin lecciones todavía", en: "No lessons yet" })}
               </div>
             )}
           </TrackLink>

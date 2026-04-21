@@ -23,7 +23,7 @@ export default async function ModulePage({
   const lang = parseLearnLang(sp.lang);
   const lessons = await listLessonsForModule(moduleSlug);
   const moduleMeta = LEARN_MODULES.find((m) => m.slug === moduleSlug);
-  const moduleTitle = moduleMeta?.title ?? moduleSlug;
+  const moduleTitle = moduleMeta ? (lang === "en" ? moduleMeta.title.en : moduleMeta.title.es) : moduleSlug;
   const langQs = learnLangSearchSuffix(lang);
 
   return (
@@ -32,7 +32,7 @@ export default async function ModulePage({
         <h1 className="text-2xl font-semibold tracking-tight">{moduleTitle}</h1>
         {moduleMeta?.description ? (
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
-            {moduleMeta.description}
+            {lang === "en" ? moduleMeta.description.en : moduleMeta.description.es}
           </p>
         ) : (
           <p className="mt-1 text-sm text-zinc-600 dark:text-zinc-300">
