@@ -20,6 +20,7 @@ import { useTrackStore } from "@/stores/useTrackStore";
 const NAV_MAIN = [
   { href: "/dashboard", label: { es: "Panel", en: "Dashboard" } },
   { href: "/learn", label: { es: "Aprender", en: "Learn" } },
+  { href: "/exercises", label: { es: "Ejercicios", en: "Exercises" } },
 ];
 
 const NAV_REF = [
