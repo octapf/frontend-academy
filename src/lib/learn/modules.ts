@@ -23,16 +23,16 @@ export const LEARN_MODULES: LearnModuleMeta[] = [
     description: { es: "Tipos, narrowing, DX.", en: "Types, narrowing, and DX." },
   },
   {
-    slug: "html-css",
-    title: { es: "HTML y CSS", en: "HTML & CSS" },
+    slug: "html",
+    title: { es: "HTML", en: "HTML" },
     description: {
-      es: "Semántica, accesibilidad base y layout sin depender solo de un framework.",
-      en: "Semantics, baseline accessibility, and layout without relying on a single framework.",
+      es: "Semántica, accesibilidad base, formularios y estructura del documento.",
+      en: "Semantics, baseline accessibility, forms, and document structure.",
     },
   },
   {
     slug: "styles",
-    title: { es: "Estilos (CSS)", en: "Styles (CSS)" },
+    title: { es: "CSS", en: "CSS" },
     description: {
       es: "Layout, responsive, cascade, Tailwind y sistemas de diseño.",
       en: "Layout, responsive design, cascade, Tailwind, and design systems.",
