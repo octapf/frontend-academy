@@ -3,7 +3,10 @@ export type MinTrack = "junior" | "mid" | "senior";
 export type SlangEntry = {
   es: string;
   en: string;
+  /** Spanish meaning (legacy field). */
   meaning: string;
+  /** Optional English meaning (fallbacks to `meaning`). */
+  meaningEn?: string;
   minTrack: MinTrack;
 };
 

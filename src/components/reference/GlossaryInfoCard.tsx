@@ -33,6 +33,10 @@ export function GlossaryInfoCard() {
     () => GLOSSARY_ENTRIES.filter((p) => trackAllows(track, p.minTrack)),
     [track]
   );
+  const missingEnCount = useMemo(
+    () => rows.filter((r) => !r.definitionEn || r.definitionEn.trim().length === 0).length,
+    [rows]
+  );
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -41,6 +45,7 @@ export function GlossaryInfoCard() {
       (r) =>
         r.term.toLowerCase().includes(q) ||
         r.definition.toLowerCase().includes(q) ||
+        (r.definitionEn?.toLowerCase().includes(q) ?? false) ||
         r.minTrack.toLowerCase().includes(q)
     );
   }, [rows, query]);
@@ -63,6 +68,11 @@ export function GlossaryInfoCard() {
               en: "Quick reference. Practice lives in Learn.",
             })}
           </p>
+          {lang === "en" && missingEnCount > 0 ? (
+            <p className="mt-2 text-xs text-amber-700 dark:text-amber-300">
+              {`Note: ${missingEnCount} definitions are still Spanish-only. We’ll translate them.`}
+            </p>
+          ) : null}
         </div>
         <div className="text-sm text-zinc-600 dark:text-zinc-300">
           {t(lang, { es: "Track", en: "Track" })}:{" "}
@@ -90,7 +100,7 @@ export function GlossaryInfoCard() {
               {r.term}
             </div>
             <div className="mt-1 text-sm text-zinc-700 dark:text-zinc-200">
-              {r.definition}
+              {lang === "en" ? (r.definitionEn ?? r.definition) : r.definition}
             </div>
             <div className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
               {r.minTrack}

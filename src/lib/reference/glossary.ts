@@ -2,7 +2,10 @@ export type MinTrack = "junior" | "mid" | "senior";
 
 export type GlossaryEntry = {
   term: string;
+  /** Spanish definition (legacy field). */
   definition: string;
+  /** Optional English definition (fallbacks to `definition`). */
+  definitionEn?: string;
   minTrack: MinTrack;
 };
 

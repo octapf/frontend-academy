@@ -33,6 +33,10 @@ export function SlangInfoCard() {
     () => SLANG_ENTRIES.filter((p) => trackAllows(track, p.minTrack)),
     [track]
   );
+  const missingEnMeaningCount = useMemo(
+    () => rows.filter((r) => !r.meaningEn || r.meaningEn.trim().length === 0).length,
+    [rows]
+  );
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -42,6 +46,7 @@ export function SlangInfoCard() {
         r.es.toLowerCase().includes(q) ||
         r.en.toLowerCase().includes(q) ||
         r.meaning.toLowerCase().includes(q) ||
+        (r.meaningEn?.toLowerCase().includes(q) ?? false) ||
         r.minTrack.toLowerCase().includes(q)
     );
   }, [rows, query]);
@@ -64,6 +69,11 @@ export function SlangInfoCard() {
               en: "Quick reference. Practice lives in Learn.",
             })}
           </p>
+          {lang === "en" && missingEnMeaningCount > 0 ? (
+            <p className="mt-2 text-xs text-amber-700 dark:text-amber-300">
+              {`Note: ${missingEnMeaningCount} meanings are still Spanish-only. We’ll translate them.`}
+            </p>
+          ) : null}
         </div>
         <div className="text-sm text-zinc-600 dark:text-zinc-300">
           {t(lang, { es: "Track", en: "Track" })}:{" "}
@@ -91,7 +101,7 @@ export function SlangInfoCard() {
               {r.es} <span className="text-zinc-500 dark:text-zinc-400">→</span> {r.en}
             </div>
             <div className="mt-1 text-sm text-zinc-700 dark:text-zinc-200">
-              {r.meaning}
+              {lang === "en" ? (r.meaningEn ?? r.meaning) : r.meaning}
             </div>
             <div className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">
               {r.minTrack}
